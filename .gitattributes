@@ -1,0 +1,7 @@
+* text=auto
+*.sh eol=lf
+*.ps1 eol=crlf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.dart text eol=lf
+*.md text eol=lf

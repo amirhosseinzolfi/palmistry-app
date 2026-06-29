@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>راهنمای جامع کفبینی تعاملی | Palmistry Cheat Sheet</title>
+    <!-- Google Fonts: Vazirmatn for Persian, Outfit for numbers and titles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background glowing orbs -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <div class="logo-icon"><i class="fa-solid fa-hand"></i></div>
+                <div class="title-area">
+                    <h1>کف‌بینی و طالع‌بینی تعاملی</h1>
+                    <p>راهنمای جامع کف‌بینی و تفسیر خطوط دست (Farsi Palmistry Cheat Sheet)</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="start-wizard-btn" class="btn btn-primary btn-glow">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>طالع‌خوان تعاملی (۱۱ مرحله)</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <!-- Sidebar Navigation / Left Canvas -->
+        <section class="visual-panel">
+            <div class="sticky-wrapper">
+                <div class="panel-card glass">
+                    <div class="panel-header">
+                        <h2>نقشه تعاملی کف دست</h2>
+                        <p class="subtitle">روی خطوط یا برجستگی‌های دست کلیک کنید تا راهنمای آن را ببینید</p>
+                    </div>
+                    
+                    <div class="canvas-container">
+                        <svg id="interactive-hand" viewBox="0 0 360 500" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <!-- Glow filters -->
+                                <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="4" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                                <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="4" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                                <filter id="glow-gold" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="3" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+
+                            <!-- Interactive Hand Shape Zones (Hidden/Semi-transparent overlays for hover) -->
+                            <g class="hand-zones">
+                                <!-- Base hand background -->
+                                <path class="hand-base" d="M 150 460 C 110 460, 80 420, 80 370 C 80 330, 50 300, 35 260 C 20 220, 50 200, 75 225 C 95 245, 110 255, 120 220 C 120 180, 105 120, 110 85 C 112 65, 138 65, 140 85 C 145 120, 145 180, 148 205 C 148 180, 152 90, 156 55 C 158 35, 182 35, 184 55 C 188 90, 188 180, 192 205 C 192 180, 196 100, 200 75 C 202 55, 226 55, 228 75 C 232 100, 232 185, 236 210 C 236 185, 240 135, 245 110 C 247 90, 268 90, 270 110 C 273 135, 273 200, 278 230 C 295 265, 305 320, 305 370 C 305 420, 275 460, 240 460 Z" />
+                                
+                                <!-- Finger zones for click/hover -->
+                                <path class="interactive-area finger-zone" data-target="finger-thumb" d="M 80 370 C 80 330, 50 300, 35 260 C 20 220, 50 200, 75 225 C 95 245, 110 255, 120 220 C 110 255, 95 290, 95 330 Z" />
+                                <path class="interactive-area finger-zone" data-target="finger-jupiter" d="M 120 220 C 120 180, 105 120, 110 85 C 112 65, 138 65, 140 85 C 145 120, 145 180, 148 205 Z" />
+                                <path class="interactive-area finger-zone" data-target="finger-saturn" d="M 148 205 C 148 180, 152 90, 156 55 C 158 35, 182 35, 184 55 C 188 90, 188 180, 192 205 Z" />
+                                <path class="interactive-area finger-zone" data-target="finger-apollo" d="M 192 205 C 192 180, 196 100, 200 75 C 202 55, 226 55, 228 75 C 232 100, 232 185, 236 210 Z" />
+                                <path class="interactive-area finger-zone" data-target="finger-mercury" d="M 236 210 C 236 185, 240 135, 245 110 C 247 90, 268 90, 270 110 C 273 135, 273 200, 278 230 Z" />
+                            </g>
+
+                            <!-- Mounts (Interactive transparent circles) -->
+                            <g class="hand-mounts">
+                                <!-- Jupiter Mount -->
+                                <circle class="interactive-area mount-zone" data-target="mount-jupiter" cx="132" cy="220" r="18" />
+                                <text x="132" y="224" class="svg-label">مشتری</text>
+                                
+                                <!-- Saturn Mount -->
+                                <circle class="interactive-area mount-zone" data-target="mount-saturn" cx="168" cy="220" r="18" />
+                                <text x="168" y="224" class="svg-label">زحل</text>
+                                
+                                <!-- Apollo Mount -->
+                                <circle class="interactive-area mount-zone" data-target="mount-apollo" cx="205" cy="220" r="18" />
+                                <text x="205" y="224" class="svg-label">خورشید</text>
+                                
+                                <!-- Mercury Mount -->
+                                <circle class="interactive-area mount-zone" data-target="mount-mercury" cx="250" cy="235" r="18" />
+                                <text x="250" y="239" class="svg-label">عطارد</text>
+
+                                <!-- Lower Mars Mount -->
+                                <circle class="interactive-area mount-zone" data-target="mount-mars-lower" cx="135" cy="280" r="15" />
+                                <text x="135" y="284" class="svg-label-sm">مریخ 🡫</text>
+
+                                <!-- Upper Mars Mount -->
+                                <circle class="interactive-area mount-zone" data-target="mount-mars-upper" cx="270" cy="290" r="15" />
+                                <text x="270" y="294" class="svg-label-sm">مریخ 🡩</text>
+
+                                <!-- Plain of Mars -->
+                                <circle class="interactive-area mount-zone" data-target="mount-mars-plain" cx="195" cy="305" r="22" />
+                                <text x="195" y="309" class="svg-label">دشت مریخ</text>
+                                
+                                <!-- Venus Mount -->
+                                <circle class="interactive-area mount-zone" data-target="mount-venus" cx="125" cy="365" r="32" />
+                                <text x="125" y="369" class="svg-label">ونوس</text>
+                                
+                                <!-- Moon Mount -->
+                                <circle class="interactive-area mount-zone" data-target="mount-moon" cx="260" cy="380" r="30" />
+                                <text x="260" y="384" class="svg-label">ماه</text>
+                            </g>
+
+                            <!-- Lines (Interactive glowing paths) -->
+                            <g class="hand-lines">
+                                <!-- Girdle of Venus -->
+                                <path class="interactive-area line-path minor-line-path" data-target="line-girdle-venus" d="M 135 190 C 160 150, 210 150, 245 190" />
+                                <text x="190" y="165" class="svg-line-label">کمربند ونوس</text>
+
+                                <!-- Heart Line -->
+                                <path class="interactive-area line-path major-line-path" data-target="line-heart" d="M 280 230 C 240 190, 190 180, 140 180" />
+                                <text x="210" y="175" class="svg-line-label">خط قلب</text>
+                                
+                                <!-- Head Line -->
+                                <path class="interactive-area line-path major-line-path" data-target="line-head" d="M 120 230 C 160 225, 220 240, 275 285" />
+                                <text x="195" y="240" class="svg-line-label">خط سر / ذهن</text>
+                                
+                                <!-- Life Line -->
+                                <path class="interactive-area line-path major-line-path" data-target="line-life" d="M 120 230 C 145 280, 130 385, 175 450" />
+                                <text x="105" y="320" class="svg-line-label">خط زندگی</text>
+                                
+                                <!-- Fate Line -->
+                                <path class="interactive-area line-path major-line-path" data-target="line-fate" d="M 200 455 C 195 380, 185 295, 178 215" />
+                                <text x="180" y="350" class="svg-line-label">خط سرنوشت</text>
+
+                                <!-- Sun/Apollo Line -->
+                                <path class="interactive-area line-path minor-line-path" data-target="line-sun" d="M 208 225 L 208 320" />
+                                <text x="218" y="295" class="svg-line-label">خط خورشید</text>
+
+                                <!-- Mercury/Health Line -->
+                                <path class="interactive-area line-path minor-line-path" data-target="line-mercury" d="M 205 420 C 225 365, 245 305, 255 240" />
+                                <text x="240" y="335" class="svg-line-label">خط سلامت</text>
+
+                                <!-- Marriage Line -->
+                                <path class="interactive-area line-path minor-line-path" data-target="line-marriage" d="M 270 205 L 285 205" />
+                                <text x="295" y="200" class="svg-line-label-sm">ازدواج</text>
+
+                                <!-- Intuition Line -->
+                                <path class="interactive-area line-path minor-line-path" data-target="line-intuition" d="M 270 365 C 230 330, 235 285, 255 250" />
+                                <text x="235" y="275" class="svg-line-label-sm">شهود</text>
+
+                                <!-- Mars Line -->
+                                <path class="interactive-area line-path minor-line-path" data-target="line-mars" d="M 128 250 C 135 285, 132 345, 148 395" />
+                                <text x="148" y="325" class="svg-line-label-sm">خط مریخ</text>
+
+                                <!-- Bracelets (Rascette) -->
+                                <path class="interactive-area line-path minor-line-path" data-target="line-bracelets" d="M 158 458 C 190 463, 220 463, 238 458" />
+                                <path class="interactive-area line-path minor-line-path" data-target="line-bracelets" d="M 156 464 C 190 469, 220 469, 240 464" />
+                                <path class="interactive-area line-path minor-line-path" data-target="line-bracelets" d="M 154 470 C 190 475, 220 475, 242 470" />
+                                <text x="200" y="485" class="svg-line-label-sm">دستبندها (مچ)</text>
+
+                                <!-- Special Rings -->
+                                <!-- Ring of Solomon -->
+                                <path class="interactive-area special-ring-path" data-target="ring-solomon" d="M 120 210 A 15 15 0 0 0 145 205" />
+                                <!-- Ring of Saturn -->
+                                <path class="interactive-area special-ring-path" data-target="ring-saturn" d="M 150 210 A 18 18 0 0 0 185 205" />
+                                <!-- Ring of Apollo -->
+                                <path class="interactive-area special-ring-path" data-target="ring-apollo" d="M 188 210 A 18 18 0 0 0 222 210" />
+                                <!-- Ring of Mercury -->
+                                <path class="interactive-area special-ring-path" data-target="ring-mercury" d="M 233 222 A 18 18 0 0 0 268 230" />
+                            </g>
+
+                            <!-- Symbols and Marks (Interactive groups) -->
+                            <g class="hand-symbols">
+                                <!-- Star on Jupiter -->
+                                <path class="interactive-area symbol-path" data-target="symbol-star" d="M 129 202 L 135 208 M 135 202 L 129 208 M 132 200 L 132 210 M 127 205 L 137 205" />
+                                <!-- Square on Life Line -->
+                                <rect class="interactive-area symbol-path" data-target="symbol-square" x="126" y="341" width="8" height="8" rx="1" transform="rotate(20, 130, 345)" />
+                                <!-- Triangle on Apollo -->
+                                <polygon class="interactive-area symbol-path" data-target="symbol-triangle" points="205,230 211,238 199,238" />
+                                <!-- Island on Head Line -->
+                                <path class="interactive-area symbol-path" data-target="symbol-island" d="M 190 240 C 194 236, 198 236, 202 240 C 198 244, 194 244, 190 240" />
+                                <!-- Cross on Plain of Mars -->
+                                <path class="interactive-area symbol-path" data-target="symbol-cross" d="M 190 300 L 200 310 M 200 300 L 190 310" />
+                                <!-- Grille on Moon Mount -->
+                                <path class="interactive-area symbol-path" data-target="symbol-grille" d="M 244 346 L 256 346 M 244 350 L 256 350 M 244 354 L 256 354 M 246 344 L 246 356 M 250 344 L 250 356 M 254 344 L 254 356" />
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="quick-filters">
+                        <span class="filter-title">فیلتر سریع:</span>
+                        <div class="filter-chips">
+                            <button class="chip active" data-filter="all">همه</button>
+                            <button class="chip" data-filter="major-line">خطوط اصلی</button>
+                            <button class="chip" data-filter="minor-line">خطوط فرعی</button>
+                            <button class="chip" data-filter="mount">برجستگی‌ها</button>
+                            <button class="chip" data-filter="finger">انگشتان</button>
+                            <button class="chip" data-filter="symbol">نشانه‌ها</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Element Details Quick View -->
+                <div id="quick-view-card" class="panel-card glass active-highlight hidden">
+                    <div class="card-glow-edge"></div>
+                    <div class="quick-view-content">
+                        <div class="drag-handle"></div>
+                        <div class="qv-header">
+                            <span class="qv-category">خط اصلی</span>
+                            <button id="close-qv-btn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <h3 id="qv-title">نام بخش انتخاب شده</h3>
+                        <div id="qv-body" class="qv-body">
+                            <!-- Populated by JS -->
+                        </div>
+                        <button id="scroll-to-details-btn" class="btn btn-secondary btn-sm">
+                            <span>مشاهده توضیحات کامل</span>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Content Panel: Detailed Guide -->
+        <section class="content-panel">
+            <!-- Search and Navigation Controls -->
+            <div class="search-nav-container glass">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="search-input" placeholder="جستجو در تمام بخش‌های راهنما و خطوط کف دست...">
+                    <button id="clear-search-btn" class="clear-btn hidden"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="category-tabs">
+                    <button class="tab-btn active" data-cat="all">همه بخش‌ها</button>
+                    <button class="tab-btn" data-cat="basics">اصول & اشکال دست</button>
+                    <button class="tab-btn" data-cat="lines">خطوط دست</button>
+                    <button class="tab-btn" data-cat="mounts-fingers">برجستگی‌ها & انگشتان</button>
+                    <button class="tab-btn" data-cat="signs-misc">نشانه‌ها & متفرقه</button>
+                </div>
+            </div>
+
+            <!-- Search empty state -->
+            <div id="search-empty-state" class="empty-state glass hidden">
+                <i class="fa-solid fa-hourglass-empty empty-icon"></i>
+                <h3>هیچ موردی یافت نشد</h3>
+                <p>عبارت جستجوی دیگری را امتحان کنید یا فیلترها را ریست کنید.</p>
+                <button id="reset-search-btn" class="btn btn-secondary">ریست کردن جستجو</button>
+            </div>
+
+            <!-- Guide Chapters Container -->
+            <div id="guide-chapters" class="chapters-grid">
+                <!-- Chapters will be rendered dynamically by app.js to keep index.html clean and enable search operations -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Step-by-Step Palm Reading Wizard Modal -->
+    <div id="wizard-modal" class="modal-overlay hidden">
+        <div class="modal-container glass">
+            <div class="modal-glow-bg"></div>
+            <header class="modal-header">
+                <div class="wizard-progress-bar-container">
+                    <div id="wizard-progress" class="wizard-progress-bar" style="width: 9%;"></div>
+                </div>
+                <div class="modal-title-row">
+                    <h2>طالع‌خوان تعاملی کف‌بینی (۱۱ مرحله)</h2>
+                    <span id="wizard-step-indicator" class="step-indicator">مرحله ۱ از ۱۱</span>
+                    <button id="close-wizard-btn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </header>
+
+            <div class="modal-body">
+                <!-- Slide wrapper for transitions -->
+                <div id="wizard-slide-container" class="wizard-slide-container">
+                    <!-- Wizard step will be injected here by app.js -->
+                </div>
+            </div>
+
+            <footer class="modal-footer">
+                <button id="prev-step-btn" class="btn btn-secondary disabled" disabled>
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <span>مرحله قبل</span>
+                </button>
+                <div class="footer-dots" id="wizard-dots">
+                    <!-- Dots generated by JS -->
+                </div>
+                <button id="next-step-btn" class="btn btn-primary btn-glow">
+                    <span>مرحله بعد</span>
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Generated Reading Report Modal -->
+    <div id="report-modal" class="modal-overlay hidden">
+        <div class="modal-container glass report-container">
+            <header class="modal-header">
+                <h2>کارنامه تحلیل کف‌بینی شما</h2>
+                <div class="report-actions-top">
+                    <button id="close-report-btn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </header>
+            <div class="modal-body scrollable">
+                <div class="report-card" id="printable-report">
+                    <div class="report-watermark"><i class="fa-solid fa-hand"></i></div>
+                    <div class="report-header">
+                        <div class="report-logo"><i class="fa-solid fa-moon"></i></div>
+                        <h3>تفسیر و راهنمای شخصی کف‌بینی</h3>
+                        <p class="report-date" id="report-date-str">تاریخ: ۲۶ خرداد ۱۴۰۵</p>
+                    </div>
+                    
+                    <div class="report-divider"></div>
+                    
+                    <div class="report-section">
+                        <h4>۱. کهن‌الگو و عنصر دست شما</h4>
+                        <div class="report-item" id="rep-hand-shape">
+                            <!-- Injected -->
+                        </div>
+                    </div>
+                    
+                    <div class="report-section">
+                        <h4>۲. تحلیل شخصیت، اراده و منطق (شست و پوست)</h4>
+                        <div class="report-item" id="rep-thumb-skin">
+                            <!-- Injected -->
+                        </div>
+                    </div>
+                    
+                    <div class="report-section">
+                        <h4>۳. وضعیت انرژی‌های درونی (برجستگی‌های دست)</h4>
+                        <div class="report-item" id="rep-mounts">
+                            <!-- Injected -->
+                        </div>
+                    </div>
+
+                    <div class="report-section">
+                        <h4>۴. مسیر فکری، عاطفی و زیستی (خطوط اصلی)</h4>
+                        <div class="report-item" id="rep-major-lines">
+                            <!-- Injected -->
+                        </div>
+                    </div>
+
+                    <div class="report-section">
+                        <h4>۵. استعدادها و چالش‌های خاص (خطوط فرعی و نشانه‌ها)</h4>
+                        <div class="report-item" id="rep-minor-signs">
+                            <!-- Injected -->
+                        </div>
+                    </div>
+
+                    <div class="report-section warning-note">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <p><strong>یادداشت مهم:</strong> کف دست نقشه قطعی سرنوشت نیست، بلکه منعکس‌کننده الگوهای ذهنی و ظرفیت‌های فعلی شماست. انتخاب‌ها، اراده و آگاهی شما همواره بالاتر و فراتر از خطوط دستتان قرار دارند.</p>
+                    </div>
+                </div>
+            </div>
+            <footer class="modal-footer">
+                <button id="copy-report-btn" class="btn btn-secondary">
+                    <i class="fa-solid fa-copy"></i>
+                    <span>کپی کردن متن گزارش</span>
+                </button>
+                <button id="print-report-btn" class="btn btn-primary btn-glow">
+                    <i class="fa-solid fa-print"></i>
+                    <span>چاپ یا ذخیره PDF</span>
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <p>ساخته شده با عشق برای علاقه‌مندان به خرد سنتی و روانشناسی کف‌بینی. تمامی حقوق محفوظ است © ۱۴۰۵</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
