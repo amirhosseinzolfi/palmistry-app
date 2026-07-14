@@ -20,3 +20,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/hand.png
+    - pkg_database/schema/
+    - pkg_database/knowledge/
+    - pkg_database/relationships/
+    - pkg_database/translations/
+    - pkg_database/metadata/

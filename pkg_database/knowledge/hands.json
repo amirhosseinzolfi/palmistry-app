@@ -1,0 +1,86 @@
+{
+  "features": [
+    {
+      "id": "hand_dominance",
+      "category": "Hand",
+      "family": "dominance",
+      "subfamily": "active_passive",
+      "name_translation_key": "hand_dominance_name",
+      "description_translation_key": "hand_dominance_desc",
+      "attributes": [
+        {
+          "name": "dominant_hand",
+          "possible_values": [
+            "right",
+            "left"
+          ]
+        },
+        {
+          "name": "passive_hand",
+          "possible_values": [
+            "right",
+            "left"
+          ]
+        },
+        {
+          "name": "symmetry",
+          "possible_values": [
+            "similar",
+            "different"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "hand_posture",
+      "category": "Hand",
+      "family": "posture",
+      "subfamily": "flexibility",
+      "name_translation_key": "hand_posture_name",
+      "description_translation_key": "hand_posture_desc",
+      "attributes": [
+        {
+          "name": "flexibility",
+          "possible_values": [
+            "stiff",
+            "flexible",
+            "extremely_flexible"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "line_density",
+      "category": "Hand",
+      "family": "density",
+      "subfamily": "line_count",
+      "name_translation_key": "line_density_name",
+      "description_translation_key": "line_density_desc",
+      "attributes": [
+        {
+          "name": "density_level",
+          "possible_values": [
+            "low_density",
+            "average_density",
+            "high_density"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

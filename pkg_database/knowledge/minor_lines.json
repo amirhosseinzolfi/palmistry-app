@@ -1,0 +1,237 @@
+{
+  "features": [
+    {
+      "id": "line_marriage",
+      "category": "Minor Line",
+      "family": "relationship",
+      "subfamily": "union",
+      "name_translation_key": "line_marriage_name",
+      "description_translation_key": "line_marriage_desc",
+      "attributes": [
+        {
+          "name": "count",
+          "possible_values": [
+            "single_clear",
+            "multiple_faint"
+          ]
+        },
+        {
+          "name": "path",
+          "possible_values": [
+            "straight",
+            "curved_up",
+            "curved_down",
+            "broken",
+            "forked"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "island",
+        "cross"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "line_children",
+      "category": "Minor Line",
+      "family": "relationship",
+      "subfamily": "children",
+      "name_translation_key": "line_children_name",
+      "description_translation_key": "line_children_desc",
+      "attributes": [
+        {
+          "name": "visibility",
+          "possible_values": [
+            "visible",
+            "absent"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "line_travel",
+      "category": "Minor Line",
+      "family": "travel",
+      "subfamily": "journey",
+      "name_translation_key": "line_travel_name",
+      "description_translation_key": "line_travel_desc",
+      "attributes": [
+        {
+          "name": "length",
+          "possible_values": [
+            "long",
+            "short",
+            "multiple"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "star",
+        "square"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "line_intuition",
+      "category": "Minor Line",
+      "family": "intuition",
+      "subfamily": "psychic",
+      "name_translation_key": "line_intuition_name",
+      "description_translation_key": "line_intuition_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint",
+            "absent"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "girdle_venus",
+      "category": "Minor Line",
+      "family": "emotion",
+      "subfamily": "girdle",
+      "name_translation_key": "girdle_venus_name",
+      "description_translation_key": "girdle_venus_desc",
+      "attributes": [
+        {
+          "name": "structure",
+          "possible_values": [
+            "complete",
+            "broken",
+            "multiple",
+            "faint",
+            "chained",
+            "absent"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "ring_solomon",
+      "category": "Minor Line",
+      "family": "intuition",
+      "subfamily": "wisdom",
+      "name_translation_key": "ring_solomon_name",
+      "description_translation_key": "ring_solomon_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint",
+            "absent"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "ring_saturn",
+      "category": "Minor Line",
+      "family": "saturn",
+      "subfamily": "blockage",
+      "name_translation_key": "ring_saturn_name",
+      "description_translation_key": "ring_saturn_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "broken",
+            "absent"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "line_influence",
+      "category": "Minor Line",
+      "family": "influence",
+      "subfamily": "support",
+      "name_translation_key": "line_influence_name",
+      "description_translation_key": "line_influence_desc",
+      "attributes": [
+        {
+          "name": "path",
+          "possible_values": [
+            "parallel_life",
+            "cutting_life",
+            "multiple"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "line_bracelets",
+      "category": "Minor Line",
+      "family": "wrist",
+      "subfamily": "rascette",
+      "name_translation_key": "line_bracelets_name",
+      "description_translation_key": "line_bracelets_desc",
+      "attributes": [
+        {
+          "name": "count",
+          "possible_values": [
+            "one",
+            "two",
+            "three",
+            "four"
+          ]
+        },
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "broken",
+            "arched"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

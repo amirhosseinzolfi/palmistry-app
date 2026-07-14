@@ -1,0 +1,76 @@
+{
+  "features": [
+    {
+      "id": "skin_texture",
+      "category": "Physical Feature",
+      "family": "skin",
+      "subfamily": "texture",
+      "name_translation_key": "skin_texture_name",
+      "description_translation_key": "skin_texture_desc",
+      "attributes": [
+        {
+          "name": "feel",
+          "possible_values": [
+            "soft",
+            "thick",
+            "firm",
+            "rough"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "hand_temperature",
+      "category": "Physical Feature",
+      "family": "temperature",
+      "subfamily": "heat",
+      "name_translation_key": "hand_temperature_name",
+      "description_translation_key": "hand_temperature_desc",
+      "attributes": [
+        {
+          "name": "heat_level",
+          "possible_values": [
+            "cold",
+            "warm",
+            "balanced"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "hand_color",
+      "category": "Physical Feature",
+      "family": "color",
+      "subfamily": "vascular",
+      "name_translation_key": "hand_color_name",
+      "description_translation_key": "hand_color_desc",
+      "attributes": [
+        {
+          "name": "color_shade",
+          "possible_values": [
+            "pink",
+            "red",
+            "pale_white",
+            "yellow",
+            "blue"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

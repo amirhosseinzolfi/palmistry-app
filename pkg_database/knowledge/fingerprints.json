@@ -1,0 +1,88 @@
+{
+  "features": [
+    {
+      "id": "fingerprint_loop",
+      "category": "Fingerprint",
+      "family": "dermatoglyphics",
+      "subfamily": "loop",
+      "name_translation_key": "fingerprint_loop_name",
+      "description_translation_key": "fingerprint_loop_desc",
+      "attributes": [
+        {
+          "name": "type",
+          "possible_values": [
+            "loop_standard"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "fingerprint_whorl",
+      "category": "Fingerprint",
+      "family": "dermatoglyphics",
+      "subfamily": "whorl",
+      "name_translation_key": "fingerprint_whorl_name",
+      "description_translation_key": "fingerprint_whorl_desc",
+      "attributes": [
+        {
+          "name": "type",
+          "possible_values": [
+            "whorl_standard"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "fingerprint_arch",
+      "category": "Fingerprint",
+      "family": "dermatoglyphics",
+      "subfamily": "arch",
+      "name_translation_key": "fingerprint_arch_name",
+      "description_translation_key": "fingerprint_arch_desc",
+      "attributes": [
+        {
+          "name": "type",
+          "possible_values": [
+            "arch_standard"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "fingerprint_tented_arch",
+      "category": "Fingerprint",
+      "family": "dermatoglyphics",
+      "subfamily": "tented",
+      "name_translation_key": "fingerprint_tented_arch_name",
+      "description_translation_key": "fingerprint_tented_arch_desc",
+      "attributes": [
+        {
+          "name": "type",
+          "possible_values": [
+            "tented_arch_standard"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

@@ -7,7 +7,7 @@
     <!-- Google Fonts: Vazirmatn for Persian, Outfit for numbers and titles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
@@ -75,8 +75,8 @@
 
                             <!-- Interactive Hand Shape Zones (Hidden/Semi-transparent overlays for hover) -->
                             <g class="hand-zones">
-                                <!-- Base hand background -->
-                                <path class="hand-base" d="M 150 460 C 110 460, 80 420, 80 370 C 80 330, 50 300, 35 260 C 20 220, 50 200, 75 225 C 95 245, 110 255, 120 220 C 120 180, 105 120, 110 85 C 112 65, 138 65, 140 85 C 145 120, 145 180, 148 205 C 148 180, 152 90, 156 55 C 158 35, 182 35, 184 55 C 188 90, 188 180, 192 205 C 192 180, 196 100, 200 75 C 202 55, 226 55, 228 75 C 232 100, 232 185, 236 210 C 236 185, 240 135, 245 110 C 247 90, 268 90, 270 110 C 273 135, 273 200, 278 230 C 295 265, 305 320, 305 370 C 305 420, 275 460, 240 460 Z" />
+                                <!-- Base hand background image -->
+                                <image href="hand.png" x="0" y="0" width="360" height="500" class="hand-base" />
                                 
                                 <!-- Finger zones for click/hover -->
                                 <path class="interactive-area finger-zone" data-target="finger-thumb" d="M 80 370 C 80 330, 50 300, 35 260 C 20 220, 50 200, 75 225 C 95 245, 110 255, 120 220 C 110 255, 95 290, 95 330 Z" />
@@ -224,9 +224,11 @@
                             <span class="qv-category">خط اصلی</span>
                             <button id="close-qv-btn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
                         </div>
-                        <h3 id="qv-title">نام بخش انتخاب شده</h3>
-                        <div id="qv-body" class="qv-body">
-                            <!-- Populated by JS -->
+                        <div class="quick-view-scrollable-body">
+                            <h3 id="qv-title">نام بخش انتخاب شده</h3>
+                            <div id="qv-body" class="qv-body">
+                                <!-- Populated by JS -->
+                            </div>
                         </div>
                         <button id="scroll-to-details-btn" class="btn btn-secondary btn-sm">
                             <span>مشاهده توضیحات کامل</span>

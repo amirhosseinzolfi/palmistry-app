@@ -1,0 +1,301 @@
+{
+  "steps": [
+    {
+      "title_key": "wiz_activeHand_title",
+      "desc_key": "wiz_activeHand_desc",
+      "key": "activeHand",
+      "options": [
+        {
+          "value": "right_active",
+          "label_key": "wiz_activeHand_opt_right_active_label",
+          "desc_key": "wiz_activeHand_opt_right_active_desc"
+        },
+        {
+          "value": "left_active",
+          "label_key": "wiz_activeHand_opt_left_active_label",
+          "desc_key": "wiz_activeHand_opt_left_active_desc"
+        },
+        {
+          "value": "similar_hands",
+          "label_key": "wiz_activeHand_opt_similar_hands_label",
+          "desc_key": "wiz_activeHand_opt_similar_hands_desc"
+        },
+        {
+          "value": "different_hands",
+          "label_key": "wiz_activeHand_opt_different_hands_label",
+          "desc_key": "wiz_activeHand_opt_different_hands_desc"
+        }
+      ]
+    },
+    {
+      "title_key": "wiz_handShape_title",
+      "desc_key": "wiz_handShape_desc",
+      "key": "handShape",
+      "options": [
+        {
+          "value": "earth",
+          "label_key": "wiz_handShape_opt_earth_label",
+          "desc_key": "wiz_handShape_opt_earth_desc"
+        },
+        {
+          "value": "water",
+          "label_key": "wiz_handShape_opt_water_label",
+          "desc_key": "wiz_handShape_opt_water_desc"
+        },
+        {
+          "value": "fire",
+          "label_key": "wiz_handShape_opt_fire_label",
+          "desc_key": "wiz_handShape_opt_fire_desc"
+        },
+        {
+          "value": "air",
+          "label_key": "wiz_handShape_opt_air_label",
+          "desc_key": "wiz_handShape_opt_air_desc"
+        }
+      ]
+    },
+    {
+      "title_key": "wiz_skinTexture_title",
+      "desc_key": "wiz_skinTexture_desc",
+      "key": "skinTexture",
+      "options": [
+        {
+          "value": "soft_warm",
+          "label_key": "wiz_skinTexture_opt_soft_warm_label",
+          "desc_key": "wiz_skinTexture_opt_soft_warm_desc"
+        },
+        {
+          "value": "thick_warm",
+          "label_key": "wiz_skinTexture_opt_thick_warm_label",
+          "desc_key": "wiz_skinTexture_opt_thick_warm_desc"
+        },
+        {
+          "value": "soft_cold",
+          "label_key": "wiz_skinTexture_opt_soft_cold_label",
+          "desc_key": "wiz_skinTexture_opt_soft_cold_desc"
+        },
+        {
+          "value": "firm_balanced",
+          "label_key": "wiz_skinTexture_opt_firm_balanced_label",
+          "desc_key": "wiz_skinTexture_opt_firm_balanced_desc"
+        }
+      ]
+    },
+    {
+      "title_key": "wiz_thumbType_title",
+      "desc_key": "wiz_thumbType_desc",
+      "key": "thumbType",
+      "options": [
+        {
+          "value": "balanced_open",
+          "label_key": "wiz_thumbType_opt_balanced_open_label",
+          "desc_key": "wiz_thumbType_opt_balanced_open_desc"
+        },
+        {
+          "value": "willpower_dominant",
+          "label_key": "wiz_thumbType_opt_willpower_dominant_label",
+          "desc_key": "wiz_thumbType_opt_willpower_dominant_desc"
+        },
+        {
+          "value": "logic_dominant",
+          "label_key": "wiz_thumbType_opt_logic_dominant_label",
+          "desc_key": "wiz_thumbType_opt_logic_dominant_desc"
+        },
+        {
+          "value": "closed_cautious",
+          "label_key": "wiz_thumbType_opt_closed_cautious_label",
+          "desc_key": "wiz_thumbType_opt_closed_cautious_desc"
+        }
+      ]
+    },
+    {
+      "title_key": "wiz_fingerDominant_title",
+      "desc_key": "wiz_fingerDominant_desc",
+      "key": "fingerDominant",
+      "options": [
+        {
+          "value": "jupiter_long",
+          "label_key": "wiz_fingerDominant_opt_jupiter_long_label",
+          "desc_key": "wiz_fingerDominant_opt_jupiter_long_desc"
+        },
+        {
+          "value": "apollo_long",
+          "label_key": "wiz_fingerDominant_opt_apollo_long_label",
+          "desc_key": "wiz_fingerDominant_opt_apollo_long_desc"
+        },
+        {
+          "value": "saturn_long",
+          "label_key": "wiz_fingerDominant_opt_saturn_long_label",
+          "desc_key": "wiz_fingerDominant_opt_saturn_long_desc"
+        },
+        {
+          "value": "mercury_long",
+          "label_key": "wiz_fingerDominant_opt_mercury_long_label",
+          "desc_key": "wiz_fingerDominant_opt_mercury_long_desc"
+        }
+      ]
+    },
+    {
+      "title_key": "wiz_prominentMount_title",
+      "desc_key": "wiz_prominentMount_desc",
+      "key": "prominentMount",
+      "options": [
+        {
+          "value": "venus_moon",
+          "label_key": "wiz_prominentMount_opt_venus_moon_label",
+          "desc_key": "wiz_prominentMount_opt_venus_moon_desc"
+        },
+        {
+          "value": "jupiter_mercury",
+          "label_key": "wiz_prominentMount_opt_jupiter_mercury_label",
+          "desc_key": "wiz_prominentMount_opt_jupiter_mercury_desc"
+        },
+        {
+          "value": "saturn_mars",
+          "label_key": "wiz_prominentMount_opt_saturn_mars_label",
+          "desc_key": "wiz_prominentMount_opt_saturn_mars_desc"
+        },
+        {
+          "value": "flat_mounts",
+          "label_key": "wiz_prominentMount_opt_flat_mounts_label",
+          "desc_key": "wiz_prominentMount_opt_flat_mounts_desc"
+        }
+      ]
+    },
+    {
+      "title_key": "wiz_heartLine_title",
+      "desc_key": "wiz_heartLine_desc",
+      "key": "heartLine",
+      "options": [
+        {
+          "value": "long_curved",
+          "label_key": "wiz_heartLine_opt_long_curved_label",
+          "desc_key": "wiz_heartLine_opt_long_curved_desc"
+        },
+        {
+          "value": "short_straight",
+          "label_key": "wiz_heartLine_opt_short_straight_label",
+          "desc_key": "wiz_heartLine_opt_short_straight_desc"
+        },
+        {
+          "value": "chained_broken",
+          "label_key": "wiz_heartLine_opt_chained_broken_label",
+          "desc_key": "wiz_heartLine_opt_chained_broken_desc"
+        },
+        {
+          "value": "balanced_split",
+          "label_key": "wiz_heartLine_opt_balanced_split_label",
+          "desc_key": "wiz_heartLine_opt_balanced_split_desc"
+        }
+      ]
+    },
+    {
+      "title_key": "wiz_headLine_title",
+      "desc_key": "wiz_headLine_desc",
+      "key": "headLine",
+      "options": [
+        {
+          "value": "long_straight",
+          "label_key": "wiz_headLine_opt_long_straight_label",
+          "desc_key": "wiz_headLine_opt_long_straight_desc"
+        },
+        {
+          "value": "long_curved_moon",
+          "label_key": "wiz_headLine_opt_long_curved_moon_label",
+          "desc_key": "wiz_headLine_opt_long_curved_moon_desc"
+        },
+        {
+          "value": "short_practical",
+          "label_key": "wiz_headLine_opt_short_practical_label",
+          "desc_key": "wiz_headLine_opt_short_practical_desc"
+        },
+        {
+          "value": "split_independent",
+          "label_key": "wiz_headLine_opt_split_independent_label",
+          "desc_key": "wiz_headLine_opt_split_independent_desc"
+        }
+      ]
+    },
+    {
+      "title_key": "wiz_lifeLine_title",
+      "desc_key": "wiz_lifeLine_desc",
+      "key": "lifeLine",
+      "options": [
+        {
+          "value": "deep_clear",
+          "label_key": "wiz_lifeLine_opt_deep_clear_label",
+          "desc_key": "wiz_lifeLine_opt_deep_clear_desc"
+        },
+        {
+          "value": "faint_broken",
+          "label_key": "wiz_lifeLine_opt_faint_broken_label",
+          "desc_key": "wiz_lifeLine_opt_faint_broken_desc"
+        },
+        {
+          "value": "double_mars",
+          "label_key": "wiz_lifeLine_opt_double_mars_label",
+          "desc_key": "wiz_lifeLine_opt_double_mars_desc"
+        },
+        {
+          "value": "outward_branch",
+          "label_key": "wiz_lifeLine_opt_outward_branch_label",
+          "desc_key": "wiz_lifeLine_opt_outward_branch_desc"
+        }
+      ]
+    },
+    {
+      "title_key": "wiz_fateLine_title",
+      "desc_key": "wiz_fateLine_desc",
+      "key": "fateLine",
+      "options": [
+        {
+          "value": "strong_fate",
+          "label_key": "wiz_fateLine_opt_strong_fate_label",
+          "desc_key": "wiz_fateLine_opt_strong_fate_desc"
+        },
+        {
+          "value": "faint_flexible",
+          "label_key": "wiz_fateLine_opt_faint_flexible_label",
+          "desc_key": "wiz_fateLine_opt_faint_flexible_desc"
+        },
+        {
+          "value": "apollo_present",
+          "label_key": "wiz_fateLine_opt_apollo_present_label",
+          "desc_key": "wiz_fateLine_opt_apollo_present_desc"
+        },
+        {
+          "value": "marriage_clear",
+          "label_key": "wiz_fateLine_opt_marriage_clear_label",
+          "desc_key": "wiz_fateLine_opt_marriage_clear_desc"
+        }
+      ]
+    },
+    {
+      "title_key": "wiz_specialSign_title",
+      "desc_key": "wiz_specialSign_desc",
+      "key": "specialSign",
+      "options": [
+        {
+          "value": "star_jupiter_apollo",
+          "label_key": "wiz_specialSign_opt_star_jupiter_apollo_label",
+          "desc_key": "wiz_specialSign_opt_star_jupiter_apollo_desc"
+        },
+        {
+          "value": "square_protection",
+          "label_key": "wiz_specialSign_opt_square_protection_label",
+          "desc_key": "wiz_specialSign_opt_square_protection_desc"
+        },
+        {
+          "value": "mystic_cross",
+          "label_key": "wiz_specialSign_opt_mystic_cross_label",
+          "desc_key": "wiz_specialSign_opt_mystic_cross_desc"
+        },
+        {
+          "value": "triangle_mercury",
+          "label_key": "wiz_specialSign_opt_triangle_mercury_label",
+          "desc_key": "wiz_specialSign_opt_triangle_mercury_desc"
+        }
+      ]
+    }
+  ]
+}

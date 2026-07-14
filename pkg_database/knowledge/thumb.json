@@ -1,0 +1,120 @@
+{
+  "features": [
+    {
+      "id": "thumb_length",
+      "category": "Thumb",
+      "family": "will_logic",
+      "subfamily": "length",
+      "name_translation_key": "thumb_length_name",
+      "description_translation_key": "thumb_length_desc",
+      "attributes": [
+        {
+          "name": "size",
+          "possible_values": [
+            "long",
+            "short",
+            "medium"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "thumb_will_phalange",
+      "category": "Thumb",
+      "family": "will_logic",
+      "subfamily": "will",
+      "name_translation_key": "thumb_will_phalange_name",
+      "description_translation_key": "thumb_will_phalange_desc",
+      "attributes": [
+        {
+          "name": "will_strength",
+          "possible_values": [
+            "long_will",
+            "short_will",
+            "thick_will",
+            "flexible_will"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "thumb_logic_phalange",
+      "category": "Thumb",
+      "family": "will_logic",
+      "subfamily": "logic",
+      "name_translation_key": "thumb_logic_phalange_name",
+      "description_translation_key": "thumb_logic_phalange_desc",
+      "attributes": [
+        {
+          "name": "logic_strength",
+          "possible_values": [
+            "long_logic",
+            "short_logic",
+            "waisted_logic"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "thumb_flexibility",
+      "category": "Thumb",
+      "family": "flexibility",
+      "subfamily": "stiffness",
+      "name_translation_key": "thumb_flexibility_name",
+      "description_translation_key": "thumb_flexibility_desc",
+      "attributes": [
+        {
+          "name": "flexibility_type",
+          "possible_values": [
+            "rigid",
+            "flexible",
+            "extremely_flexible"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "thumb_angle",
+      "category": "Thumb",
+      "family": "flexibility",
+      "subfamily": "angle",
+      "name_translation_key": "thumb_angle_name",
+      "description_translation_key": "thumb_angle_desc",
+      "attributes": [
+        {
+          "name": "angle_range",
+          "possible_values": [
+            "open_wide",
+            "medium",
+            "closed_cautious"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

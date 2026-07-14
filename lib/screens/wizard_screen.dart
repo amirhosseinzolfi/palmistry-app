@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/palmistry_data.dart';
+import '../services/pkg_database_service.dart';
 import 'report_screen.dart';
 
 class WizardScreen extends StatefulWidget {
@@ -10,9 +10,24 @@ class WizardScreen extends StatefulWidget {
 }
 
 class _WizardScreenState extends State<WizardScreen> {
+  final PkgDatabaseService _dbService = PkgDatabaseService();
   final PageController _pageController = PageController();
+  
+  bool _isLoading = true;
   int _currentStep = 0;
   final Map<String, String> _selections = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _dbService.initialize().then((_) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -27,7 +42,7 @@ class _WizardScreenState extends State<WizardScreen> {
 
     // Automatically slide to next page after a tiny delay for visual confirmation
     Future.delayed(const Duration(milliseconds: 350), () {
-      if (_currentStep < wizardSteps.length - 1) {
+      if (_currentStep < _dbService.wizardSteps.length - 1) {
         _pageController.nextPage(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
@@ -49,7 +64,17 @@ class _WizardScreenState extends State<WizardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double progress = (_currentStep + 1) / wizardSteps.length;
+    if (_isLoading) {
+      return const Scaffold(
+        backgroundColor: Color(0xFF070A13),
+        body: Center(
+          child: CircularProgressIndicator(color: Color(0xFF00F2FE)),
+        ),
+      );
+    }
+
+    final int totalSteps = _dbService.wizardSteps.length;
+    final double progress = (_currentStep + 1) / totalSteps;
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -86,7 +111,7 @@ class _WizardScreenState extends State<WizardScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "مرحله ${_currentStep + 1} از ${wizardSteps.length}",
+                    "مرحله ${_currentStep + 1} از $totalSteps",
                     style: const TextStyle(
                       color: Color(0xFF00F2FE),
                       fontSize: 12,
@@ -111,15 +136,17 @@ class _WizardScreenState extends State<WizardScreen> {
               child: PageView.builder(
                 controller: _pageController,
                 physics: const NeverScrollableScrollPhysics(), // Force using buttons or option taps
-                itemCount: wizardSteps.length,
+                itemCount: totalSteps,
                 onPageChanged: (pageIndex) {
                   setState(() {
                     _currentStep = pageIndex;
                   });
                 },
                 itemBuilder: (context, index) {
-                  final step = wizardSteps[index];
-                  final savedVal = _selections[step.key];
+                  final step = _dbService.wizardSteps[index];
+                  final String stepKey = step['key'];
+                  final savedVal = _selections[stepKey];
+                  final List<dynamic> options = step['options'] ?? [];
 
                   return SingleChildScrollView(
                     padding: const EdgeInsets.all(20),
@@ -127,7 +154,7 @@ class _WizardScreenState extends State<WizardScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          step.title,
+                          _dbService.translate(step['title_key']),
                           style: const TextStyle(
                             color: Color(0xFFFFB703),
                             fontSize: 18,
@@ -137,7 +164,7 @@ class _WizardScreenState extends State<WizardScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          step.desc,
+                          _dbService.translate(step['desc_key']),
                           style: const TextStyle(
                             color: Color(0xFFA9B2C3),
                             fontSize: 13,
@@ -148,10 +175,11 @@ class _WizardScreenState extends State<WizardScreen> {
                         const SizedBox(height: 25),
                         
                         // Options grid/list
-                        ...step.options.map((opt) {
-                          final bool isSelected = savedVal == opt.value;
+                        ...options.map((opt) {
+                          final String optVal = opt['value'];
+                          final bool isSelected = savedVal == optVal;
                           return GestureDetector(
-                            onTap: () => _onOptionSelected(step.key, opt.value),
+                            onTap: () => _onOptionSelected(stepKey, optVal),
                             child: Container(
                               margin: const EdgeInsets.only(bottom: 12),
                               padding: const EdgeInsets.all(16),
@@ -191,7 +219,7 @@ class _WizardScreenState extends State<WizardScreen> {
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
                                         Text(
-                                          opt.label,
+                                          _dbService.translate(opt['label_key']),
                                           style: TextStyle(
                                             color: isSelected ? const Color(0xFFFFB703) : Colors.white,
                                             fontSize: 14,
@@ -201,7 +229,7 @@ class _WizardScreenState extends State<WizardScreen> {
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
-                                          opt.desc,
+                                          _dbService.translate(opt['desc_key']),
                                           style: const TextStyle(
                                             color: Color(0xFFA9B2C3),
                                             fontSize: 12,
@@ -254,7 +282,7 @@ class _WizardScreenState extends State<WizardScreen> {
 
                   // Step Indicators (Dots)
                   Row(
-                    children: List.generate(wizardSteps.length, (i) {
+                    children: List.generate(totalSteps, (i) {
                       final bool isCurrent = i == _currentStep;
                       final bool isDone = i < _currentStep;
                       return Container(
@@ -276,13 +304,15 @@ class _WizardScreenState extends State<WizardScreen> {
                   // Next / Finish Btn
                   ElevatedButton(
                     onPressed: () {
-                      final step = wizardSteps[_currentStep];
+                      final step = _dbService.wizardSteps[_currentStep];
+                      final String stepKey = step['key'];
+                      final List<dynamic> options = step['options'] ?? [];
                       // Select first option as default if nothing selected yet
-                      if (!_selections.containsKey(step.key)) {
-                        _selections[step.key] = step.options[0].value;
+                      if (!_selections.containsKey(stepKey) && options.isNotEmpty) {
+                        _selections[stepKey] = options[0]['value'];
                       }
 
-                      if (_currentStep < wizardSteps.length - 1) {
+                      if (_currentStep < totalSteps - 1) {
                         _pageController.nextPage(
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.easeInOut,
@@ -299,7 +329,7 @@ class _WizardScreenState extends State<WizardScreen> {
                       elevation: 0,
                     ),
                     child: Text(
-                      _currentStep == wizardSteps.length - 1 ? "دریافت نتیجه" : "مرحله بعد",
+                      _currentStep == totalSteps - 1 ? "دریافت نتیجه" : "مرحله بعد",
                       style: const TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Vazirmatn'),
                     ),
                   ),

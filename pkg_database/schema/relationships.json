@@ -1,0 +1,59 @@
+{
+  "allowed_connections": [
+    {
+      "from": "Hand",
+      "relationship": "contains",
+      "to": "Palm"
+    },
+    {
+      "from": "Hand",
+      "relationship": "contains",
+      "to": "Finger"
+    },
+    {
+      "from": "Hand",
+      "relationship": "contains",
+      "to": "Thumb"
+    },
+    {
+      "from": "Finger",
+      "relationship": "contains",
+      "to": "Nail"
+    },
+    {
+      "from": "Finger",
+      "relationship": "contains",
+      "to": "Fingerprint"
+    },
+    {
+      "from": "Mount",
+      "relationship": "contains",
+      "to": "Mark"
+    },
+    {
+      "from": "Major Line",
+      "relationship": "crosses",
+      "to": "Major Line"
+    },
+    {
+      "from": "Minor Line",
+      "relationship": "starts_from",
+      "to": "Mount"
+    },
+    {
+      "from": "Minor Line",
+      "relationship": "ends_at",
+      "to": "Mount"
+    },
+    {
+      "from": "Mark",
+      "relationship": "inside",
+      "to": "Mount"
+    },
+    {
+      "from": "Mark",
+      "relationship": "inside",
+      "to": "Major Line"
+    }
+  ]
+}

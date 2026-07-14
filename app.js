@@ -360,7 +360,95 @@ const wizardSteps = [
             { value: "long_curved", label: "بلند، عمیق و انتهای منحنی", desc: "صمیمیت گرم، رمانتیک بودن، وفاداری بالا و توان عشق‌ورزی عمیق." },
             { value: "short_straight", label: "کوتاه، صاف یا پایان زیر انگشت میانی", desc: "کنترل شدید عاطفی، نگاه عقلانی و محتاطانه به رابطه، خودمحوری مثبت احساسی." },
             { value: "chained_broken", label: "زنجیره‌ای، لرزان یا دارای شکستگی", desc: "حساسیت عاطفی به شدت بالا، نوسان عواطف و تجربه‌های احساسی پیچیده." },
-            { value: "balanced_split", label: "پایان �    let touchStartY = 0;
+            { value: "balanced_split", label: "پایان بین انگشت اشاره و میانی", desc: "ایده‌آل‌ترین حالت تعادل میان عقل و عواطف در روابط صمیمانه." }
+        ]
+    },
+    {
+        title: "مسیر خط سر (ذهن و تفکر)",
+        desc: "فرم و طول خط میانی افقی دست خود را بررسی کنید.",
+        key: "headLine",
+        options: [
+            { value: "long_straight", label: "بلند و صاف", desc: "ذهنی منطقی، واقع‌بین، تحلیل‌گر و با تمرکز بسیار قوی روی اهداف." },
+            { value: "long_curved_moon", label: "خمیده به سمت برجستگی ماه", desc: "تخیل قوی، خلاقیت بالا، شهود عالی، و تفکری متناسب با هنر و نویسندگی." },
+            { value: "short_practical", label: "کوتاه و متمرکز", desc: "عمل‌گرایی محض، تصمیم‌گیری‌های بسیار سریع عینی و دوری از فرضیات." },
+            { value: "split_independent", label: "مستقل از خط زندگی", desc: "جسارت بسیار بالا، استقلال فکری کامل از خانواده، و نترسیدن از اقدامات متهورانه." }
+        ]
+    },
+    {
+        title: "مسیر خط زندگی (بنیه بدنی)",
+        desc: "کیفیت و خط انحنای دور شست خود را بررسی کنید.",
+        key: "lifeLine",
+        options: [
+            { value: "deep_clear", label: "عمیق و بدون وقفه", desc: "بنیه جسمی عالی، انرژی حیاتی بالا، مقاومت خوب در برابر مشکلات فیزیکی." },
+            { value: "faint_broken", label: "لرزان یا دارای شکستگی", desc: "لزوم بازنگری در شیوه زندگی و استرس؛ همچنین نشانه تحولات جدی نظیر مهاجرت." },
+            { value: "double_mars", label: "دارای خط مریخ موازی", desc: "سپر محافظتی فوق‌العاده قوی فرشته نگهبان یا مقاومت بیولوژیک شگفت‌انگیز." },
+            { value: "outward_branch", label: "دارای انشعاب به سمت خارج دست", desc: "سفرهای پی‌درپی و احتمال بالای مهاجرت و اقامت در سرزمین‌های دور." }
+        ]
+    },
+    {
+        title: "مسیر خط سرنوشت و موفقیت",
+        desc: "خط عمودی وسط دست که به سمت انگشت میانی یا حلقه می‌رود را بررسی کنید.",
+        key: "fateLine",
+        options: [
+            { value: "strong_fate", label: "عمیق و واضح", desc: "اهداف کاری کاملاً مشخص، متعهد به رسالت شغلی، و موفقیت ساختارمند." },
+            { value: "faint_flexible", label: "کمرنگ یا ناپدید", desc: "انعطاف‌پذیری فوق‌العاده شغلی؛ حرکت با فرصت‌های مسیر بدون محدود شدن." },
+            { value: "apollo_present", label: "خط خورشید (آپولو) واضح", desc: "کسب اعتبار عالی، رضایت درونی بالا از کارنامه زندگی و خلاقیت." },
+            { value: "marriage_clear", label: "خط رابطه/ازدواج مشخص و صعودی", desc: "یک پیوند عاطفی عمیق و سازنده که برکت مادی و روحی به همراه دارد." }
+        ]
+    },
+    {
+        title: "نشانه‌های خاص و علامت‌های کف دست",
+        desc: "به دنبال علائم ریز مانند ستاره، مربع، مثلث یا صلیب بگردید.",
+        key: "specialSign",
+        options: [
+            { value: "star_jupiter_apollo", label: "ستاره روی مشتری یا خورشید", desc: "شهرت ناگهانی، شانس پیشرفت غیرمنتظره و درخشش فوق‌العاده." },
+            { value: "square_protection", label: "وجود نشان مربع", desc: "سپر حمایتی قدرتمند مانع فروریختن مالی یا روانی در مقاطع حساس." },
+            { value: "mystic_cross", label: "صلیب عرفانی در مرکز دست", desc: "شهود بالا، درک عمیق رازآلود جهان و پتانسیل درک متافیزیکی قوی." },
+            { value: "triangle_mercury", label: "نشان مثلث روی برجستگی‌ها", desc: "هوش استراتژیک، موفقیت عالی در کلام و استعداد سودآوری اقتصادی." }
+        ]
+    }
+];
+
+document.addEventListener("DOMContentLoaded", () => {
+    // DOM Elements
+    const startWizardBtn = document.getElementById("start-wizard-btn");
+    const wizardModal = document.getElementById("wizard-modal");
+    const closeWizardBtn = document.getElementById("close-wizard-btn");
+    const prevStepBtn = document.getElementById("prev-step-btn");
+    const nextStepBtn = document.getElementById("next-step-btn");
+    const wizardStepIndicator = document.getElementById("wizard-step-indicator");
+    const wizardProgressBar = document.getElementById("wizard-progress");
+    const wizardDotsContainer = document.getElementById("wizard-dots");
+    const wizardSlideContainer = document.getElementById("wizard-slide-container");
+    const reportModal = document.getElementById("report-modal");
+    const closeReportBtn = document.getElementById("close-report-btn");
+    const copyReportBtn = document.getElementById("copy-report-btn");
+    const printReportBtn = document.getElementById("print-report-btn");
+    const reportDateStr = document.getElementById("report-date-str");
+    const quickViewCard = document.getElementById("quick-view-card");
+    const closeQvBtn = document.getElementById("close-qv-btn");
+    const qvCategory = quickViewCard.querySelector(".qv-category");
+    const qvTitle = document.getElementById("qv-title");
+    const qvBody = document.getElementById("qv-body");
+    const scrollToDetailsBtn = document.getElementById("scroll-to-details-btn");
+    const searchInput = document.getElementById("search-input");
+    const clearSearchBtn = document.getElementById("clear-search-btn");
+    const resetSearchBtn = document.getElementById("reset-search-btn");
+    const categoryTabs = document.querySelectorAll(".tab-btn");
+    const quickChips = document.querySelectorAll(".chip");
+    const svgHand = document.getElementById("interactive-hand");
+    const svgInteractiveAreas = document.querySelectorAll(".interactive-area");
+    const guideChaptersContainer = document.getElementById("guide-chapters");
+    const searchEmptyState = document.getElementById("search-empty-state");
+
+    let wizardCurrentStep = 0;
+    let wizardSelections = {};
+    let selectedSvgId = null;
+    let searchQuery = "";
+    let currentCategory = "all";
+
+    // Bottom sheet drag gesture variables
+    let touchStartY = 0;
     let touchStartHeight = 0;
     let isDragging = false;
 
@@ -382,11 +470,10 @@ const wizardSteps = [
         const diffY = touchStartY - currentY; // positive means drag up
         const newHeight = touchStartHeight + diffY;
         const maxHeight = window.innerHeight * 0.85;
-        const minHeight = 180;
+        const minHeight = 150;
         
         if (newHeight >= minHeight && newHeight <= maxHeight) {
             quickViewCard.style.height = `${newHeight}px`;
-            // If height is expanded beyond mid point, show full details
             if (newHeight > window.innerHeight * 0.45) {
                 quickViewCard.classList.add("expanded");
             } else {
@@ -401,14 +488,23 @@ const wizardSteps = [
         quickViewCard.style.transition = "";
         
         const currentHeight = quickViewCard.offsetHeight;
-        const midHeight = window.innerHeight * 0.45;
+        const diffHeight = currentHeight - touchStartHeight;
         
-        if (currentHeight > midHeight) {
+        // If dragged up by more than 30px, or current height is past a low threshold, expand fully to 85vh
+        if (diffHeight > 30 || currentHeight > window.innerHeight * 0.45) {
             quickViewCard.classList.add("expanded");
             quickViewCard.style.height = "85vh";
-        } else {
+        } else if (diffHeight < -30) {
+            // Dragged down by more than 30px, collapse
             quickViewCard.classList.remove("expanded");
             quickViewCard.style.height = "";
+        } else {
+            // Restore previous state
+            if (quickViewCard.classList.contains("expanded")) {
+                quickViewCard.style.height = "85vh";
+            } else {
+                quickViewCard.style.height = "";
+            }
         }
     });
 
@@ -544,7 +640,7 @@ const wizardSteps = [
             if (!fullDetailsContainer) {
                 fullDetailsContainer = document.createElement("div");
                 fullDetailsContainer.className = "qv-full-details";
-                quickViewCard.querySelector(".quick-view-content").appendChild(fullDetailsContainer);
+                quickViewCard.querySelector(".quick-view-scrollable-body").appendChild(fullDetailsContainer);
             }
             fullDetailsContainer.innerHTML = fullDetailsHtml;
             
@@ -557,7 +653,7 @@ const wizardSteps = [
                     <span class="drag-hint-arrow"><i class="fa-solid fa-angles-up"></i></span>
                     <span class="drag-hint-text">برای مشاهده راهنمای کامل، به بالا بکشید</span>
                 `;
-                quickViewCard.querySelector(".quick-view-content").insertBefore(dragIndicator, scrollToDetailsBtn);
+                quickViewCard.querySelector(".quick-view-scrollable-body").appendChild(dragIndicator);
             }
 
             quickViewCard.classList.remove("hidden");
@@ -586,7 +682,30 @@ const wizardSteps = [
 
     closeQvBtn.addEventListener("click", () => {
         clearSvgSelection();
-    });                   highlightedTitle = chapter.title.replace(regex, `<span class="search-highlight">$1</span>`);
+    });
+
+    function renderChapters() {
+        guideChaptersContainer.innerHTML = "";
+        let visibleCount = 0;
+
+        palmistryDatabase.forEach((chapter, index) => {
+            const matchesCategory = (currentCategory === "all" || chapter.category === currentCategory);
+            let matchesSearch = true;
+            let highlightedTitle = chapter.title;
+            let highlightedContent = chapter.content;
+
+            if (searchQuery.trim() !== "") {
+                const regex = new RegExp(`(${escapeRegExp(searchQuery)})`, "gi");
+                const inTitle = chapter.title.match(regex);
+                const inContent = chapter.content.match(regex);
+                let inDetails = false;
+                if (chapter.details) {
+                    inDetails = chapter.details.some(d => d.name.match(regex) || d.value.match(regex));
+                }
+
+                if (inTitle || inContent || inDetails) {
+                    matchesSearch = true;
+                    highlightedTitle = chapter.title.replace(regex, `<span class="search-highlight">$1</span>`);
                     highlightedContent = chapter.content.replace(regex, `<span class="search-highlight">$1</span>`);
                 } else {
                     matchesSearch = false;

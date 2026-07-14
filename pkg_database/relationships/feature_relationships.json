@@ -1,0 +1,29 @@
+{
+  "edges": [
+    {
+      "from": "ring_solomon",
+      "relationship": "starts_from",
+      "to": "mount_jupiter"
+    },
+    {
+      "from": "ring_saturn",
+      "relationship": "starts_from",
+      "to": "mount_saturn"
+    },
+    {
+      "from": "line_influence",
+      "relationship": "parallel_to",
+      "to": "line_life"
+    },
+    {
+      "from": "girdle_venus",
+      "relationship": "inside",
+      "to": "mount_venus"
+    },
+    {
+      "from": "line_marriage",
+      "relationship": "inside",
+      "to": "mount_mercury"
+    }
+  ]
+}

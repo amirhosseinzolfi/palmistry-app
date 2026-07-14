@@ -1,0 +1,65 @@
+{
+  "tree": {
+    "Hand": {
+      "Palm": {
+        "Mounts": [
+          "Jupiter",
+          "Saturn",
+          "Apollo",
+          "Mercury",
+          "Venus",
+          "Moon",
+          "Mars Positive",
+          "Mars Negative",
+          "Plain of Mars"
+        ]
+      },
+      "Fingers": {
+        "Thumb": [
+          "Phalange 1 (Will)",
+          "Phalange 2 (Logic)"
+        ],
+        "Index": [
+          "Phalange 1",
+          "Phalange 2",
+          "Phalange 3"
+        ],
+        "Middle": [
+          "Phalange 1",
+          "Phalange 2",
+          "Phalange 3"
+        ],
+        "Ring": [
+          "Phalange 1",
+          "Phalange 2",
+          "Phalange 3"
+        ],
+        "Little": [
+          "Phalange 1",
+          "Phalange 2",
+          "Phalange 3"
+        ]
+      },
+      "Lines": {
+        "Major": [
+          "Life",
+          "Head",
+          "Heart",
+          "Fate",
+          "Sun",
+          "Mercury"
+        ],
+        "Minor": [
+          "Marriage",
+          "Children",
+          "Travel",
+          "Intuition",
+          "Girdle of Venus",
+          "Ring of Solomon",
+          "Ring of Saturn",
+          "Bracelets"
+        ]
+      }
+    }
+  }
+}

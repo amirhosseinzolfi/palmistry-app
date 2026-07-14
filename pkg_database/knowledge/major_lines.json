@@ -1,0 +1,315 @@
+{
+  "features": [
+    {
+      "id": "line_life",
+      "category": "Major Line",
+      "family": "life",
+      "subfamily": "vitality",
+      "name_translation_key": "line_life_name",
+      "description_translation_key": "line_life_desc",
+      "attributes": [
+        {
+          "name": "length",
+          "possible_values": [
+            "long",
+            "short"
+          ]
+        },
+        {
+          "name": "depth",
+          "possible_values": [
+            "deep",
+            "faint"
+          ]
+        },
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "broken",
+            "chained",
+            "double",
+            "faint",
+            "short_deep",
+            "long_clear"
+          ]
+        },
+        {
+          "name": "path",
+          "possible_values": [
+            "near_thumb",
+            "wide_arc"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "island",
+        "square",
+        "star",
+        "cross"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "line_head",
+      "category": "Major Line",
+      "family": "head",
+      "subfamily": "mind",
+      "name_translation_key": "line_head_name",
+      "description_translation_key": "line_head_desc",
+      "attributes": [
+        {
+          "name": "length",
+          "possible_values": [
+            "long",
+            "short"
+          ]
+        },
+        {
+          "name": "depth",
+          "possible_values": [
+            "deep",
+            "faint"
+          ]
+        },
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "broken",
+            "chained",
+            "forked"
+          ]
+        },
+        {
+          "name": "path",
+          "possible_values": [
+            "straight",
+            "curved_moon",
+            "separated_life",
+            "attached_life",
+            "down_to_moon"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "island",
+        "square",
+        "star",
+        "cross"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "line_heart",
+      "category": "Major Line",
+      "family": "heart",
+      "subfamily": "emotion",
+      "name_translation_key": "line_heart_name",
+      "description_translation_key": "line_heart_desc",
+      "attributes": [
+        {
+          "name": "length",
+          "possible_values": [
+            "long",
+            "short"
+          ]
+        },
+        {
+          "name": "depth",
+          "possible_values": [
+            "deep",
+            "faint"
+          ]
+        },
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "broken",
+            "chained",
+            "forked"
+          ]
+        },
+        {
+          "name": "path",
+          "possible_values": [
+            "straight",
+            "curved_up",
+            "ends_jupiter",
+            "ends_saturn",
+            "ends_between",
+            "chained",
+            "broken"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "island",
+        "square",
+        "star",
+        "cross"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "line_fate",
+      "category": "Major Line",
+      "family": "fate",
+      "subfamily": "career",
+      "name_translation_key": "line_fate_name",
+      "description_translation_key": "line_fate_desc",
+      "attributes": [
+        {
+          "name": "length",
+          "possible_values": [
+            "long",
+            "short",
+            "absent"
+          ]
+        },
+        {
+          "name": "depth",
+          "possible_values": [
+            "deep",
+            "faint"
+          ]
+        },
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "broken",
+            "multiple_faint",
+            "absent"
+          ]
+        },
+        {
+          "name": "path",
+          "possible_values": [
+            "starts_wrist",
+            "starts_life",
+            "starts_moon",
+            "starts_venus",
+            "ends_saturn",
+            "stops_head",
+            "stops_heart"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "island",
+        "square",
+        "star"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "line_sun",
+      "category": "Major Line",
+      "family": "sun",
+      "subfamily": "fame",
+      "name_translation_key": "line_sun_name",
+      "description_translation_key": "line_sun_desc",
+      "attributes": [
+        {
+          "name": "length",
+          "possible_values": [
+            "long",
+            "short",
+            "absent"
+          ]
+        },
+        {
+          "name": "depth",
+          "possible_values": [
+            "deep",
+            "faint"
+          ]
+        },
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "broken",
+            "multiple_faint",
+            "absent"
+          ]
+        },
+        {
+          "name": "path",
+          "possible_values": [
+            "starts_head",
+            "starts_heart",
+            "starts_low"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "star",
+        "square",
+        "cross"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "line_mercury",
+      "category": "Major Line",
+      "family": "mercury",
+      "subfamily": "health",
+      "name_translation_key": "line_mercury_name",
+      "description_translation_key": "line_mercury_desc",
+      "attributes": [
+        {
+          "name": "length",
+          "possible_values": [
+            "long",
+            "short",
+            "absent"
+          ]
+        },
+        {
+          "name": "depth",
+          "possible_values": [
+            "deep",
+            "faint"
+          ]
+        },
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "broken",
+            "wavy",
+            "chained"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "island",
+        "square",
+        "star",
+        "cross"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

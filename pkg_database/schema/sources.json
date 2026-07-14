@@ -1,0 +1,39 @@
+{
+  "sources": [
+    {
+      "id": "cheiro_1910",
+      "title": "Palmistry for All",
+      "author": "Cheiro",
+      "epoch": "Modern Western",
+      "description": "Classic foundational book focusing heavily on character and destiny calculations."
+    },
+    {
+      "id": "benham_1900",
+      "title": "The Laws of Scientific Hand Reading",
+      "author": "William G. Benham",
+      "epoch": "Modern Western",
+      "description": "Introduced structural physiology analysis into hand reading."
+    },
+    {
+      "id": "vedic_samudrika",
+      "title": "Samudrika Shastra",
+      "author": "Traditional Vedic Rishis",
+      "epoch": "Vedic Indian",
+      "description": "Ancient Indian tradition emphasizing marks (Fish, Lotus, Temple) and planetary signs."
+    },
+    {
+      "id": "chinese_physiognomy",
+      "title": "Chinese Chiromancy",
+      "author": "Traditional Chinese Masters",
+      "epoch": "Chinese",
+      "description": "Focuses on balancing yin/yang, elements, and structural proportions of fingers and palm."
+    },
+    {
+      "id": "fincham_modern",
+      "title": "The Spellbinding Power of Palmistry",
+      "author": "Johnny Fincham",
+      "epoch": "Contemporary",
+      "description": "Modern psychological approach, emphasizing elements (Earth, Air, Fire, Water) and direct physical cues."
+    }
+  ]
+}

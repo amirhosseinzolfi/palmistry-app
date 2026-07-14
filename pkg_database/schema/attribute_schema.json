@@ -1,0 +1,81 @@
+{
+  "attributes": [
+    {
+      "name": "length",
+      "type": "string",
+      "choices": [
+        "short",
+        "medium",
+        "long",
+        "very_long"
+      ]
+    },
+    {
+      "name": "depth",
+      "type": "string",
+      "choices": [
+        "faint",
+        "medium",
+        "deep",
+        "very_deep"
+      ]
+    },
+    {
+      "name": "width",
+      "type": "string",
+      "choices": [
+        "thin",
+        "medium",
+        "broad"
+      ]
+    },
+    {
+      "name": "clarity",
+      "type": "string",
+      "choices": [
+        "chained",
+        "broken",
+        "clear",
+        "wavy"
+      ]
+    },
+    {
+      "name": "flexibility",
+      "type": "string",
+      "choices": [
+        "rigid",
+        "flexible",
+        "very_flexible"
+      ]
+    },
+    {
+      "name": "temperature",
+      "type": "string",
+      "choices": [
+        "cold",
+        "warm",
+        "balanced"
+      ]
+    },
+    {
+      "name": "texture",
+      "type": "string",
+      "choices": [
+        "soft",
+        "thick",
+        "firm",
+        "rough"
+      ]
+    },
+    {
+      "name": "height",
+      "type": "string",
+      "choices": [
+        "flat",
+        "normal",
+        "prominent",
+        "overdeveloped"
+      ]
+    }
+  ]
+}

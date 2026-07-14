@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/palmistry_data.dart';
+import '../services/pkg_database_service.dart';
 import '../widgets/hand_painter.dart';
 import 'wizard_screen.dart';
 
@@ -11,23 +11,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final PkgDatabaseService _dbService = PkgDatabaseService();
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  
+
+  bool _isLoading = true;
   int _currentTabIndex = 0; // 0: Interactive Hand Tab, 1: Manual/Search Tab
   String _handFilter = "all"; // "all", "lines", "mounts", "symbols", "fingers"
-  String _selectedCategory = "all";
   String _searchQuery = "";
   String? _selectedSvgId;
-
-  // Map chapter IDs to their position index in the filtered list
-  final Map<String, GlobalKey> _cardKeys = {};
 
   @override
   void initState() {
     super.initState();
-    for (var chapter in palmistryDatabase) {
-      _cardKeys[chapter.id] = GlobalKey();
+    _loadDatabase();
+  }
+
+  Future<void> _loadDatabase() async {
+    await _dbService.initialize();
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -38,29 +43,53 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  List<PalmistryChapter> get _filteredChapters {
-    return palmistryDatabase.where((chapter) {
-      // Category filter check
-      final matchesCategory = _selectedCategory == "all" || chapter.category == _selectedCategory;
-
-      // Search filter check
-      bool matchesSearch = true;
-      if (_searchQuery.trim().isNotEmpty) {
-        final query = _searchQuery.toLowerCase();
-        final hasInTitle = chapter.title.toLowerCase().contains(query);
-        final hasInContent = chapter.content.toLowerCase().contains(query);
-        bool hasInDetails = false;
-        for (var d in chapter.details) {
-          if (d.name.toLowerCase().contains(query) || d.value.toLowerCase().contains(query)) {
-            hasInDetails = true;
-            break;
-          }
-        }
-        matchesSearch = hasInTitle || hasInContent || hasInDetails;
-      }
-
-      return matchesCategory && matchesSearch;
-    }).toList();
+  // Map the SVG target ID to our normalized PKG database IDs
+  String? _mapSvgIdToFeatureId(String targetId) {
+    if (targetId.startsWith("finger-")) {
+      final fingerName = targetId.split("-")[1];
+      if (fingerName == "thumb") return "thumb_length";
+      if (fingerName == "jupiter") return "finger_index";
+      if (fingerName == "saturn") return "finger_middle";
+      if (fingerName == "apollo") return "finger_ring";
+      if (fingerName == "mercury") return "finger_little";
+    } else if (targetId.startsWith("mount-")) {
+      if (targetId == "mount-jupiter") return "mount_jupiter";
+      if (targetId == "mount-saturn") return "mount_saturn";
+      if (targetId == "mount-apollo") return "mount_apollo";
+      if (targetId == "mount-mercury") return "mount_mercury";
+      if (targetId == "mount-venus") return "mount_venus";
+      if (targetId == "mount-moon") return "mount_moon";
+      if (targetId == "mount-mars-lower") return "mount_mars_positive";
+      if (targetId == "mount-mars-upper") return "mount_mars_negative";
+      if (targetId == "mount-mars-plain") return "mount_plain_mars";
+    } else if (targetId.startsWith("line-")) {
+      if (targetId == "line-life") return "line_life";
+      if (targetId == "line-head") return "line_head";
+      if (targetId == "line-heart") return "line_heart";
+      if (targetId == "line-fate") return "line_fate";
+      if (targetId == "line-sun") return "line_sun";
+      if (targetId == "line-mercury") return "line_mercury";
+      if (targetId == "line-marriage") return "line_marriage";
+      if (targetId == "line-travel") return "line_travel";
+      if (targetId == "line-intuition") return "line_intuition";
+      if (targetId == "line-girdle-venus") return "girdle_venus";
+      if (targetId == "line-influence") return "line_influence";
+      if (targetId == "line-bracelets") return "line_bracelets";
+      if (targetId == "line-mars") return "line_influence";
+    } else if (targetId.startsWith("ring-")) {
+      if (targetId == "ring-solomon") return "ring_solomon";
+      if (targetId == "ring-saturn") return "ring_saturn";
+      if (targetId == "ring-apollo") return "ring_saturn";
+      if (targetId == "ring-mercury") return "ring_saturn";
+    } else if (targetId.startsWith("symbol-")) {
+      if (targetId == "symbol-star") return "mark_star";
+      if (targetId == "symbol-cross") return "mark_cross";
+      if (targetId == "symbol-square") return "mark_square";
+      if (targetId == "symbol-triangle") return "mark_triangle";
+      if (targetId == "symbol-island") return "mark_island";
+      if (targetId == "symbol-grille") return "mark_grille";
+    }
+    return null;
   }
 
   void _onElementSelected(String targetId) {
@@ -68,215 +97,63 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedSvgId = targetId;
     });
 
-    // Match selected hand region to a chapter ID
-    String? chapterId;
-    String title = "";
-    String desc = "";
-
-    if (targetId.startsWith("finger-")) {
-      final fingerName = targetId.split("-")[1];
-      if (fingerName == "thumb") {
-        chapterId = "thumb-logic";
-        title = "انگشت شست 👍";
-        desc = "شست مهم‌ترین انگشت در کف‌بینی سنتی است و شاه‌کلید اراده، منطق، کنترل نفس و تصمیم‌گیری است. تناسب بند بالایی (اراده) و بند پایینی (منطق) و انعطاف آن تفسیر می‌شود.";
-      } else {
-        chapterId = "fingers";
-        if (fingerName == "jupiter") {
-          title = "انگشت اشاره (مشتری) ☝️";
-          desc = "نشان‌دهنده رهبری، عزت نفس، اعتمادبه‌نفس و جاه‌طلبِ مفرط و میل به تاثیرگذاری بر محیط. بلند بودن آن نشان‌دهنده لیدر طبیعی و کوتاه بودن آن نشان‌دهنده فروتنی یا تردید است.";
-        } else if (fingerName == "saturn") {
-          title = "انگشت میانی (زحل) 🪐";
-          desc = "نشان‌دهنده تعهد، مسئولیت‌پذیری، نظم، جدیت و واقع‌بینی. بلند بودن آن نشان‌دهنده انضباط کاری بالا و کوتاه بودن آن نشان‌دهنده سبک‌گیری مسئولیت‌ها است.";
-        } else if (fingerName == "apollo") {
-          title = "انگشت حلقه (خورشید) ☀️";
-          desc = "نشان‌دهنده ذوق خلاقیت، استعداد هنری، درخشش اجتماعی و کاریزمای درونی. بلند بودن آن نشان‌دهنده خلاقیت سرشار و کوتاه بودن نشان‌دهنده عمل‌گرایی بی صدا است.";
-        } else if (fingerName == "mercury") {
-          title = "انگشت کوچک (عطارد) 💬";
-          desc = "نشان‌دهنده هوش کلامی، کلام تاثیرگذار، روابط اجتماعی و استعداد تجارت و فروش. بلند بودن آن نشان‌دهنده کلام نافذ و کوتاه بودن نشان‌دهنده کم‌حرفی است.";
-        }
-      }
-    } else if (targetId.startsWith("mount-")) {
-      if (targetId == "mount-jupiter") {
-        chapterId = "mount-jupiter";
-        title = "برجستگی مشتری ♃";
-        desc = "واقع در زیر انگشت اشاره. نشان‌دهنده عزت نفس، میل به رهبری، جاه‌طلبِ مثبت و هدفمندی اجتماعی.";
-      } else if (targetId == "mount-saturn") {
-        chapterId = "mount-saturn";
-        title = "برجستگی زحل ♄";
-        desc = "واقع در زیر انگشت میانی. نشان‌دهنده صبر، انضباط شخصی، مسئولیت‌پذیری، تفکر فلسفی و تعهد کاری.";
-      } else if (targetId == "mount-apollo") {
-        chapterId = "mount-sun";
-        title = "برجستگی خورشید ☀️";
-        desc = "واقع در زیر انگشت حلقه. نشان‌دهنده ذوق خلاقیت، زیباییدوستی، کاریزما و تمایل به دیده شدن و اعتبار اجتماعی.";
-      } else if (targetId == "mount-mercury") {
-        chapterId = "mount-mercury";
-        title = "برجستگی عطارد ☿";
-        desc = "واقع در زیر انگشت کوچک. نشان‌دهنده قدرت ارتباطات، بیان، تجارت، فروش و هوش روانشناسی عملی.";
-      } else if (targetId == "mount-venus") {
-        chapterId = "mount-venus";
-        title = "برجستگی ونوس ♀️";
-        desc = "بخش گوشتی پایه شست. نشان‌دهنده عشق، شور زندگی، محبت عمیق، انرژی بدنی و خانواده.";
-      } else if (targetId == "mount-moon") {
-        chapterId = "mount-moon";
-        title = "برجستگی ماه 🌙";
-        desc = "بخش پهن لبه پایینی دست. نشان‌دهنده تخیل قوی، شهود، رویاپردازی، ناخودآگاه، هنر و کشش به سفرهای دور.";
-      } else {
-        chapterId = "mount-mars";
-        if (targetId == "mount-mars-lower") {
-          title = "برجستگی مریخ پایین (مثبت) ♂️";
-          desc = "واقع در بین شست و خط زندگی. نشان‌دهنده شجاعت فیزیکی مستقیم، توان دفاع فعال و اقدام در مواقع خطر.";
-        } else if (targetId == "mount-mars-upper") {
-          title = "برجستگی مریخ بالا (منفی)";
-          desc = "واقع در لبه دست بین عطارد و ماه. نشان‌دهنده استقامت روحی، صبر استراتژیک، مقاومت و خستگی‌ناپذیری در مشکلات.";
-        } else if (targetId == "mount-mars-plain") {
-          title = "دشت مریخ (مرکز دست)";
-          desc = "گودی وسط کف دست. نشان‌دهنده میدان نبرد زندگی و نحوه برخورد و تعادل در تنش‌ها و فشارهای روزمره.";
-        }
-      }
-    } else if (targetId.startsWith("line-")) {
-      if (targetId == "line-heart") {
-        chapterId = "line-heart";
-        title = "خط قلب (عشق) 💓";
-        desc = "مسیر عواطف، روابط، سبک وابستگی عاطفی، پایداری روابط و ابراز صمیمیت را نشان می‌دهد.";
-      } else if (targetId == "line-head") {
-        chapterId = "line-head";
-        title = "خط سر / ذهن 🧠";
-        desc = "نحوه تفکر، یادگیری، استدلال، تمرکز، سبک فکری و تصمیم‌گیری‌های اساسی را آشکار می‌سازد.";
-      } else if (targetId == "line-life") {
-        chapterId = "line-life";
-        title = "خط زندگی ❤️🔥";
-        desc = "بنیه بدنی، توان جسمی و روانی، مقاومت بدنی و دوره‌های تحول‌آفرین زندگی را نشان می‌دهد (نه طول عمر فیزیکی).";
-      } else {
-        chapterId = "line-fate-minor";
-        if (targetId == "line-fate") {
-          title = "خط سرنوشت / تقدیر 🔮";
-          desc = "مسیر شغلی، رسالت کاری، میزان تعهد به اهداف بیرونی و انضباط در اجرای برنامه‌ها را نشان می‌دهد.";
-        } else if (targetId == "line-sun") {
-          title = "خط خورشید (آپولو)";
-          desc = "نشان‌دهنده کسب نام نیکو، موفقیت‌های خلاق، شهرت، و رضایت درونی عمیق از دستاوردها.";
-        } else if (targetId == "line-mercury") {
-          title = "خط سلامت (عطارد)";
-          desc = "نمایانگر هوش تجاری برجسته، و تعادل در سیستم عصبی بدنی نمادین.";
-        } else if (targetId == "line-marriage") {
-          title = "خط ازدواج / رابطه";
-          desc = "نمایانگر پیوندهای عاطفی عمیق، وفاداری، تعهد صمیمی و کیفیت روابط بلندمدت.";
-        } else if (targetId == "line-girdle-venus") {
-          title = "کمربند ونوس";
-          desc = "نشان‌دهنده حساسیت عاطفی بالا، شدت احساسات، زیباییدوستی و استعدادهای هنری.";
-        } else if (targetId == "line-intuition") {
-          title = "خط شهود";
-          desc = "نشان‌دهنده الهام قلبی، حس ششم فوق‌العاده قوی و توانایی خواندن پنهان آدم‌ها و فضاها.";
-        } else if (targetId == "line-mars") {
-          title = "خط مریخ (حمایت)";
-          desc = "خط موازی خط زندگی در داخل. نشان‌دهنده محافظت بالا و مقاومت فیزیکی و حیاتی مضاعف.";
-        } else if (targetId == "line-bracelets") {
-          title = "دستبندهای مچ";
-          desc = "نشان‌دهنده پایه انرژی فیزیکی، ریشه‌های حیات، سلامتی عمومی و تعادل عمومی بدنی.";
-        } else if (targetId == "line-travel") {
-          title = "خطوط سفر ✈️";
-          desc = "سفرهای خارجی سرنوشت‌ساز، مهاجرت‌های موثر، یا جابه‌جایی‌هایی که مسیر زندگی را تغییر می‌دهند.";
-        }
-      }
-    } else if (targetId.startsWith("ring-")) {
-      chapterId = "line-fate-minor";
-      if (targetId == "ring-solomon") {
-        title = "حلقه سلیمان";
-        desc = "خرد، قدرت ارائه مشاوره، بینش روان‌شناختی، همدلی و کشش به فلسفه و متافیزیک.";
-      } else if (targetId == "ring-saturn") {
-        title = "حلقه زحل";
-        desc = "تمایل به تفکر انفرادی، جدیت فلسفی، و گاهی موانع ابراز تمایلات اجتماعی.";
-      } else if (targetId == "ring-apollo") {
-        title = "حلقه خورشید";
-        desc = "حساسیت زیبایی‌شناختی بسیار بالا، تمایل به کار خلاق و موانع ابراز عمومی هنر.";
-      } else if (targetId == "ring-mercury") {
-        title = "حلقه عطارد";
-        desc = "پیچیدگی‌های کلامی، یا احتیاط زیاد در ابراز احساسات صمیمانه عاطفی.";
-      }
-    } else if (targetId.startsWith("symbol-")) {
-      chapterId = "line-fate-minor";
-      if (targetId == "symbol-star") {
-        title = "نشانه ستاره ⭐";
-        desc = "نماد رویدادهای ناگهانی، خلاقیت درخشان، درخشش و موفقیت بزرگ غیرمنتظره در آن ناحیه.";
-      } else if (targetId == "symbol-square") {
-        title = "نشانه مربع ⏹️";
-        desc = "سپر محافظت کامل؛ نجات سلامت از بحران‌ها، شکست‌ها و خطرات فیزیکی یا کاری.";
-      } else if (targetId == "symbol-triangle") {
-        title = "نشانه مثلث 🔺";
-        desc = "نشان‌دهنده هوش استراتژیک، متمرکز، تصمیم‌گیری عقلانی و توانایی‌های بالای فکری.";
-      } else if (targetId == "symbol-island") {
-        title = "نشانه جزیره 👁️";
-        desc = "نشان‌دهنده دوره‌های افت موقت انرژی، استرس، ابهامات فکری یا تنش‌های عاطفی.";
-      } else if (targetId == "symbol-cross") {
-        title = "صلیب عرفانی ➕";
-        desc = "شهود قلبی بسیار بالا، درک ناخودآگاه قوی و استعداد فراوان در مسائل متافیزیک.";
-      } else if (targetId == "symbol-grille") {
-        title = "نشانه شبکه 🌐";
-        desc = "نشان‌دهنده تنش بالا، استرس شدید، پراکندگی مداوم انرژی و آشفتگی موقت در آن ناحیه.";
-      }
-    }
-
-    if (chapterId != null) {
-      _showQuickPreviewBottomSheet(title, desc, chapterId);
+    final String? featureId = _mapSvgIdToFeatureId(targetId);
+    if (featureId != null) {
+      final String title = _dbService.translate("${featureId}_name", fallback: targetId);
+      final String desc = _dbService.translate("${featureId}_desc", fallback: "");
+      _showFeatureDetailBottomSheet(featureId, title, desc);
     }
   }
 
-  void _showQuickPreviewBottomSheet(String title, String desc, String chapterId) {
-    // Find matching chapter database record
-    PalmistryChapter? chapter;
-    for (var c in palmistryDatabase) {
-      if (c.id == chapterId) {
-        chapter = c;
-        break;
-      }
-    }
-    final activeChapter = chapter ?? palmistryDatabase.first;
+  void _showFeatureDetailBottomSheet(String featureId, String title, String desc) {
+    final interpretations = _dbService.getInterpretationsForFeature(featureId);
 
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      barrierColor: Colors.black54,
-      isScrollControlled: true, // Let DraggableScrollableSheet expand properly
+      barrierColor: Colors.black.withOpacity(0.7),
+      isScrollControlled: true,
       builder: (context) {
         return DraggableScrollableSheet(
-          initialChildSize: 0.38,
+          initialChildSize: 0.45,
           minChildSize: 0.35,
-          maxChildSize: 0.88,
+          maxChildSize: 0.9,
           expand: false,
           builder: (context, scrollController) {
             return Container(
               decoration: const BoxDecoration(
-                color: Color(0xFF0C0F22),
+                color: Color(0xFF0B0E17),
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
                 ),
                 border: Border(
-                  top: BorderSide(color: Color(0x3000F2FE), width: 1.5),
+                  top: BorderSide(color: Color(0x406366F1), width: 1.5),
                 ),
               ),
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
                 ),
                 child: ListView(
                   controller: scrollController,
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 30),
                   children: [
-                    // Drag Handle Indicator
+                    // Pull Indicator
                     Center(
                       child: Container(
-                        width: 40,
-                        height: 4,
-                        margin: const EdgeInsets.only(bottom: 12),
+                        width: 45,
+                        height: 5,
+                        margin: const EdgeInsets.only(bottom: 16),
                         decoration: BoxDecoration(
-                          color: Colors.white24,
-                          borderRadius: BorderRadius.circular(2),
+                          color: Colors.white30,
+                          borderRadius: BorderRadius.circular(3),
                         ),
                       ),
                     ),
-                    
-                    // Header Row
+
+                    // Title Header
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -284,45 +161,45 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(
                             title,
                             style: const TextStyle(
-                              color: Color(0xFFFFB703),
-                              fontSize: 18,
+                              color: Color(0xFF00F2FE),
+                              fontSize: 19,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Vazirmatn',
                             ),
                           ),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.close, color: Colors.white54, size: 20),
+                          icon: const Icon(Icons.close, color: Colors.white54, size: 22),
                           onPressed: () => Navigator.pop(context),
                         ),
                       ],
                     ),
-                    
-                    const SizedBox(height: 8),
-                    
-                    // Quick Summary
+
+                    const SizedBox(height: 10),
+
+                    // Description
                     Text(
                       desc,
                       style: const TextStyle(
                         color: Color(0xFFA9B2C3),
                         fontSize: 14.5,
-                        height: 1.6,
+                        height: 1.7,
                         fontFamily: 'Vazirmatn',
                       ),
                     ),
-                    
-                    const SizedBox(height: 12),
-                    
-                    // Slide up hint
+
+                    const SizedBox(height: 14),
+
+                    // Slide up Tip
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.keyboard_double_arrow_up_rounded, size: 16, color: Color(0xFF00F2FE)),
+                        const Icon(Icons.keyboard_double_arrow_up_rounded, size: 16, color: Color(0xFF6366F1)),
                         const SizedBox(width: 6),
                         Text(
-                          "برای مشاهده راهنمای کامل، به بالا بکشید",
+                          "برای مشاهده جزئیات حالت‌ها بالا بکشید",
                           style: TextStyle(
-                            color: const Color(0xFF00F2FE).withOpacity(0.8),
+                            color: const Color(0xFF6366F1).withOpacity(0.9),
                             fontSize: 11.5,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Vazirmatn',
@@ -330,77 +207,51 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    
+
                     const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
+                      padding: EdgeInsets.symmetric(vertical: 18),
                       child: Divider(color: Color(0x15FFFFFF), height: 1),
                     ),
-                    
-                    // Detailed Title
-                    const Text(
-                      "تفسیر تفصیلی و معنای نمادین",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Vazirmatn',
-                      ),
-                    ),
-                    
-                    const SizedBox(height: 8),
-                    
-                    // Detailed Content
-                    Text(
-                      activeChapter.content,
-                      style: const TextStyle(
-                        color: Color(0xFFCBD5E1),
-                        fontSize: 13.5,
-                        height: 1.7,
-                        fontFamily: 'Vazirmatn',
-                      ),
-                    ),
-                    
-                    const SizedBox(height: 20),
-                    
-                    // Details/Variations list
-                    if (activeChapter.details.isNotEmpty) ...[
+
+                    // Interpretations lists
+                    if (interpretations.isNotEmpty) ...[
                       const Text(
-                        "حالت‌ها و انواع مختلف برای تحلیل:",
+                        "معانی و حالات مختلف در کف‌بینی:",
                         style: TextStyle(
                           color: Color(0xFFFFB703),
-                          fontSize: 14,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Vazirmatn',
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      ...activeChapter.details.map((detail) {
+                      const SizedBox(height: 12),
+                      ...interpretations.map((interp) {
                         return Container(
                           margin: const EdgeInsets.only(bottom: 12),
-                          padding: const EdgeInsets.all(14),
+                          padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF1E293B).withOpacity(0.4),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: const Color(0x10FFFFFF)),
+                            color: const Color(0xFF14172C).withOpacity(0.65),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: const Color(0x08FFFFFF), width: 1.2),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Text(
-                                detail.name,
+                                interp['state'] ?? '',
                                 style: const TextStyle(
                                   color: Color(0xFF00F2FE),
-                                  fontSize: 13,
+                                  fontSize: 13.5,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Vazirmatn',
                                 ),
                               ),
-                              const SizedBox(height: 6),
+                              const SizedBox(height: 8),
                               Text(
-                                detail.value,
+                                interp['explanation'] ?? '',
                                 style: const TextStyle(
                                   color: Color(0xFFA9B2C3),
-                                  fontSize: 12.5,
+                                  fontSize: 13,
                                   height: 1.6,
                                   fontFamily: 'Vazirmatn',
                                 ),
@@ -409,7 +260,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       }).toList(),
-                    ],
+                    ] else ...[
+                      const Text(
+                        "تفاسیر و جزئیات بیشتر به زودی افزوده می‌شود.",
+                        style: TextStyle(
+                          color: Colors.white30,
+                          fontSize: 13,
+                          fontFamily: 'Vazirmatn',
+                        ),
+                      ),
+                    ]
                   ],
                 ),
               ),
@@ -420,39 +280,35 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _scrollToChapter(String id) {
-    // Look up category directly from the database chapter config
-    final chapter = palmistryDatabase.firstWhere(
-      (c) => c.id == id,
-      orElse: () => palmistryDatabase.first,
-    );
-    final cat = chapter.category;
-    
-    setState(() {
-      _currentTabIndex = 1; // Switch tab to Manual/Search Tab
-      _selectedCategory = cat;
-    });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final key = _cardKeys[id];
-      if (key != null && key.currentContext != null) {
-        Scrollable.ensureVisible(
-          key.currentContext!,
-          duration: const Duration(milliseconds: 600),
-          curve: Curves.easeInOut,
-        );
-      }
-    });
+  // Filter dynamic lists on search queries
+  List<dynamic> _filterFeatures(List<dynamic> originalList) {
+    if (_searchQuery.trim().isEmpty) return originalList;
+    final query = _searchQuery.toLowerCase();
+    return originalList.where((item) {
+      final String id = item['id'];
+      final String name = _dbService.translate("${id}_name").toLowerCase();
+      final String desc = _dbService.translate("${id}_desc").toLowerCase();
+      return name.contains(query) || desc.contains(query);
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        backgroundColor: Color(0xFF070A13),
+        body: Center(
+          child: CircularProgressIndicator(color: Color(0xFF00F2FE)),
+        ),
+      );
+    }
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFF080A16),
+        backgroundColor: const Color(0xFF070A13),
         appBar: AppBar(
-          backgroundColor: const Color(0xFF0B0E20),
+          backgroundColor: const Color(0xFF04060C),
           elevation: 0,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -470,24 +326,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(width: 10),
               const Text(
-                "کف‌بینی تعاملی کیهانی",
+                "طالع‌بین کیهانی تعاملی",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 16.5,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Vazirmatn',
                 ),
               ),
             ],
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.info_outline, color: Colors.white60),
-              onPressed: () {
-                _scrollToChapter("basics");
-              },
-            ),
-          ],
         ),
         body: IndexedStack(
           index: _currentTabIndex,
@@ -503,9 +351,9 @@ class _HomeScreenState extends State<HomeScreen> {
               _currentTabIndex = index;
             });
           },
-          backgroundColor: const Color(0xFF0C0F22),
+          backgroundColor: const Color(0xFF04060C),
           selectedItemColor: const Color(0xFF00F2FE),
-          unselectedItemColor: const Color(0x60FFFFFF),
+          unselectedItemColor: const Color(0x40FFFFFF),
           selectedLabelStyle: const TextStyle(fontFamily: 'Vazirmatn', fontWeight: FontWeight.bold, fontSize: 12),
           unselectedLabelStyle: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 11),
           type: BottomNavigationBarType.fixed,
@@ -516,18 +364,18 @@ class _HomeScreenState extends State<HomeScreen> {
               label: "نقشه تعاملی",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book_rounded),
-              label: "دانشنامه خطوط",
+              icon: Icon(Icons.grid_view_rounded),
+              label: "دانشنامه کیهانی",
             ),
           ],
         ),
-        floatingActionButton: _currentTabIndex == 0 
+        floatingActionButton: _currentTabIndex == 0
             ? FloatingActionButton.extended(
                 backgroundColor: const Color(0xFF6366F1),
                 foregroundColor: Colors.white,
-                elevation: 4,
+                elevation: 6,
                 label: const Text(
-                  "طالع‌خوان تعاملی (۱۱ مرحله)",
+                  "تحلیل گام به گام دست (طالع‌خوان)",
                   style: TextStyle(
                     fontSize: 12.5,
                     fontWeight: FontWeight.bold,
@@ -560,19 +408,19 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _buildHandFilterChip("همه بخش‌ها", "all"),
                 _buildHandFilterChip("خطوط دست", "lines"),
-                _buildHandFilterChip("تپه‌ها", "mounts"),
+                _buildHandFilterChip("تپه‌ها (کوه‌ها)", "mounts"),
                 _buildHandFilterChip("نشانه‌ها", "symbols"),
                 _buildHandFilterChip("انگشتان", "fingers"),
               ],
             ),
           ),
         ),
-        
+
         // Helper hint text
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Text(
-            "روی بخش‌های دست ضربه بزنید تا معنی و تفسیر را درجا ببینید",
+            "روی بخش‌های رنگی دست ضربه بزنید تا معنی و تفسیر را درجا ببینید",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Color(0xFF6C7A9C),
@@ -581,8 +429,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        
-        // The Interactive Hand Map Widget
+
+        // Interactive Hand Map Widget
         Expanded(
           child: Container(
             margin: const EdgeInsets.fromLTRB(15, 5, 15, 20),
@@ -591,16 +439,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 center: const Alignment(0, 0),
                 radius: 1.0,
                 colors: [
-                  const Color(0xFF131832).withOpacity(0.4),
-                  const Color(0xFF080A16),
+                  const Color(0xFF131832).withOpacity(0.3),
+                  const Color(0xFF070A13),
                 ],
               ),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(color: const Color(0x10FFFFFF)),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 20,
+                  color: Colors.black.withOpacity(0.4),
+                  blurRadius: 25,
                   offset: const Offset(0, 8),
                 )
               ],
@@ -625,17 +473,17 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () {
         setState(() {
           _handFilter = filterValue;
-          _selectedSvgId = null; // Clear selection when changing filter
+          _selectedSvgId = null;
         });
       },
       child: Container(
         margin: const EdgeInsets.only(left: 8),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF6366F1).withOpacity(0.2) : const Color(0xFF12162B),
+          color: isSelected ? const Color(0xFF6366F1).withOpacity(0.18) : const Color(0xFF14172C),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? const Color(0xFF6366F1) : const Color(0x10FFFFFF),
+            color: isSelected ? const Color(0xFF6366F1) : const Color(0x0FFFFFFF),
             width: 1.2,
           ),
         ),
@@ -653,231 +501,292 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildManualTab() {
-    final chapters = _filteredChapters;
+    final filteredLines = _filterFeatures(_dbService.majorLines);
+    final filteredMinorLines = _filterFeatures(_dbService.minorLines);
+    final filteredMounts = _filterFeatures(_dbService.mounts);
+    final filteredSigns = _filterFeatures(_dbService.marks);
+    final filteredFingers = _filterFeatures(_dbService.fingers);
+    final filteredThumbs = _filterFeatures(_dbService.thumbFeatures);
+    final filteredNails = _filterFeatures(_dbService.nails);
+    final filteredFingerprints = _filterFeatures(_dbService.fingerprints);
+    final filteredShapes = _filterFeatures(_dbService.handShapes);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Search & Category Headers
+        // Search Header
         Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            children: [
-              TextField(
-                controller: _searchController,
-                style: const TextStyle(color: Colors.white, fontSize: 14),
-                decoration: InputDecoration(
-                  hintText: "جستجو در تمام راهنما و خطوط دست...",
-                  hintStyle: const TextStyle(color: Color(0xFF6C7A9C), fontSize: 13, fontFamily: 'Vazirmatn'),
-                  prefixIcon: const Icon(Icons.search, color: Color(0xFF6366F1)),
-                  suffixIcon: _searchQuery.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Icons.clear, color: Colors.white60),
-                          onPressed: () {
-                            _searchController.clear();
-                            setState(() {
-                              _searchQuery = "";
-                            });
-                          },
-                        )
-                      : null,
-                  fillColor: const Color(0xFF12162B),
-                  filled: true,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: const BorderSide(color: Color(0x15FFFFFF)),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: const BorderSide(color: Color(0x10FFFFFF)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: const BorderSide(color: Color(0xFF6366F1)),
-                  ),
-                ),
-                onChanged: (val) {
-                  setState(() {
-                    _searchQuery = val;
-                  });
-                },
+          padding: const EdgeInsets.all(16),
+          child: TextField(
+            controller: _searchController,
+            style: const TextStyle(color: Colors.white, fontSize: 14),
+            decoration: InputDecoration(
+              hintText: "جستجو در خطوط، کوه‌ها، نشانه‌ها و ویژگی‌ها...",
+              hintStyle: const TextStyle(color: Color(0xFF6C7A9C), fontSize: 13, fontFamily: 'Vazirmatn'),
+              prefixIcon: const Icon(Icons.search, color: Color(0xFF6366F1)),
+              suffixIcon: _searchQuery.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.clear, color: Colors.white60),
+                      onPressed: () {
+                        _searchController.clear();
+                        setState(() {
+                          _searchQuery = "";
+                        });
+                      },
+                    )
+                  : null,
+              fillColor: const Color(0xFF14172C),
+              filled: true,
+              contentPadding: const EdgeInsets.symmetric(vertical: 12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: const BorderSide(color: Color(0x10FFFFFF)),
               ),
-              const SizedBox(height: 12),
-
-              // Category Filter chips (horizontal scroll)
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    _buildCategoryChip("همه موضوعات", "all"),
-                    _buildCategoryChip("اصول اولیه دست", "basics"),
-                    _buildCategoryChip("خطوط اصلی و فرعی", "lines"),
-                    _buildCategoryChip("برجستگی‌ها و انگشتان", "mounts-fingers"),
-                    _buildCategoryChip("نشانه‌ها و حلقه‌ها", "signs-misc"),
-                  ],
-                ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: const BorderSide(color: Color(0x08FFFFFF)),
               ),
-            ],
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: const BorderSide(color: Color(0xFF6366F1)),
+              ),
+            ),
+            onChanged: (val) {
+              setState(() {
+                _searchQuery = val;
+              });
+            },
           ),
         ),
 
-        // Scrollable Chapters list
+        // Categories Cards Lists
         Expanded(
-          child: chapters.isEmpty
-              ? _buildEmptyState()
-              : ListView.builder(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                  itemCount: chapters.length,
-                  itemBuilder: (context, index) {
-                    final chapter = chapters[index];
-                    final isHighlighted = _selectedSvgId == chapter.id;
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (filteredLines.isNotEmpty)
+                  _buildSectionHeader("خطوط اصلی دست (THE CORE LINES)", const Color(0xFF6366F1)),
+                if (filteredLines.isNotEmpty)
+                  _buildHorizontalList(filteredLines, const Color(0xFF6366F1), "line"),
 
-                    return Container(
-                      key: _cardKeys[chapter.id],
-                      margin: const EdgeInsets.only(bottom: 15),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF12162B),
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(
-                          color: isHighlighted ? const Color(0xFF00F2FE) : const Color(0x10FFFFFF),
-                          width: isHighlighted ? 1.5 : 1.0,
-                        ),
-                        boxShadow: isHighlighted
-                            ? [
-                                BoxShadow(
-                                  color: const Color(0xFF00F2FE).withOpacity(0.12),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 3),
-                                )
-                              ]
-                            : null,
-                      ),
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                chapter.title,
-                                style: const TextStyle(
-                                  color: Color(0xFF00F2FE), // Neon Cyan title
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Vazirmatn',
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF6366F1).withOpacity(0.12),
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: const Color(0xFF6366F1).withOpacity(0.2)),
-                                ),
-                                child: Text(
-                                  chapter.badge,
-                                  style: const TextStyle(
-                                    color: Color(0xFF818CF8),
-                                    fontSize: 10.5,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Vazirmatn',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Divider(color: Color(0x15FFFFFF), height: 24),
-                          Text(
-                            chapter.content,
-                            textAlign: TextAlign.justify,
-                            style: const TextStyle(
-                              color: Color(0xFFA9B2C3),
-                              fontSize: 13,
-                              height: 1.7,
-                              fontFamily: 'Vazirmatn',
-                            ),
-                          ),
-                          if (chapter.details.isNotEmpty) ...[
-                            const SizedBox(height: 15),
-                            Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF0C0F22),
-                                borderRadius: BorderRadius.circular(12),
-                                border: const Border(
-                                  right: BorderSide(color: Color(0xFF6366F1), width: 3.5),
-                                ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: chapter.details.map((detail) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 8),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        style: const TextStyle(
-                                          color: Color(0xFFA9B2C3),
-                                          fontSize: 12,
-                                          height: 1.6,
-                                          fontFamily: 'Vazirmatn',
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text: "${detail.name}: ",
-                                            style: const TextStyle(
-                                              color: Color(0xFF00F2FE),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          TextSpan(text: detail.value),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                if (filteredMinorLines.isNotEmpty)
+                  _buildSectionHeader("خطوط فرعی و حلقه‌ها (MINOR LINES)", const Color(0xFFC084FC)),
+                if (filteredMinorLines.isNotEmpty)
+                  _buildHorizontalList(filteredMinorLines, const Color(0xFFC084FC), "minor_line"),
+
+                if (filteredMounts.isNotEmpty)
+                  _buildSectionHeader("کوه‌ها و تپه‌ها (THE MOUNTS)", const Color(0xFF00F2FE)),
+                if (filteredMounts.isNotEmpty)
+                  _buildHorizontalList(filteredMounts, const Color(0xFF00F2FE), "mount"),
+
+                if (filteredSigns.isNotEmpty)
+                  _buildSectionHeader("نشانه‌ها و علائم (SIGNS & SYMBOLS)", const Color(0xFFFFB703)),
+                if (filteredSigns.isNotEmpty)
+                  _buildHorizontalList(filteredSigns, const Color(0xFFFFB703), "sign"),
+
+                if (filteredFingers.isNotEmpty)
+                  _buildSectionHeader("انگشتان دست (THE FINGERS)", const Color(0xFF10B981)),
+                if (filteredFingers.isNotEmpty)
+                  _buildHorizontalList(filteredFingers, const Color(0xFF10B981), "finger"),
+
+                if (filteredThumbs.isNotEmpty)
+                  _buildSectionHeader("ویژگی‌های انگشت شست (THUMB DETAILS)", const Color(0xFFFB923C)),
+                if (filteredThumbs.isNotEmpty)
+                  _buildHorizontalList(filteredThumbs, const Color(0xFFFB923C), "thumb"),
+
+                if (filteredNails.isNotEmpty)
+                  _buildSectionHeader("شکل و فرم ناخن‌ها (NAILS DETAILS)", const Color(0xFF2DD4BF)),
+                if (filteredNails.isNotEmpty)
+                  _buildHorizontalList(filteredNails, const Color(0xFF2DD4BF), "nail"),
+
+                if (filteredFingerprints.isNotEmpty)
+                  _buildSectionHeader("الگوهای اثر انگشت (FINGERPRINTS)", const Color(0xFFFB7185)),
+                if (filteredFingerprints.isNotEmpty)
+                  _buildHorizontalList(filteredFingerprints, const Color(0xFFFB7185), "fingerprint"),
+
+                if (filteredShapes.isNotEmpty)
+                  _buildSectionHeader("انواع فرم‌های دست (HAND SHAPES)", const Color(0xFFEC4899)),
+                if (filteredShapes.isNotEmpty)
+                  _buildHorizontalList(filteredShapes, const Color(0xFFEC4899), "shape"),
+
+                if (filteredLines.isEmpty && filteredMinorLines.isEmpty && filteredMounts.isEmpty && filteredSigns.isEmpty && filteredFingers.isEmpty && filteredThumbs.isEmpty && filteredNails.isEmpty && filteredFingerprints.isEmpty && filteredShapes.isEmpty)
+                  _buildEmptyState()
+              ],
+            ),
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildCategoryChip(String label, String categoryId) {
-    final bool isSelected = _selectedCategory == categoryId;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedCategory = categoryId;
-        });
-      },
-      child: Container(
-        margin: const EdgeInsets.only(left: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF6366F1).withOpacity(0.2) : const Color(0xFF12162B),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: isSelected ? const Color(0xFF6366F1) : const Color(0x10FFFFFF),
-            width: 1,
+  Widget _buildSectionHeader(String title, Color accentColor) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 10),
+      child: Row(
+        children: [
+          Container(
+            width: 4,
+            height: 16,
+            decoration: BoxDecoration(
+              color: accentColor,
+              borderRadius: BorderRadius.circular(2),
+            ),
           ),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? const Color(0xFFFFB703) : const Color(0xFFA9B2C3),
-            fontSize: 11.5,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            fontFamily: 'Vazirmatn',
+          const SizedBox(width: 8),
+          Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14.5,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Vazirmatn',
+            ),
           ),
-        ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHorizontalList(List<dynamic> list, Color accentColor, String type) {
+    return SizedBox(
+      height: 190,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          final item = list[index];
+          final String fid = item['id'];
+          final String title = _dbService.translate("${fid}_name", fallback: fid);
+          final String desc = _dbService.translate("${fid}_desc", fallback: "");
+
+          // Determine specific colors/icons per type
+          IconData iconData = Icons.star_rounded;
+          Color itemGlowColor = accentColor;
+
+          if (type == "line") {
+            if (fid == "line_life") { iconData = Icons.favorite_rounded; itemGlowColor = Colors.redAccent; }
+            else if (fid == "line_head") { iconData = Icons.psychology_rounded; itemGlowColor = Colors.cyan; }
+            else if (fid == "line_heart") { iconData = Icons.volunteer_activism_rounded; itemGlowColor = Colors.purpleAccent; }
+            else if (fid == "line_fate") { iconData = Icons.auto_awesome; itemGlowColor = Colors.amber; }
+            else if (fid == "line_sun") { iconData = Icons.wb_sunny_rounded; itemGlowColor = Colors.orangeAccent; }
+            else if (fid == "line_mercury") { iconData = Icons.spa_rounded; itemGlowColor = Colors.greenAccent; }
+          } else if (type == "minor_line") {
+            if (fid == "ring_solomon") iconData = Icons.workspace_premium_rounded;
+            else if (fid == "ring_saturn") iconData = Icons.circle_outlined;
+            else if (fid == "girdle_venus") iconData = Icons.gesture_rounded;
+            else if (fid == "line_marriage") iconData = Icons.favorite_border_rounded;
+            else if (fid == "line_travel") iconData = Icons.flight_takeoff_rounded;
+            else if (fid == "line_intuition") iconData = Icons.lens_blur_rounded;
+            else if (fid == "line_bracelets") iconData = Icons.menu_rounded;
+            else iconData = Icons.linear_scale_rounded;
+          } else if (type == "mount") {
+            if (fid == "mount_jupiter") iconData = Icons.grade_rounded;
+            else if (fid == "mount_saturn") iconData = Icons.public_rounded;
+            else if (fid == "mount_apollo") iconData = Icons.wb_sunny_rounded;
+            else if (fid == "mount_mercury") iconData = Icons.chat_bubble_rounded;
+            else if (fid == "mount_venus") iconData = Icons.favorite_rounded;
+            else if (fid == "mount_moon") iconData = Icons.brightness_2_rounded;
+            else iconData = Icons.shield_rounded;
+          } else if (type == "sign") {
+            if (fid == "mark_star") iconData = Icons.star_rounded;
+            else if (fid == "mark_triangle") iconData = Icons.change_history_rounded;
+            else if (fid == "mark_square") iconData = Icons.crop_square_rounded;
+            else if (fid == "mark_cross") iconData = Icons.add_rounded;
+            else if (fid == "mark_island") iconData = Icons.lens_blur_rounded;
+            else iconData = Icons.grid_goldenratio_rounded;
+          } else if (type == "finger") {
+            iconData = Icons.back_hand_rounded;
+          } else if (type == "thumb") {
+            if (fid == "thumb_length") iconData = Icons.height_rounded;
+            else if (fid == "thumb_will_phalange") iconData = Icons.psychology_rounded;
+            else if (fid == "thumb_logic_phalange") iconData = Icons.lightbulb_rounded;
+            else if (fid == "thumb_flexibility") iconData = Icons.sync_alt_rounded;
+            else iconData = Icons.navigation_rounded;
+          } else if (type == "nail") {
+            iconData = Icons.crop_original_rounded;
+          } else if (type == "fingerprint") {
+            iconData = Icons.fingerprint_rounded;
+          } else if (type == "shape") {
+            iconData = Icons.category_rounded;
+          }
+
+          return GestureDetector(
+            onTap: () => _showFeatureDetailBottomSheet(fid, title, desc),
+            child: Container(
+              width: 145,
+              margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFF14172C).withOpacity(0.65),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: itemGlowColor.withOpacity(0.15), width: 1.2),
+                boxShadow: [
+                  BoxShadow(
+                    color: itemGlowColor.withOpacity(0.04),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  )
+                ],
+              ),
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Icon
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: itemGlowColor.withOpacity(0.12),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: itemGlowColor.withOpacity(0.2),
+                            blurRadius: 8,
+                          )
+                        ],
+                      ),
+                      child: Icon(
+                        iconData,
+                        color: itemGlowColor,
+                        size: 24,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  // Title
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Vazirmatn',
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  // Short Desc
+                  Text(
+                    desc,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: const Color(0xFFA9B2C3).withOpacity(0.7),
+                      fontSize: 10.5,
+                      height: 1.4,
+                      fontFamily: 'Vazirmatn',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -885,9 +794,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildEmptyState() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
       decoration: BoxDecoration(
-        color: const Color(0xFF12162B),
+        color: const Color(0xFF14172C),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0x10FFFFFF)),
       ),
@@ -902,7 +811,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 6),
           const Text(
-            "عبارت دیگری جستجو کنید یا فیلترها را ریست کنید.",
+            "عبارت دیگری را جستجو کنید.",
             textAlign: TextAlign.center,
             style: TextStyle(color: Color(0xFF6C7A9C), fontSize: 12.5, fontFamily: 'Vazirmatn'),
           ),
@@ -912,10 +821,9 @@ class _HomeScreenState extends State<HomeScreen> {
               _searchController.clear();
               setState(() {
                 _searchQuery = "";
-                _selectedCategory = "all";
               });
             },
-            child: const Text("ریست کردن جستجو", style: TextStyle(color: Color(0xFF00F2FE), fontWeight: FontWeight.bold, fontFamily: 'Vazirmatn')),
+            child: const Text("پاک کردن جستجو", style: TextStyle(color: Color(0xFF00F2FE), fontWeight: FontWeight.bold, fontFamily: 'Vazirmatn')),
           )
         ],
       ),
