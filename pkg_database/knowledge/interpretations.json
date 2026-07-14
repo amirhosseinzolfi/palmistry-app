@@ -1,0 +1,2037 @@
+{
+  "records": [
+    {
+      "id": "interp_hand_shape_earth",
+      "target_entity": "hand_shape_earth",
+      "condition_attribute": "palm_shape",
+      "condition_value": "square",
+      "source_id": "fincham_modern",
+      "interpretation": {
+        "overall": "key_interp_earth_overall",
+        "personality": "key_interp_earth_personality",
+        "character": "key_interp_earth_character",
+        "mind": "key_interp_earth_mind",
+        "career": "key_interp_earth_career",
+        "challenges": "key_interp_earth_challenges"
+      }
+    },
+    {
+      "id": "interp_hand_shape_fire",
+      "target_entity": "hand_shape_fire",
+      "condition_attribute": "palm_shape",
+      "condition_value": "rectangle",
+      "source_id": "fincham_modern",
+      "interpretation": {
+        "overall": "key_interp_fire_overall",
+        "personality": "key_interp_fire_personality",
+        "character": "key_interp_fire_character",
+        "mind": "key_interp_fire_mind",
+        "career": "key_interp_fire_career",
+        "challenges": "key_interp_fire_challenges"
+      }
+    },
+    {
+      "id": "interp_hand_shape_air",
+      "target_entity": "hand_shape_air",
+      "condition_attribute": "palm_shape",
+      "condition_value": "square",
+      "source_id": "fincham_modern",
+      "interpretation": {
+        "overall": "key_interp_air_overall",
+        "personality": "key_interp_air_personality",
+        "character": "key_interp_air_character",
+        "mind": "key_interp_air_mind",
+        "career": "key_interp_air_career",
+        "challenges": "key_interp_air_challenges"
+      }
+    },
+    {
+      "id": "interp_hand_shape_water",
+      "target_entity": "hand_shape_water",
+      "condition_attribute": "palm_shape",
+      "condition_value": "rectangle",
+      "source_id": "fincham_modern",
+      "interpretation": {
+        "overall": "key_interp_water_overall",
+        "personality": "key_interp_water_personality",
+        "character": "key_interp_water_character",
+        "mind": "key_interp_water_mind",
+        "career": "key_interp_water_career",
+        "challenges": "key_interp_water_challenges"
+      }
+    },
+    {
+      "id": "interp_line_life_long_deep",
+      "target_entity": "line_life",
+      "condition_attribute": "length",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_life_long_overall",
+        "personality": "key_interp_life_long_personality",
+        "health_symbolism": "key_interp_life_long_health",
+        "challenges": "key_interp_life_long_challenges"
+      }
+    },
+    {
+      "id": "interp_line_head_straight",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "straight",
+      "source_id": "benham_1900",
+      "interpretation": {
+        "overall": "key_interp_head_straight_overall",
+        "mind": "key_interp_head_straight_mind",
+        "career": "key_interp_head_straight_career"
+      }
+    },
+    {
+      "id": "interp_line_head_curved_moon",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "curved_moon",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_head_curved_overall",
+        "mind": "key_interp_head_curved_mind",
+        "creativity": "key_interp_head_curved_creative"
+      }
+    },
+    {
+      "id": "interp_line_heart_long_curved",
+      "target_entity": "line_heart",
+      "condition_attribute": "path",
+      "condition_value": "curved_up",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_heart_curved_overall",
+        "love": "key_interp_heart_curved_love",
+        "relationships": "key_interp_heart_curved_rel"
+      }
+    },
+    {
+      "id": "interp_palm_proportions_overall_size_large_generated",
+      "target_entity": "palm_proportions",
+      "condition_attribute": "overall_size",
+      "condition_value": "large",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_palm_proportions_overall_size_large"
+      }
+    },
+    {
+      "id": "interp_palm_proportions_overall_size_small_generated",
+      "target_entity": "palm_proportions",
+      "condition_attribute": "overall_size",
+      "condition_value": "small",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_palm_proportions_overall_size_small"
+      }
+    },
+    {
+      "id": "interp_palm_proportions_overall_size_medium_generated",
+      "target_entity": "palm_proportions",
+      "condition_attribute": "overall_size",
+      "condition_value": "medium",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_palm_proportions_overall_size_medium"
+      }
+    },
+    {
+      "id": "interp_palm_proportions_shape_ratio_square_generated",
+      "target_entity": "palm_proportions",
+      "condition_attribute": "shape_ratio",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_palm_proportions_shape_ratio_square"
+      }
+    },
+    {
+      "id": "interp_palm_proportions_shape_ratio_rectangle_generated",
+      "target_entity": "palm_proportions",
+      "condition_attribute": "shape_ratio",
+      "condition_value": "rectangle",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_palm_proportions_shape_ratio_rectangle"
+      }
+    },
+    {
+      "id": "interp_palm_proportions_shape_ratio_broad_generated",
+      "target_entity": "palm_proportions",
+      "condition_attribute": "shape_ratio",
+      "condition_value": "broad",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_palm_proportions_shape_ratio_broad"
+      }
+    },
+    {
+      "id": "interp_palm_proportions_shape_ratio_narrow_generated",
+      "target_entity": "palm_proportions",
+      "condition_attribute": "shape_ratio",
+      "condition_value": "narrow",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_palm_proportions_shape_ratio_narrow"
+      }
+    },
+    {
+      "id": "interp_skin_texture_feel_soft_generated",
+      "target_entity": "skin_texture",
+      "condition_attribute": "feel",
+      "condition_value": "soft",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_skin_texture_feel_soft"
+      }
+    },
+    {
+      "id": "interp_skin_texture_feel_firm_generated",
+      "target_entity": "skin_texture",
+      "condition_attribute": "feel",
+      "condition_value": "firm",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_skin_texture_feel_firm"
+      }
+    },
+    {
+      "id": "interp_skin_texture_feel_rigid_generated",
+      "target_entity": "skin_texture",
+      "condition_attribute": "feel",
+      "condition_value": "rigid",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_skin_texture_feel_rigid"
+      }
+    },
+    {
+      "id": "interp_skin_texture_feel_rough_generated",
+      "target_entity": "skin_texture",
+      "condition_attribute": "feel",
+      "condition_value": "rough",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_skin_texture_feel_rough"
+      }
+    },
+    {
+      "id": "interp_hand_color_color_shade_pink_generated",
+      "target_entity": "hand_color",
+      "condition_attribute": "color_shade",
+      "condition_value": "pink",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_hand_color_color_shade_pink"
+      }
+    },
+    {
+      "id": "interp_hand_color_color_shade_red_generated",
+      "target_entity": "hand_color",
+      "condition_attribute": "color_shade",
+      "condition_value": "red",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_hand_color_color_shade_red"
+      }
+    },
+    {
+      "id": "interp_hand_color_color_shade_pale_white_generated",
+      "target_entity": "hand_color",
+      "condition_attribute": "color_shade",
+      "condition_value": "pale_white",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_hand_color_color_shade_pale_white"
+      }
+    },
+    {
+      "id": "interp_hand_color_color_shade_yellow_generated",
+      "target_entity": "hand_color",
+      "condition_attribute": "color_shade",
+      "condition_value": "yellow",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_hand_color_color_shade_yellow"
+      }
+    },
+    {
+      "id": "interp_hand_color_color_shade_blue_generated",
+      "target_entity": "hand_color",
+      "condition_attribute": "color_shade",
+      "condition_value": "blue",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_hand_color_color_shade_blue"
+      }
+    },
+    {
+      "id": "interp_line_density_density_level_low_density_generated",
+      "target_entity": "line_density",
+      "condition_attribute": "density_level",
+      "condition_value": "low_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_density_density_level_low_density"
+      }
+    },
+    {
+      "id": "interp_line_density_density_level_high_density_generated",
+      "target_entity": "line_density",
+      "condition_attribute": "density_level",
+      "condition_value": "high_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_density_density_level_high_density"
+      }
+    },
+    {
+      "id": "interp_palm_proportions_overall_size_long_generated",
+      "target_entity": "palm_proportions",
+      "condition_attribute": "overall_size",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_palm_proportions_overall_size_long"
+      }
+    },
+    {
+      "id": "interp_palm_proportions_overall_size_short_generated",
+      "target_entity": "palm_proportions",
+      "condition_attribute": "overall_size",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_palm_proportions_overall_size_short"
+      }
+    },
+    {
+      "id": "interp_palm_proportions_overall_size_narrow_generated",
+      "target_entity": "palm_proportions",
+      "condition_attribute": "overall_size",
+      "condition_value": "narrow",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_palm_proportions_overall_size_narrow"
+      }
+    },
+    {
+      "id": "interp_finger_spacing_spread_tight_generated",
+      "target_entity": "finger_spacing",
+      "condition_attribute": "spread",
+      "condition_value": "tight",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_spacing_spread_tight"
+      }
+    },
+    {
+      "id": "interp_finger_spacing_spread_normal_generated",
+      "target_entity": "finger_spacing",
+      "condition_attribute": "spread",
+      "condition_value": "normal",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_spacing_spread_normal"
+      }
+    },
+    {
+      "id": "interp_finger_spacing_spread_wide_generated",
+      "target_entity": "finger_spacing",
+      "condition_attribute": "spread",
+      "condition_value": "wide",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_spacing_spread_wide"
+      }
+    },
+    {
+      "id": "interp_finger_spacing_spread_high_density_generated",
+      "target_entity": "finger_spacing",
+      "condition_attribute": "spread",
+      "condition_value": "high_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_spacing_spread_high_density"
+      }
+    },
+    {
+      "id": "interp_finger_spacing_spread_low_density_generated",
+      "target_entity": "finger_spacing",
+      "condition_attribute": "spread",
+      "condition_value": "low_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_spacing_spread_low_density"
+      }
+    },
+    {
+      "id": "interp_finger_index_relative_length_long_generated",
+      "target_entity": "finger_index",
+      "condition_attribute": "relative_length",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_index_relative_length_long"
+      }
+    },
+    {
+      "id": "interp_finger_index_relative_length_short_generated",
+      "target_entity": "finger_index",
+      "condition_attribute": "relative_length",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_index_relative_length_short"
+      }
+    },
+    {
+      "id": "interp_finger_middle_relative_length_long_generated",
+      "target_entity": "finger_middle",
+      "condition_attribute": "relative_length",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_middle_relative_length_long"
+      }
+    },
+    {
+      "id": "interp_finger_middle_relative_length_short_generated",
+      "target_entity": "finger_middle",
+      "condition_attribute": "relative_length",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_middle_relative_length_short"
+      }
+    },
+    {
+      "id": "interp_finger_middle_relative_length_knotted_generated",
+      "target_entity": "finger_middle",
+      "condition_attribute": "relative_length",
+      "condition_value": "knotted",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_middle_relative_length_knotted"
+      }
+    },
+    {
+      "id": "interp_finger_ring_relative_length_long_generated",
+      "target_entity": "finger_ring",
+      "condition_attribute": "relative_length",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_ring_relative_length_long"
+      }
+    },
+    {
+      "id": "interp_finger_ring_relative_length_short_generated",
+      "target_entity": "finger_ring",
+      "condition_attribute": "relative_length",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_ring_relative_length_short"
+      }
+    },
+    {
+      "id": "interp_finger_ring_relative_length_balanced_generated",
+      "target_entity": "finger_ring",
+      "condition_attribute": "relative_length",
+      "condition_value": "balanced",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_ring_relative_length_balanced"
+      }
+    },
+    {
+      "id": "interp_finger_little_relative_length_long_generated",
+      "target_entity": "finger_little",
+      "condition_attribute": "relative_length",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_little_relative_length_long"
+      }
+    },
+    {
+      "id": "interp_finger_little_relative_length_short_generated",
+      "target_entity": "finger_little",
+      "condition_attribute": "relative_length",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_little_relative_length_short"
+      }
+    },
+    {
+      "id": "interp_finger_little_relative_length_curved_moon_generated",
+      "target_entity": "finger_little",
+      "condition_attribute": "relative_length",
+      "condition_value": "curved_moon",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_little_relative_length_curved_moon"
+      }
+    },
+    {
+      "id": "interp_finger_little_relative_length_high_density_generated",
+      "target_entity": "finger_little",
+      "condition_attribute": "relative_length",
+      "condition_value": "high_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_little_relative_length_high_density"
+      }
+    },
+    {
+      "id": "interp_finger_little_relative_length_square_generated",
+      "target_entity": "finger_little",
+      "condition_attribute": "relative_length",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_little_relative_length_square"
+      }
+    },
+    {
+      "id": "interp_finger_little_relative_length_conic_generated",
+      "target_entity": "finger_little",
+      "condition_attribute": "relative_length",
+      "condition_value": "conic",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_little_relative_length_conic"
+      }
+    },
+    {
+      "id": "interp_finger_little_relative_length_round_generated",
+      "target_entity": "finger_little",
+      "condition_attribute": "relative_length",
+      "condition_value": "round",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_little_relative_length_round"
+      }
+    },
+    {
+      "id": "interp_finger_little_relative_length_spatulate_generated",
+      "target_entity": "finger_little",
+      "condition_attribute": "relative_length",
+      "condition_value": "spatulate",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_little_relative_length_spatulate"
+      }
+    },
+    {
+      "id": "interp_finger_little_relative_length_pointed_generated",
+      "target_entity": "finger_little",
+      "condition_attribute": "relative_length",
+      "condition_value": "pointed",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_little_relative_length_pointed"
+      }
+    },
+    {
+      "id": "interp_finger_knots_prominence_knotted_generated",
+      "target_entity": "finger_knots",
+      "condition_attribute": "prominence",
+      "condition_value": "knotted",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_knots_prominence_knotted"
+      }
+    },
+    {
+      "id": "interp_finger_knots_prominence_smooth_generated",
+      "target_entity": "finger_knots",
+      "condition_attribute": "prominence",
+      "condition_value": "smooth",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_knots_prominence_smooth"
+      }
+    },
+    {
+      "id": "interp_finger_knots_prominence_prominent_generated",
+      "target_entity": "finger_knots",
+      "condition_attribute": "prominence",
+      "condition_value": "prominent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_finger_knots_prominence_prominent"
+      }
+    },
+    {
+      "id": "interp_thumb_length_size_long_generated",
+      "target_entity": "thumb_length",
+      "condition_attribute": "size",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_length_size_long"
+      }
+    },
+    {
+      "id": "interp_thumb_length_size_short_generated",
+      "target_entity": "thumb_length",
+      "condition_attribute": "size",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_length_size_short"
+      }
+    },
+    {
+      "id": "interp_thumb_length_size_medium_generated",
+      "target_entity": "thumb_length",
+      "condition_attribute": "size",
+      "condition_value": "medium",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_length_size_medium"
+      }
+    },
+    {
+      "id": "interp_thumb_will_phalange_will_strength_long_generated",
+      "target_entity": "thumb_will_phalange",
+      "condition_attribute": "will_strength",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_will_phalange_will_strength_long"
+      }
+    },
+    {
+      "id": "interp_thumb_will_phalange_will_strength_short_generated",
+      "target_entity": "thumb_will_phalange",
+      "condition_attribute": "will_strength",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_will_phalange_will_strength_short"
+      }
+    },
+    {
+      "id": "interp_thumb_will_phalange_will_strength_narrow_generated",
+      "target_entity": "thumb_will_phalange",
+      "condition_attribute": "will_strength",
+      "condition_value": "narrow",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_will_phalange_will_strength_narrow"
+      }
+    },
+    {
+      "id": "interp_thumb_will_phalange_will_strength_rigid_generated",
+      "target_entity": "thumb_will_phalange",
+      "condition_attribute": "will_strength",
+      "condition_value": "rigid",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_will_phalange_will_strength_rigid"
+      }
+    },
+    {
+      "id": "interp_thumb_will_phalange_will_strength_extremely_flexible_generated",
+      "target_entity": "thumb_will_phalange",
+      "condition_attribute": "will_strength",
+      "condition_value": "extremely_flexible",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_will_phalange_will_strength_extremely_flexible"
+      }
+    },
+    {
+      "id": "interp_thumb_logic_phalange_logic_strength_long_generated",
+      "target_entity": "thumb_logic_phalange",
+      "condition_attribute": "logic_strength",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_logic_phalange_logic_strength_long"
+      }
+    },
+    {
+      "id": "interp_thumb_logic_phalange_logic_strength_short_generated",
+      "target_entity": "thumb_logic_phalange",
+      "condition_attribute": "logic_strength",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_logic_phalange_logic_strength_short"
+      }
+    },
+    {
+      "id": "interp_thumb_logic_phalange_logic_strength_narrow_generated",
+      "target_entity": "thumb_logic_phalange",
+      "condition_attribute": "logic_strength",
+      "condition_value": "narrow",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_logic_phalange_logic_strength_narrow"
+      }
+    },
+    {
+      "id": "interp_thumb_logic_phalange_logic_strength_balanced_generated",
+      "target_entity": "thumb_logic_phalange",
+      "condition_attribute": "logic_strength",
+      "condition_value": "balanced",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_logic_phalange_logic_strength_balanced"
+      }
+    },
+    {
+      "id": "interp_thumb_angle_angle_range_open_wide_generated",
+      "target_entity": "thumb_angle",
+      "condition_attribute": "angle_range",
+      "condition_value": "open_wide",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_angle_angle_range_open_wide"
+      }
+    },
+    {
+      "id": "interp_thumb_angle_angle_range_closed_cautious_generated",
+      "target_entity": "thumb_angle",
+      "condition_attribute": "angle_range",
+      "condition_value": "closed_cautious",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_angle_angle_range_closed_cautious"
+      }
+    },
+    {
+      "id": "interp_thumb_angle_angle_range_balanced_generated",
+      "target_entity": "thumb_angle",
+      "condition_attribute": "angle_range",
+      "condition_value": "balanced",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_angle_angle_range_balanced"
+      }
+    },
+    {
+      "id": "interp_thumb_flexibility_flexibility_type_extremely_flexible_generated",
+      "target_entity": "thumb_flexibility",
+      "condition_attribute": "flexibility_type",
+      "condition_value": "extremely_flexible",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_flexibility_flexibility_type_extremely_flexible"
+      }
+    },
+    {
+      "id": "interp_thumb_flexibility_flexibility_type_rigid_generated",
+      "target_entity": "thumb_flexibility",
+      "condition_attribute": "flexibility_type",
+      "condition_value": "rigid",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_flexibility_flexibility_type_rigid"
+      }
+    },
+    {
+      "id": "interp_thumb_flexibility_flexibility_type_balanced_generated",
+      "target_entity": "thumb_flexibility",
+      "condition_attribute": "flexibility_type",
+      "condition_value": "balanced",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_thumb_flexibility_flexibility_type_balanced"
+      }
+    },
+    {
+      "id": "interp_nail_shape_form_long_generated",
+      "target_entity": "nail_shape",
+      "condition_attribute": "form",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_shape_form_long"
+      }
+    },
+    {
+      "id": "interp_nail_shape_form_short_generated",
+      "target_entity": "nail_shape",
+      "condition_attribute": "form",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_shape_form_short"
+      }
+    },
+    {
+      "id": "interp_nail_shape_form_broad_generated",
+      "target_entity": "nail_shape",
+      "condition_attribute": "form",
+      "condition_value": "broad",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_shape_form_broad"
+      }
+    },
+    {
+      "id": "interp_nail_shape_form_narrow_generated",
+      "target_entity": "nail_shape",
+      "condition_attribute": "form",
+      "condition_value": "narrow",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_shape_form_narrow"
+      }
+    },
+    {
+      "id": "interp_nail_shape_form_square_generated",
+      "target_entity": "nail_shape",
+      "condition_attribute": "form",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_shape_form_square"
+      }
+    },
+    {
+      "id": "interp_nail_shape_form_round_generated",
+      "target_entity": "nail_shape",
+      "condition_attribute": "form",
+      "condition_value": "round",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_shape_form_round"
+      }
+    },
+    {
+      "id": "interp_nail_color_shade_pink_generated",
+      "target_entity": "nail_color",
+      "condition_attribute": "shade",
+      "condition_value": "pink",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_color_shade_pink"
+      }
+    },
+    {
+      "id": "interp_nail_color_shade_pale_white_generated",
+      "target_entity": "nail_color",
+      "condition_attribute": "shade",
+      "condition_value": "pale_white",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_color_shade_pale_white"
+      }
+    },
+    {
+      "id": "interp_nail_color_shade_red_generated",
+      "target_entity": "nail_color",
+      "condition_attribute": "shade",
+      "condition_value": "red",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_color_shade_red"
+      }
+    },
+    {
+      "id": "interp_nail_color_shade_blue_generated",
+      "target_entity": "nail_color",
+      "condition_attribute": "shade",
+      "condition_value": "blue",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_color_shade_blue"
+      }
+    },
+    {
+      "id": "interp_nail_color_shade_yellow_generated",
+      "target_entity": "nail_color",
+      "condition_attribute": "shade",
+      "condition_value": "yellow",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_color_shade_yellow"
+      }
+    },
+    {
+      "id": "interp_nail_lunula_size_clear_generated",
+      "target_entity": "nail_lunula",
+      "condition_attribute": "size",
+      "condition_value": "clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_lunula_size_clear"
+      }
+    },
+    {
+      "id": "interp_nail_lunula_size_low_density_generated",
+      "target_entity": "nail_lunula",
+      "condition_attribute": "size",
+      "condition_value": "low_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_nail_lunula_size_low_density"
+      }
+    },
+    {
+      "id": "interp_mount_jupiter_development_prominent_generated",
+      "target_entity": "mount_jupiter",
+      "condition_attribute": "development",
+      "condition_value": "prominent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_jupiter_development_prominent"
+      }
+    },
+    {
+      "id": "interp_mount_jupiter_development_overdeveloped_generated",
+      "target_entity": "mount_jupiter",
+      "condition_attribute": "development",
+      "condition_value": "overdeveloped",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_jupiter_development_overdeveloped"
+      }
+    },
+    {
+      "id": "interp_mount_jupiter_development_flat_generated",
+      "target_entity": "mount_jupiter",
+      "condition_attribute": "development",
+      "condition_value": "flat",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_jupiter_development_flat"
+      }
+    },
+    {
+      "id": "interp_mount_jupiter_development_square_generated",
+      "target_entity": "mount_jupiter",
+      "condition_attribute": "development",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_jupiter_development_square"
+      }
+    },
+    {
+      "id": "interp_mount_saturn_development_prominent_generated",
+      "target_entity": "mount_saturn",
+      "condition_attribute": "development",
+      "condition_value": "prominent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_saturn_development_prominent"
+      }
+    },
+    {
+      "id": "interp_mount_saturn_development_overdeveloped_generated",
+      "target_entity": "mount_saturn",
+      "condition_attribute": "development",
+      "condition_value": "overdeveloped",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_saturn_development_overdeveloped"
+      }
+    },
+    {
+      "id": "interp_mount_saturn_development_flat_generated",
+      "target_entity": "mount_saturn",
+      "condition_attribute": "development",
+      "condition_value": "flat",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_saturn_development_flat"
+      }
+    },
+    {
+      "id": "interp_mount_saturn_development_square_generated",
+      "target_entity": "mount_saturn",
+      "condition_attribute": "development",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_saturn_development_square"
+      }
+    },
+    {
+      "id": "interp_mount_apollo_development_prominent_generated",
+      "target_entity": "mount_apollo",
+      "condition_attribute": "development",
+      "condition_value": "prominent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_apollo_development_prominent"
+      }
+    },
+    {
+      "id": "interp_mount_apollo_development_overdeveloped_generated",
+      "target_entity": "mount_apollo",
+      "condition_attribute": "development",
+      "condition_value": "overdeveloped",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_apollo_development_overdeveloped"
+      }
+    },
+    {
+      "id": "interp_mount_apollo_development_flat_generated",
+      "target_entity": "mount_apollo",
+      "condition_attribute": "development",
+      "condition_value": "flat",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_apollo_development_flat"
+      }
+    },
+    {
+      "id": "interp_mount_apollo_development_clear_generated",
+      "target_entity": "mount_apollo",
+      "condition_attribute": "development",
+      "condition_value": "clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_apollo_development_clear"
+      }
+    },
+    {
+      "id": "interp_mount_apollo_development_square_generated",
+      "target_entity": "mount_apollo",
+      "condition_attribute": "development",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_apollo_development_square"
+      }
+    },
+    {
+      "id": "interp_mount_mercury_development_prominent_generated",
+      "target_entity": "mount_mercury",
+      "condition_attribute": "development",
+      "condition_value": "prominent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mercury_development_prominent"
+      }
+    },
+    {
+      "id": "interp_mount_mercury_development_overdeveloped_generated",
+      "target_entity": "mount_mercury",
+      "condition_attribute": "development",
+      "condition_value": "overdeveloped",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mercury_development_overdeveloped"
+      }
+    },
+    {
+      "id": "interp_mount_mercury_development_flat_generated",
+      "target_entity": "mount_mercury",
+      "condition_attribute": "development",
+      "condition_value": "flat",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mercury_development_flat"
+      }
+    },
+    {
+      "id": "interp_mount_mercury_development_square_generated",
+      "target_entity": "mount_mercury",
+      "condition_attribute": "development",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mercury_development_square"
+      }
+    },
+    {
+      "id": "interp_mount_venus_development_prominent_generated",
+      "target_entity": "mount_venus",
+      "condition_attribute": "development",
+      "condition_value": "prominent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_venus_development_prominent"
+      }
+    },
+    {
+      "id": "interp_mount_venus_development_overdeveloped_generated",
+      "target_entity": "mount_venus",
+      "condition_attribute": "development",
+      "condition_value": "overdeveloped",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_venus_development_overdeveloped"
+      }
+    },
+    {
+      "id": "interp_mount_venus_development_flat_generated",
+      "target_entity": "mount_venus",
+      "condition_attribute": "development",
+      "condition_value": "flat",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_venus_development_flat"
+      }
+    },
+    {
+      "id": "interp_mount_venus_development_square_generated",
+      "target_entity": "mount_venus",
+      "condition_attribute": "development",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_venus_development_square"
+      }
+    },
+    {
+      "id": "interp_mount_moon_development_prominent_generated",
+      "target_entity": "mount_moon",
+      "condition_attribute": "development",
+      "condition_value": "prominent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_moon_development_prominent"
+      }
+    },
+    {
+      "id": "interp_mount_moon_development_overdeveloped_generated",
+      "target_entity": "mount_moon",
+      "condition_attribute": "development",
+      "condition_value": "overdeveloped",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_moon_development_overdeveloped"
+      }
+    },
+    {
+      "id": "interp_mount_moon_development_flat_generated",
+      "target_entity": "mount_moon",
+      "condition_attribute": "development",
+      "condition_value": "flat",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_moon_development_flat"
+      }
+    },
+    {
+      "id": "interp_mount_moon_development_square_generated",
+      "target_entity": "mount_moon",
+      "condition_attribute": "development",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_moon_development_square"
+      }
+    },
+    {
+      "id": "interp_mount_mars_positive_development_prominent_generated",
+      "target_entity": "mount_mars_positive",
+      "condition_attribute": "development",
+      "condition_value": "prominent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mars_positive_development_prominent"
+      }
+    },
+    {
+      "id": "interp_mount_mars_positive_development_overdeveloped_generated",
+      "target_entity": "mount_mars_positive",
+      "condition_attribute": "development",
+      "condition_value": "overdeveloped",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mars_positive_development_overdeveloped"
+      }
+    },
+    {
+      "id": "interp_mount_mars_positive_development_flat_generated",
+      "target_entity": "mount_mars_positive",
+      "condition_attribute": "development",
+      "condition_value": "flat",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mars_positive_development_flat"
+      }
+    },
+    {
+      "id": "interp_mount_mars_positive_development_square_generated",
+      "target_entity": "mount_mars_positive",
+      "condition_attribute": "development",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mars_positive_development_square"
+      }
+    },
+    {
+      "id": "interp_mount_mars_negative_development_prominent_generated",
+      "target_entity": "mount_mars_negative",
+      "condition_attribute": "development",
+      "condition_value": "prominent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mars_negative_development_prominent"
+      }
+    },
+    {
+      "id": "interp_mount_mars_negative_development_overdeveloped_generated",
+      "target_entity": "mount_mars_negative",
+      "condition_attribute": "development",
+      "condition_value": "overdeveloped",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mars_negative_development_overdeveloped"
+      }
+    },
+    {
+      "id": "interp_mount_mars_negative_development_flat_generated",
+      "target_entity": "mount_mars_negative",
+      "condition_attribute": "development",
+      "condition_value": "flat",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mars_negative_development_flat"
+      }
+    },
+    {
+      "id": "interp_mount_mars_negative_development_square_generated",
+      "target_entity": "mount_mars_negative",
+      "condition_attribute": "development",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_mars_negative_development_square"
+      }
+    },
+    {
+      "id": "interp_mount_plain_mars_development_balanced_generated",
+      "target_entity": "mount_plain_mars",
+      "condition_attribute": "development",
+      "condition_value": "balanced",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_plain_mars_development_balanced"
+      }
+    },
+    {
+      "id": "interp_mount_plain_mars_development_square_generated",
+      "target_entity": "mount_plain_mars",
+      "condition_attribute": "development",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_plain_mars_development_square"
+      }
+    },
+    {
+      "id": "interp_line_life_clarity_clear_generated",
+      "target_entity": "line_life",
+      "condition_attribute": "clarity",
+      "condition_value": "clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_life_clarity_clear"
+      }
+    },
+    {
+      "id": "interp_line_life_clarity_short_generated",
+      "target_entity": "line_life",
+      "condition_attribute": "clarity",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_life_clarity_short"
+      }
+    },
+    {
+      "id": "interp_line_life_clarity_faint_generated",
+      "target_entity": "line_life",
+      "condition_attribute": "clarity",
+      "condition_value": "faint",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_life_clarity_faint"
+      }
+    },
+    {
+      "id": "interp_line_life_clarity_high_density_generated",
+      "target_entity": "line_life",
+      "condition_attribute": "clarity",
+      "condition_value": "high_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_life_clarity_high_density"
+      }
+    },
+    {
+      "id": "interp_line_life_clarity_broken_generated",
+      "target_entity": "line_life",
+      "condition_attribute": "clarity",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_life_clarity_broken"
+      }
+    },
+    {
+      "id": "interp_line_life_clarity_chained_generated",
+      "target_entity": "line_life",
+      "condition_attribute": "clarity",
+      "condition_value": "chained",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_life_clarity_chained"
+      }
+    },
+    {
+      "id": "interp_line_life_clarity_double_generated",
+      "target_entity": "line_life",
+      "condition_attribute": "clarity",
+      "condition_value": "double",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_life_clarity_double"
+      }
+    },
+    {
+      "id": "interp_line_head_path_long_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_long"
+      }
+    },
+    {
+      "id": "interp_line_head_path_short_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_short"
+      }
+    },
+    {
+      "id": "interp_line_head_path_straight_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "straight",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_straight"
+      }
+    },
+    {
+      "id": "interp_line_head_path_curved_moon_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "curved_moon",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_curved_moon"
+      }
+    },
+    {
+      "id": "interp_line_head_path_high_density_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "high_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_high_density"
+      }
+    },
+    {
+      "id": "interp_line_head_path_faint_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "faint",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_faint"
+      }
+    },
+    {
+      "id": "interp_line_head_path_broken_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_broken"
+      }
+    },
+    {
+      "id": "interp_line_head_path_chained_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "chained",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_chained"
+      }
+    },
+    {
+      "id": "interp_line_head_path_forked_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "forked",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_forked"
+      }
+    },
+    {
+      "id": "interp_line_head_path_separated_life_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "separated_life",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_separated_life"
+      }
+    },
+    {
+      "id": "interp_line_head_path_attached_life_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "attached_life",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_attached_life"
+      }
+    },
+    {
+      "id": "interp_line_head_path_square_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_square"
+      }
+    },
+    {
+      "id": "interp_line_head_path_flat_generated",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "flat",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_flat"
+      }
+    },
+    {
+      "id": "interp_line_heart_path_long_generated",
+      "target_entity": "line_heart",
+      "condition_attribute": "path",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_heart_path_long"
+      }
+    },
+    {
+      "id": "interp_line_heart_path_short_generated",
+      "target_entity": "line_heart",
+      "condition_attribute": "path",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_heart_path_short"
+      }
+    },
+    {
+      "id": "interp_line_heart_path_high_density_generated",
+      "target_entity": "line_heart",
+      "condition_attribute": "path",
+      "condition_value": "high_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_heart_path_high_density"
+      }
+    },
+    {
+      "id": "interp_line_heart_path_faint_generated",
+      "target_entity": "line_heart",
+      "condition_attribute": "path",
+      "condition_value": "faint",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_heart_path_faint"
+      }
+    },
+    {
+      "id": "interp_line_heart_path_straight_generated",
+      "target_entity": "line_heart",
+      "condition_attribute": "path",
+      "condition_value": "straight",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_heart_path_straight"
+      }
+    },
+    {
+      "id": "interp_line_heart_path_curved_up_generated",
+      "target_entity": "line_heart",
+      "condition_attribute": "path",
+      "condition_value": "curved_up",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_heart_path_curved_up"
+      }
+    },
+    {
+      "id": "interp_line_heart_path_chained_generated",
+      "target_entity": "line_heart",
+      "condition_attribute": "path",
+      "condition_value": "chained",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_heart_path_chained"
+      }
+    },
+    {
+      "id": "interp_line_heart_path_broken_generated",
+      "target_entity": "line_heart",
+      "condition_attribute": "path",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_heart_path_broken"
+      }
+    },
+    {
+      "id": "interp_line_heart_path_square_generated",
+      "target_entity": "line_heart",
+      "condition_attribute": "path",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_heart_path_square"
+      }
+    },
+    {
+      "id": "interp_line_fate_path_clear_generated",
+      "target_entity": "line_fate",
+      "condition_attribute": "path",
+      "condition_value": "clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_fate_path_clear"
+      }
+    },
+    {
+      "id": "interp_line_fate_path_faint_generated",
+      "target_entity": "line_fate",
+      "condition_attribute": "path",
+      "condition_value": "faint",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_fate_path_faint"
+      }
+    },
+    {
+      "id": "interp_line_fate_path_absent_generated",
+      "target_entity": "line_fate",
+      "condition_attribute": "path",
+      "condition_value": "absent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_fate_path_absent"
+      }
+    },
+    {
+      "id": "interp_line_fate_path_multiple_faint_generated",
+      "target_entity": "line_fate",
+      "condition_attribute": "path",
+      "condition_value": "multiple_faint",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_fate_path_multiple_faint"
+      }
+    },
+    {
+      "id": "interp_line_fate_path_broken_generated",
+      "target_entity": "line_fate",
+      "condition_attribute": "path",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_fate_path_broken"
+      }
+    },
+    {
+      "id": "interp_line_sun_path_clear_generated",
+      "target_entity": "line_sun",
+      "condition_attribute": "path",
+      "condition_value": "clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_sun_path_clear"
+      }
+    },
+    {
+      "id": "interp_line_sun_path_faint_generated",
+      "target_entity": "line_sun",
+      "condition_attribute": "path",
+      "condition_value": "faint",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_sun_path_faint"
+      }
+    },
+    {
+      "id": "interp_line_sun_path_absent_generated",
+      "target_entity": "line_sun",
+      "condition_attribute": "path",
+      "condition_value": "absent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_sun_path_absent"
+      }
+    },
+    {
+      "id": "interp_line_sun_path_multiple_faint_generated",
+      "target_entity": "line_sun",
+      "condition_attribute": "path",
+      "condition_value": "multiple_faint",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_sun_path_multiple_faint"
+      }
+    },
+    {
+      "id": "interp_line_sun_path_broken_generated",
+      "target_entity": "line_sun",
+      "condition_attribute": "path",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_sun_path_broken"
+      }
+    },
+    {
+      "id": "interp_line_sun_path_square_generated",
+      "target_entity": "line_sun",
+      "condition_attribute": "path",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_sun_path_square"
+      }
+    },
+    {
+      "id": "interp_line_mercury_clarity_flat_generated",
+      "target_entity": "line_mercury",
+      "condition_attribute": "clarity",
+      "condition_value": "flat",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_mercury_clarity_flat"
+      }
+    },
+    {
+      "id": "interp_line_mercury_clarity_wavy_generated",
+      "target_entity": "line_mercury",
+      "condition_attribute": "clarity",
+      "condition_value": "wavy",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_mercury_clarity_wavy"
+      }
+    },
+    {
+      "id": "interp_line_mercury_clarity_broken_generated",
+      "target_entity": "line_mercury",
+      "condition_attribute": "clarity",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_mercury_clarity_broken"
+      }
+    },
+    {
+      "id": "interp_line_mercury_clarity_chained_generated",
+      "target_entity": "line_mercury",
+      "condition_attribute": "clarity",
+      "condition_value": "chained",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_mercury_clarity_chained"
+      }
+    },
+    {
+      "id": "interp_line_mercury_clarity_absent_generated",
+      "target_entity": "line_mercury",
+      "condition_attribute": "clarity",
+      "condition_value": "absent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_mercury_clarity_absent"
+      }
+    },
+    {
+      "id": "interp_line_marriage_path_single_clear_generated",
+      "target_entity": "line_marriage",
+      "condition_attribute": "path",
+      "condition_value": "single_clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_marriage_path_single_clear"
+      }
+    },
+    {
+      "id": "interp_line_marriage_path_multiple_faint_generated",
+      "target_entity": "line_marriage",
+      "condition_attribute": "path",
+      "condition_value": "multiple_faint",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_marriage_path_multiple_faint"
+      }
+    },
+    {
+      "id": "interp_line_marriage_path_short_generated",
+      "target_entity": "line_marriage",
+      "condition_attribute": "path",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_marriage_path_short"
+      }
+    },
+    {
+      "id": "interp_line_marriage_path_long_generated",
+      "target_entity": "line_marriage",
+      "condition_attribute": "path",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_marriage_path_long"
+      }
+    },
+    {
+      "id": "interp_line_marriage_path_broken_generated",
+      "target_entity": "line_marriage",
+      "condition_attribute": "path",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_marriage_path_broken"
+      }
+    },
+    {
+      "id": "interp_line_marriage_path_forked_generated",
+      "target_entity": "line_marriage",
+      "condition_attribute": "path",
+      "condition_value": "forked",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_marriage_path_forked"
+      }
+    },
+    {
+      "id": "interp_line_children_visibility_visible_generated",
+      "target_entity": "line_children",
+      "condition_attribute": "visibility",
+      "condition_value": "visible",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_children_visibility_visible"
+      }
+    },
+    {
+      "id": "interp_line_children_visibility_low_density_generated",
+      "target_entity": "line_children",
+      "condition_attribute": "visibility",
+      "condition_value": "low_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_children_visibility_low_density"
+      }
+    },
+    {
+      "id": "interp_line_children_visibility_absent_generated",
+      "target_entity": "line_children",
+      "condition_attribute": "visibility",
+      "condition_value": "absent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_children_visibility_absent"
+      }
+    },
+    {
+      "id": "interp_line_travel_length_short_generated",
+      "target_entity": "line_travel",
+      "condition_attribute": "length",
+      "condition_value": "short",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_travel_length_short"
+      }
+    },
+    {
+      "id": "interp_line_travel_length_long_generated",
+      "target_entity": "line_travel",
+      "condition_attribute": "length",
+      "condition_value": "long",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_travel_length_long"
+      }
+    },
+    {
+      "id": "interp_line_travel_length_clear_generated",
+      "target_entity": "line_travel",
+      "condition_attribute": "length",
+      "condition_value": "clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_travel_length_clear"
+      }
+    },
+    {
+      "id": "interp_line_travel_length_broken_generated",
+      "target_entity": "line_travel",
+      "condition_attribute": "length",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_travel_length_broken"
+      }
+    },
+    {
+      "id": "interp_line_travel_length_square_generated",
+      "target_entity": "line_travel",
+      "condition_attribute": "length",
+      "condition_value": "square",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_travel_length_square"
+      }
+    },
+    {
+      "id": "interp_line_travel_length_high_density_generated",
+      "target_entity": "line_travel",
+      "condition_attribute": "length",
+      "condition_value": "high_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_travel_length_high_density"
+      }
+    },
+    {
+      "id": "interp_line_intuition_clarity_clear_generated",
+      "target_entity": "line_intuition",
+      "condition_attribute": "clarity",
+      "condition_value": "clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_intuition_clarity_clear"
+      }
+    },
+    {
+      "id": "interp_line_intuition_clarity_faint_generated",
+      "target_entity": "line_intuition",
+      "condition_attribute": "clarity",
+      "condition_value": "faint",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_intuition_clarity_faint"
+      }
+    },
+    {
+      "id": "interp_line_intuition_clarity_broken_generated",
+      "target_entity": "line_intuition",
+      "condition_attribute": "clarity",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_intuition_clarity_broken"
+      }
+    },
+    {
+      "id": "interp_girdle_venus_structure_complete_generated",
+      "target_entity": "girdle_venus",
+      "condition_attribute": "structure",
+      "condition_value": "complete",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_girdle_venus_structure_complete"
+      }
+    },
+    {
+      "id": "interp_girdle_venus_structure_broken_generated",
+      "target_entity": "girdle_venus",
+      "condition_attribute": "structure",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_girdle_venus_structure_broken"
+      }
+    },
+    {
+      "id": "interp_girdle_venus_structure_faint_generated",
+      "target_entity": "girdle_venus",
+      "condition_attribute": "structure",
+      "condition_value": "faint",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_girdle_venus_structure_faint"
+      }
+    },
+    {
+      "id": "interp_girdle_venus_structure_chained_generated",
+      "target_entity": "girdle_venus",
+      "condition_attribute": "structure",
+      "condition_value": "chained",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_girdle_venus_structure_chained"
+      }
+    },
+    {
+      "id": "interp_ring_solomon_clarity_clear_generated",
+      "target_entity": "ring_solomon",
+      "condition_attribute": "clarity",
+      "condition_value": "clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_ring_solomon_clarity_clear"
+      }
+    },
+    {
+      "id": "interp_ring_solomon_clarity_faint_generated",
+      "target_entity": "ring_solomon",
+      "condition_attribute": "clarity",
+      "condition_value": "faint",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_ring_solomon_clarity_faint"
+      }
+    },
+    {
+      "id": "interp_ring_saturn_clarity_clear_generated",
+      "target_entity": "ring_saturn",
+      "condition_attribute": "clarity",
+      "condition_value": "clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_ring_saturn_clarity_clear"
+      }
+    },
+    {
+      "id": "interp_ring_saturn_clarity_broken_generated",
+      "target_entity": "ring_saturn",
+      "condition_attribute": "clarity",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_ring_saturn_clarity_broken"
+      }
+    },
+    {
+      "id": "interp_line_influence_path_high_density_generated",
+      "target_entity": "line_influence",
+      "condition_attribute": "path",
+      "condition_value": "high_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_influence_path_high_density"
+      }
+    },
+    {
+      "id": "interp_line_influence_path_low_density_generated",
+      "target_entity": "line_influence",
+      "condition_attribute": "path",
+      "condition_value": "low_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_influence_path_low_density"
+      }
+    },
+    {
+      "id": "interp_line_bracelets_clarity_clear_generated",
+      "target_entity": "line_bracelets",
+      "condition_attribute": "clarity",
+      "condition_value": "clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_bracelets_clarity_clear"
+      }
+    },
+    {
+      "id": "interp_line_bracelets_clarity_broken_generated",
+      "target_entity": "line_bracelets",
+      "condition_attribute": "clarity",
+      "condition_value": "broken",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_bracelets_clarity_broken"
+      }
+    },
+    {
+      "id": "interp_line_bracelets_clarity_low_density_generated",
+      "target_entity": "line_bracelets",
+      "condition_attribute": "clarity",
+      "condition_value": "low_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_bracelets_clarity_low_density"
+      }
+    },
+    {
+      "id": "interp_line_life_long_clear",
+      "target_entity": "line_life",
+      "condition_attribute": "clarity",
+      "condition_value": "long_clear",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_life_clarity_clear",
+        "personality": "key_interp_life_long_personality",
+        "health_symbolism": "key_interp_life_long_health"
+      }
+    },
+    {
+      "id": "interp_line_life_short_deep",
+      "target_entity": "line_life",
+      "condition_attribute": "clarity",
+      "condition_value": "short_deep",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_life_clarity_short"
+      }
+    },
+    {
+      "id": "interp_line_head_down_to_moon",
+      "target_entity": "line_head",
+      "condition_attribute": "path",
+      "condition_value": "down_to_moon",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_head_path_curved_moon",
+        "creativity": "key_interp_head_curved_creative"
+      }
+    },
+    {
+      "id": "interp_mount_jupiter_star",
+      "target_entity": "mount_jupiter",
+      "condition_attribute": "development",
+      "condition_value": "prominent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_mount_jupiter_development_prominent",
+        "sign": "key_specialSign_opt_star_jupiter_apollo_desc"
+      }
+    }
+  ]
+}

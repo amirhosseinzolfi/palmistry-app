@@ -1,0 +1,76 @@
+{
+  "features": [
+    {
+      "id": "timing_life_line",
+      "category": "Timing",
+      "family": "chronology",
+      "subfamily": "life_calc",
+      "name_translation_key": "timing_life_line_name",
+      "description_translation_key": "timing_life_line_desc",
+      "attributes": [
+        {
+          "name": "age_marker",
+          "possible_values": [
+            "age_21",
+            "age_35",
+            "age_49",
+            "age_70"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "timing_head_line",
+      "category": "Timing",
+      "family": "chronology",
+      "subfamily": "head_calc",
+      "name_translation_key": "timing_head_line_name",
+      "description_translation_key": "timing_head_line_desc",
+      "attributes": [
+        {
+          "name": "age_marker",
+          "possible_values": [
+            "age_21",
+            "age_35",
+            "age_49",
+            "age_70"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "timing_fate_line",
+      "category": "Timing",
+      "family": "chronology",
+      "subfamily": "fate_calc",
+      "name_translation_key": "timing_fate_line_name",
+      "description_translation_key": "timing_fate_line_desc",
+      "attributes": [
+        {
+          "name": "age_marker",
+          "possible_values": [
+            "age_21",
+            "age_35",
+            "age_49",
+            "age_70"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

@@ -1,10 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../services/pkg_database_service.dart';
 
-class ReportScreen extends StatelessWidget {
+class ReportScreen extends StatefulWidget {
   final Map<String, String> selections;
 
   const ReportScreen({Key? key, required this.selections}) : super(key: key);
+
+  @override
+  State<ReportScreen> createState() => _ReportScreenState();
+}
+
+class _ReportScreenState extends State<ReportScreen> {
+  final PkgDatabaseService _dbService = PkgDatabaseService();
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _dbService.initialize().then((_) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    });
+  }
+
+  String _resolveOptionDesc(String stepKey, String optionValue) {
+    for (var step in _dbService.wizardSteps) {
+      if (step['key'] == stepKey) {
+        final List<dynamic> options = step['options'] ?? [];
+        for (var opt in options) {
+          if (opt['value'] == optionValue) {
+            return _dbService.translate(opt['desc_key']);
+          }
+        }
+      }
+    }
+    return "";
+  }
 
   String _compileReportText() {
     final buffer = StringBuffer();
@@ -26,135 +61,71 @@ class ReportScreen extends StatelessWidget {
   }
 
   String _compileHandShapeText({bool plainText = false}) {
-    final shape = selections["handShape"] ?? "earth";
-    final hand = selections["activeHand"] ?? "right_active";
+    final shapeVal = widget.selections["handShape"] ?? "earth";
+    final activeHandVal = widget.selections["activeHand"] ?? "right_active";
 
-    String elementTitle = "";
-    String elementText = "";
-    if (shape == "earth") {
-      elementTitle = "دست خاکی (عنصر خاک)";
-      elementText = "کف دست مربع و پهن با انگشتان کوتاه و پوست ضخیم. شما فردی عمیقاً عملی، واقع‌بین، قابل اعتماد و پایدار هستید. از تغییرات بیزارید و به امنیت اهمیت می‌دهید.";
-    } else if (shape == "water") {
-      elementTitle = "دست آبی (عنصر آب)";
-      elementText = "کف دست کشیده و انگشتان بلند با پوست نرم. شما فردی احساسی، شهودی، حساس و خلاق هستید. هنر، روان‌شناسی و مشاوره بهترین بستر برای درخشش شماست.";
-    } else if (shape == "fire") {
-      elementTitle = "دست آتشی (عنصر آتش)";
-      elementText = "کف دست مستطیلی با انگشتان کوتاه‌تر. شما فردی پرانرژی، کاریزماتیک، ریسک‌پذیر و سریع در تصمیم‌گیری هستید که علاقه وافری به کارآفرینی دارید.";
-    } else if (shape == "air") {
-      elementTitle = "دست هوایی (عنصر هوا)";
-      elementText = "کف دست مربع با انگشتان کشیده. تفکر منطقی، هوش کلامی عالی، روحیه استراتژیک و علاقه به یادگیری مستمر از صفات برجسته شماست.";
-    }
-
-    String activeHandText = "";
-    if (hand == "right_active") {
-      activeHandText = "راست‌دست هستید. دست راست نشان‌دهنده مسیر فعلی و تصمیمات آگاهانه شماست و دست چپ استعداد ذاتی شما را بازتاب می‌دهد.";
-    } else if (hand == "left_active") {
-      activeHandText = "چپ‌دست هستید. دست چپ نشان‌دهنده مسیر فعلی و تصمیمات آگاهانه شماست و دست راست استعدادهای پنهان را نشان می‌دهد.";
-    } else if (hand == "similar_hands") {
-      activeHandText = "دو دست شما شبیه هم هستند؛ استعدادهای ذاتی شما با شیوه زندگی فعلی کاملاً منطبق است.";
-    } else if (hand == "different_hands") {
-      activeHandText = "تفاوت جدی بین دو دست شما مشهود است؛ در طول زندگی تحولات جدی داشته‌اید و از الگوهای اولیه فاصله گرفته‌اید.";
-    }
+    final shapeText = _resolveOptionDesc("handShape", shapeVal);
+    final activeHandText = _resolveOptionDesc("activeHand", activeHandVal);
 
     if (plainText) {
-      return "عنصر: $elementTitle\nتفسیر: $elementText\nوضعیت دست فعال: $activeHandText";
+      return "عنصر دست: $shapeText\nوضعیت دست: $activeHandText";
     }
-    return "• **$elementTitle**\n$elementText\n\n• **وضعیت دست:** $activeHandText";
+    return "• **تحلیل عنصر دست:**\n$shapeText\n\n• **پیکربندی دست:**\n$activeHandText";
   }
 
   String _compileThumbSkinText({bool plainText = false}) {
-    final skin = selections["skinTexture"] ?? "firm_balanced";
-    final thumb = selections["thumbType"] ?? "balanced_open";
+    final skinVal = widget.selections["skinTexture"] ?? "firm_balanced";
+    final thumbVal = widget.selections["thumbType"] ?? "balanced_open";
 
-    String skinText = "";
-    if (skin == "soft_warm") skinText = "پوست نرم و دست گرم نشان‌دهنده حساسیت عاطفی بالا، پردازش حسی سریع و صمیمیت اجتماعی عالی است.";
-    else if (skin == "thick_warm") skinText = "پوست ضخیم و دست گرم نشان‌دهنده عمل‌گرایی مطلق، مقاومت و شجاعت فراوان است.";
-    else if (skin == "soft_cold") skinText = "پوست نرم و دست سرد گویای رویکردی محتاط، ذهن درگیر عواقب و نیاز بالا به احساس امنیت عاطفی است.";
-    else if (skin == "firm_balanced") skinText = "دست محکم و با سفتی متعادل نشان‌دهنده اراده محکم، تعادل میان رویا و عمل، و پایداری در تصمیمات است.";
-
-    String thumbText = "";
-    if (thumb == "balanced_open") thumbText = "شست قوی با زاویه باز نشان‌دهنده اراده عالی، منطق توسعه‌یافته، تفکر مستقل و سخاوت بالا است.";
-    else if (thumb == "willpower_dominant") thumbText = "بند بالایی بزرگتر شست نشان‌دهنده غلبه اراده بر منطق است؛ شما مصمم اما گاهی عجول عمل می‌کنید.";
-    else if (thumb == "logic_dominant") thumbText = "بند پایینی بزرگتر شست نشان‌دهنده غلبه منطق بر اراده است؛ متفکر و تحلیل‌گر هستید اما مستعد تردید در اجرا می‌باشید.";
-    else if (thumb == "closed_cautious") thumbText = "زاویه بازشدن بسیار کم شست نشان‌دهنده احتیاط فراوان، محافظه‌کاری مالی شدید و سخت‌گیری شخصی است.";
+    final skinText = _resolveOptionDesc("skinTexture", skinVal);
+    final thumbText = _resolveOptionDesc("thumbType", thumbVal);
 
     return "$skinText\n\n$thumbText";
   }
 
   String _compileMountsText({bool plainText = false}) {
-    final finger = selections["fingerDominant"] ?? "jupiter_long";
-    final mount = selections["prominentMount"] ?? "venus_moon";
+    final fingerVal = widget.selections["fingerDominant"] ?? "jupiter_long";
+    final mountVal = widget.selections["prominentMount"] ?? "venus_moon";
 
-    String fingerText = "";
-    if (finger == "jupiter_long") fingerText = "انگشت اشاره (مشتری) بلند است: نماد جاه‌طلبی شغلی، اعتمادبه‌نفس بالا و تمایل به رهبری گروهی.";
-    else if (finger == "apollo_long") fingerText = "انگشت حلقه (خورشید) بلند است: استعداد هنری قوی، خلاقیت بالا، کاریزمای اجتماعی و تمایل به ابراز هنر.";
-    else if (finger == "saturn_long") fingerText = "انگشت میانی (زحل) بلند است: مسئولیت‌پذیری بالا، تعهد عمیق به اصول، واقع‌بینی کامل و تمایل به سکوت.";
-    else if (finger == "mercury_long") fingerText = "انگشت کوچک (عطارد) بلند است: قدرت کلام، هوش ارتباطی فوق‌العاده و توانایی بالا در فروش و متقاعدسازی.";
-
-    String mountText = "";
-    if (mount == "venus_moon") mountText = "برجستگی ونوس و ماه قوی است: توازن عالی میان صمیمیت عاطفی گرم با تخیل، شهود و رویاپردازی خلاق.";
-    else if (mount == "jupiter_mercury") mountText = "برجستگی مشتری و عطارد قوی است: ترکیب عالی مدیریت و عزت نفس به همراه قدرت بیان و کلام تاثیرگذار.";
-    else if (mount == "saturn_mars") mountText = "زحل قوی و مریخ بالا برجسته است: صبر استراتژیک، پایداری بالا در برابر مشکلات و استقامت روانی فوق‌العاده.";
-    else if (mount == "flat_mounts") mountText = "برجستگی‌های دست صاف هستند: صلح‌طلب هستید و از رقابت‌های سنگین و جنجال‌ها دوری می‌کنید.";
+    final fingerText = _resolveOptionDesc("fingerDominant", fingerVal);
+    final mountText = _resolveOptionDesc("prominentMount", mountVal);
 
     return "$fingerText\n\n$mountText";
   }
 
   String _compileMajorLinesText({bool plainText = false}) {
-    final heart = selections["heartLine"] ?? "long_curved";
-    final head = selections["headLine"] ?? "long_straight";
-    final life = selections["lifeLine"] ?? "deep_clear";
+    final heartVal = widget.selections["heartLine"] ?? "long_curved";
+    final headVal = widget.selections["headLine"] ?? "long_straight";
+    final lifeVal = widget.selections["lifeLine"] ?? "deep_clear";
 
-    String heartText = "";
-    if (heart == "long_curved") heartText = "خط قلب بلند و منحنی است: نشانگر عواطف گرم، رمانتیک بودن، وفاداری بالا و تعهد در روابط صمیمی.";
-    else if (heart == "short_straight") heartText = "خط قلب کوتاه و صاف است: نشانگر کنترل عاطفی، احتیاط بالا در ابراز علاقه و ترجیح منطق بر احساس.";
-    else if (heart == "chained_broken") heartText = "خط قلب زنجیره‌ای یا لرزان است: نشانگر حساسیت عاطفی بالا، نوسانات احساسی و نیاز به خودآگاهی بیشتر.";
-    else if (heart == "balanced_split") heartText = "خط قلب به بین اشاره و میانی ختم می‌شود: تعادل عالی میان عقل و عاطفه در زندگی زناشویی.";
-
-    String headText = "";
-    if (head == "long_straight") headText = "خط سر بلند و صاف است: نشانگر تفکر منطقی، واقع‌بینی کامل، تحلیل‌گری قوی و تمرکز عالی روی پروژه‌ها.";
-    else if (head == "long_curved_moon") headText = "خط سر خمیده رو به پایین است: نشانگر تخیل بالا، شهود عالی، خلاقیت سرشار و مناسب برای نویسندگی و هنر.";
-    else if (head == "short_practical") headText = "خط سر کوتاه است: تمرکز بر عمل و نتایج سریع، دوری از تئوری و حلال عینی مشکلات.";
-    else if (head == "split_independent") headText = "خط سر جدا از خط زندگی است: استقلال فکری بالا، جسارت در تصمیم‌گیری و نترسیدن از ریسک‌ها.";
-
-    String lifeText = "";
-    if (life == "deep_clear") lifeText = "خط زندگی عمیق و بلند است: انرژی حیاتی بالا، بنیه جسمی عالی و ثبات خوب در زندگی.";
-    else if (life == "faint_broken") lifeText = "خط زندگی لرزان یا شکسته است: نیاز به مراقبت از سبک زندگی، یا دوره‌های تغییر بزرگ و شروع دوباره.";
-    else if (life == "double_mars") lifeText = "خط زندگی دوگانه است: محافظت درونی قوی در رویدادها و مقاومت بدنی مضاعف.";
-    else if (life == "outward_branch") lifeText = "خط زندگی انشعاب بیرونی دارد: سفرهای پی‌درپی و احتمال بالای مهاجرت به سرزمین‌های دور.";
+    final heartText = _resolveOptionDesc("heartLine", heartVal);
+    final headText = _resolveOptionDesc("headLine", headVal);
+    final lifeText = _resolveOptionDesc("lifeLine", lifeVal);
 
     return "• **خط قلب:** $heartText\n\n• **خط ذهن:** $headText\n\n• **خط زندگی:** $lifeText";
   }
 
   String _compileMinorSignsText({bool plainText = false}) {
-    final fate = selections["fateLine"] ?? "strong_fate";
-    final sign = selections["specialSign"] ?? "mystic_cross";
-    final shape = selections["handShape"] ?? "earth";
-    final head = selections["headLine"] ?? "long_straight";
-    final heart = selections["heartLine"] ?? "long_curved";
-    final life = selections["lifeLine"] ?? "deep_clear";
+    final fateVal = widget.selections["fateLine"] ?? "strong_fate";
+    final signVal = widget.selections["specialSign"] ?? "mystic_cross";
 
-    String fateText = "";
-    if (fate == "strong_fate") fateText = "خط سرنوشت عمیق است: مسیر شغلی هدفمند، تعهد بالا به کار و پیشرفت گام‌به‌گام.";
-    else if (fate == "faint_flexible") fateText = "خط سرنوشت کمرنگ است: انعطاف‌پذیری شغلی و آزادی در کارآفرینی و انتخاب آزادانه مسیر زندگی.";
-    else if (fate == "apollo_present") fateText = "خط خورشید واضح است: پتانسیل کسب اعتبار عالی، شهرت خلاق و رضایت عمیق درونی از کارها.";
-    else if (fate == "marriage_clear") fateText = "خط رابطه عمیق است: پیوند عاطفی بسیار تاثیرگذار و صمیمیت عمیق در تعهد عاطفی.";
+    final fateText = _resolveOptionDesc("fateLine", fateVal);
+    final signText = _resolveOptionDesc("specialSign", signVal);
 
-    String signText = "";
-    if (sign == "star_jupiter_apollo") signText = "نشانه ستاره روی مشتری/خورشید: شانس غیرمنتظره، درخشش هنری یا شهرت ناگهانی در مدیریت.";
-    else if (sign == "square_protection") signText = "نشانه مربع: سپر ایمنی در بحران‌ها و عبور به سلامت از طوفان‌های زندگی.";
-    else if (sign == "mystic_cross") signText = "صلیب عرفانی: درک شهودی بسیار بالا، تفکرات معنوی و استعداد متافیزیک.";
-    else if (sign == "triangle_mercury") signText = "نشانه مثلث: هوش تجاری برجسته، قدرت استراتژیست کلامی و مهارت در امور اقتصادی.";
+    final shape = widget.selections["handShape"] ?? "earth";
+    final head = widget.selections["headLine"] ?? "long_straight";
+    final heart = widget.selections["heartLine"] ?? "long_curved";
+    final life = widget.selections["lifeLine"] ?? "deep_clear";
 
     String comboText = "";
     if (shape == "fire" && head == "short_practical") {
-      comboText = "\n\n💡 **ترکیب طلایی شما (دست آتشی + خط سر کوتاه):** شما بمب عمل‌گرایی و تصمیمات سریع هستید. توصیه می‌شود در سرمایه‌گذاری‌های بزرگ، صبوری پیشه کنید.";
+      comboText = "\n\n" + _dbService.translate("key_combo_fire_practical_desc");
     } else if (shape == "water" && heart == "chained_broken") {
-      comboText = "\n\n💡 **ترکیب طلایی شما (دست آبی + خط قلب زنجیره‌ای):** حساسیت عاطفی شما بسیار بالا و روحیه شما بسیار ظریف است. ساختن مرزهای عاطفی برای آرامش شما کلیدی است.";
+      comboText = "\n\n" + _dbService.translate("key_combo_water_sensitive_desc");
     } else if (shape == "air" && head == "long_straight") {
-      comboText = "\n\n💡 **ترکیب طلایی شما (دست هوایی + خط سر بلند):** شما استراتژیست، متفکر و تحلیل‌گر عالی هستید. برای عبور از overthinking تمرین اقدام بدون تحلیل اضافی کنید.";
+      comboText = "\n\n" + _dbService.translate("key_combo_air_strategic_desc");
     } else if (shape == "earth" && life == "deep_clear") {
-      comboText = "\n\n💡 **ترکیب طلایی شما (دست خاکی + خط زندگی عمیق):** شما نماد پایداری، ثبات و امنیت هستید. در مقابل تغییرات مقاومت نکنید تا جریان‌های نوین موفقیت جاری شوند.";
+      comboText = "\n\n" + _dbService.translate("key_combo_earth_stable_desc");
     }
 
     return "• **خط سرنوشت/فرعی:** $fateText\n\n• **نشانه خاص:** $signText$comboText";
@@ -162,6 +133,15 @@ class ReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        backgroundColor: Color(0xFF070A13),
+        body: Center(
+          child: CircularProgressIndicator(color: Color(0xFF00F2FE)),
+        ),
+      );
+    }
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -228,7 +208,7 @@ class ReportScreen extends StatelessWidget {
                     const SizedBox(height: 4),
                     const Center(
                       child: Text(
-                        "بر اساس فرمول جامع کف‌بینی شخصی",
+                        "بر اساس فرمול جامع کف‌بینی شخصی",
                         style: TextStyle(
                           color: Color(0xFF6C7A9C),
                           fontSize: 11,
@@ -395,7 +375,6 @@ class ReportScreen extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8),
-        // Simple markdown parsing mockup for bullet points / bold strings in text
         _buildParsedText(content),
         const SizedBox(height: 25),
       ],
@@ -403,7 +382,6 @@ class ReportScreen extends StatelessWidget {
   }
 
   Widget _buildParsedText(String content) {
-    // Parse very simple bullet points and bolding for native layout
     final lines = content.split('\n');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -413,7 +391,6 @@ class ReportScreen extends StatelessWidget {
         bool isBullet = line.startsWith('•');
         String cleanedLine = isBullet ? line.replaceFirst('•', '').trim() : line;
 
-        // Parse simple bold tags **text** -> RichText
         List<TextSpan> spans = [];
         final regex = RegExp(r'\*\*(.*?)\*\*');
         int lastIndex = 0;

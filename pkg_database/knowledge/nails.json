@@ -1,0 +1,81 @@
+{
+  "features": [
+    {
+      "id": "nail_shape",
+      "category": "Nail",
+      "family": "nails",
+      "subfamily": "shape",
+      "name_translation_key": "nail_shape_name",
+      "description_translation_key": "nail_shape_desc",
+      "attributes": [
+        {
+          "name": "form",
+          "possible_values": [
+            "long",
+            "short",
+            "broad",
+            "narrow",
+            "square",
+            "round",
+            "almond",
+            "spoon"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "nail_color",
+      "category": "Nail",
+      "family": "nails",
+      "subfamily": "color",
+      "name_translation_key": "nail_color_name",
+      "description_translation_key": "nail_color_desc",
+      "attributes": [
+        {
+          "name": "shade",
+          "possible_values": [
+            "pink",
+            "white",
+            "red",
+            "yellow",
+            "blue"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "nail_lunula",
+      "category": "Nail",
+      "family": "nails",
+      "subfamily": "half_moon",
+      "name_translation_key": "nail_lunula_name",
+      "description_translation_key": "nail_lunula_desc",
+      "attributes": [
+        {
+          "name": "size",
+          "possible_values": [
+            "visible",
+            "faint",
+            "very_large",
+            "absent"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

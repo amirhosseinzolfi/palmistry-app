@@ -1,0 +1,179 @@
+{
+  "rules": [
+    {
+      "id": "rule_combo_fire_practical",
+      "name": "Fire Hand + Short Practical Head Line",
+      "conditions": {
+        "operator": "AND",
+        "rules": [
+          {
+            "field": "hand_shape_fire",
+            "attribute": "palm_shape",
+            "value": "rectangle"
+          },
+          {
+            "field": "line_head",
+            "attribute": "length",
+            "value": "short"
+          }
+        ]
+      },
+      "result_translation_key": "key_combo_fire_practical_desc"
+    },
+    {
+      "id": "rule_combo_water_sensitive",
+      "name": "Water Hand + Chained Heart Line",
+      "conditions": {
+        "operator": "AND",
+        "rules": [
+          {
+            "field": "hand_shape_water",
+            "attribute": "palm_shape",
+            "value": "rectangle"
+          },
+          {
+            "field": "line_heart",
+            "attribute": "clarity",
+            "value": "chained"
+          }
+        ]
+      },
+      "result_translation_key": "key_combo_water_sensitive_desc"
+    },
+    {
+      "id": "rule_combo_air_strategic",
+      "name": "Air Hand + Long Straight Head Line",
+      "conditions": {
+        "operator": "AND",
+        "rules": [
+          {
+            "field": "hand_shape_air",
+            "attribute": "palm_shape",
+            "value": "square"
+          },
+          {
+            "field": "line_head",
+            "attribute": "path",
+            "value": "straight"
+          }
+        ]
+      },
+      "result_translation_key": "key_combo_air_strategic_desc"
+    },
+    {
+      "id": "rule_combo_earth_stable",
+      "name": "Earth Hand + Deep Life Line",
+      "conditions": {
+        "operator": "AND",
+        "rules": [
+          {
+            "field": "hand_shape_earth",
+            "attribute": "palm_shape",
+            "value": "square"
+          },
+          {
+            "field": "line_life",
+            "attribute": "depth",
+            "value": "deep"
+          }
+        ]
+      },
+      "result_translation_key": "key_combo_earth_stable_desc"
+    },
+    {
+      "id": "rule_advanced_mind_logical",
+      "name": "Logical Mind",
+      "conditions": {
+        "operator": "AND",
+        "rules": [
+          {
+            "field": "line_head",
+            "attribute": "path",
+            "value": "straight"
+          },
+          {
+            "field": "finger_tips",
+            "attribute": "shape",
+            "value": "square"
+          },
+          {
+            "field": "thumb_length",
+            "attribute": "size",
+            "value": "long"
+          }
+        ]
+      },
+      "result_translation_key": "key_advanced_mind_logical_desc"
+    },
+    {
+      "id": "rule_advanced_mind_creative",
+      "name": "Creative Mind",
+      "conditions": {
+        "operator": "AND",
+        "rules": [
+          {
+            "field": "line_head",
+            "attribute": "path",
+            "value": "curved_moon"
+          },
+          {
+            "field": "mount_moon",
+            "attribute": "development",
+            "value": "prominent"
+          },
+          {
+            "field": "finger_ring",
+            "attribute": "relative_length",
+            "value": "long"
+          }
+        ]
+      },
+      "result_translation_key": "key_advanced_mind_creative_desc"
+    },
+    {
+      "id": "rule_advanced_emotion_passionate",
+      "name": "Passionate Love",
+      "conditions": {
+        "operator": "AND",
+        "rules": [
+          {
+            "field": "line_heart",
+            "attribute": "path",
+            "value": "curved_up"
+          },
+          {
+            "field": "mount_venus",
+            "attribute": "development",
+            "value": "prominent"
+          }
+        ]
+      },
+      "result_translation_key": "key_advanced_emotion_passionate_desc"
+    },
+    {
+      "id": "rule_advanced_leadership_natural",
+      "name": "Natural Leader",
+      "conditions": {
+        "operator": "AND",
+        "rules": [
+          {
+            "field": "mount_jupiter",
+            "attribute": "development",
+            "value": "prominent"
+          },
+          {
+            "field": "finger_index",
+            "attribute": "relative_length",
+            "value": "long"
+          },
+          {
+            "field": "thumb_length",
+            "attribute": "size",
+            "value": "long"
+          }
+        ]
+      },
+      "result_translation_key": "key_advanced_leadership_natural_desc"
+    }
+  ]
+}

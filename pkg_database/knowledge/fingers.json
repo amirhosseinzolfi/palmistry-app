@@ -1,0 +1,217 @@
+{
+  "features": [
+    {
+      "id": "finger_index",
+      "category": "Finger",
+      "family": "jupiter",
+      "subfamily": "lengths",
+      "name_translation_key": "finger_index_name",
+      "description_translation_key": "finger_index_desc",
+      "attributes": [
+        {
+          "name": "relative_length",
+          "possible_values": [
+            "long",
+            "short",
+            "equal_ring"
+          ]
+        },
+        {
+          "name": "curvature",
+          "possible_values": [
+            "straight",
+            "lean_saturn",
+            "lean_outward"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "finger_middle",
+      "category": "Finger",
+      "family": "saturn",
+      "subfamily": "lengths",
+      "name_translation_key": "finger_middle_name",
+      "description_translation_key": "finger_middle_desc",
+      "attributes": [
+        {
+          "name": "relative_length",
+          "possible_values": [
+            "long",
+            "short"
+          ]
+        },
+        {
+          "name": "curvature",
+          "possible_values": [
+            "straight",
+            "lean_jupiter",
+            "lean_apollo"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "finger_ring",
+      "category": "Finger",
+      "family": "apollo",
+      "subfamily": "lengths",
+      "name_translation_key": "finger_ring_name",
+      "description_translation_key": "finger_ring_desc",
+      "attributes": [
+        {
+          "name": "relative_length",
+          "possible_values": [
+            "long",
+            "short"
+          ]
+        },
+        {
+          "name": "curvature",
+          "possible_values": [
+            "straight",
+            "lean_saturn",
+            "lean_mercury"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "finger_little",
+      "category": "Finger",
+      "family": "mercury",
+      "subfamily": "lengths",
+      "name_translation_key": "finger_little_name",
+      "description_translation_key": "finger_little_desc",
+      "attributes": [
+        {
+          "name": "relative_length",
+          "possible_values": [
+            "long",
+            "short"
+          ]
+        },
+        {
+          "name": "curvature",
+          "possible_values": [
+            "straight",
+            "bent"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "finger_spacing",
+      "category": "Finger",
+      "family": "gaps",
+      "subfamily": "spacing",
+      "name_translation_key": "finger_spacing_name",
+      "description_translation_key": "finger_spacing_desc",
+      "attributes": [
+        {
+          "name": "spread",
+          "possible_values": [
+            "tight",
+            "normal",
+            "wide"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "finger_tips",
+      "category": "Finger",
+      "family": "tips",
+      "subfamily": "shape",
+      "name_translation_key": "finger_tips_name",
+      "description_translation_key": "finger_tips_desc",
+      "attributes": [
+        {
+          "name": "shape",
+          "possible_values": [
+            "square",
+            "conic",
+            "round",
+            "spatulate",
+            "pointed"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "finger_knots",
+      "category": "Finger",
+      "family": "joints",
+      "subfamily": "knots",
+      "name_translation_key": "finger_knots_name",
+      "description_translation_key": "finger_knots_desc",
+      "attributes": [
+        {
+          "name": "prominence",
+          "possible_values": [
+            "knotted",
+            "smooth"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "finger_phalanges",
+      "category": "Finger",
+      "family": "phalanges",
+      "subfamily": "balance",
+      "name_translation_key": "finger_phalanges_name",
+      "description_translation_key": "finger_phalanges_desc",
+      "attributes": [
+        {
+          "name": "dominant_phalange",
+          "possible_values": [
+            "first_mind",
+            "second_logic",
+            "third_material"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "version": "1.0.0",
+  "entities": [
+    {
+      "name": "Hand",
+      "description": "The overall hand entity including dominance, symmetry, flexibility, and line density."
+    },
+    {
+      "name": "Hand Shape",
+      "description": "The elemental and physical shape categorization of the hands (e.g. Earth, Air)."
+    },
+    {
+      "name": "Physical Feature",
+      "description": "General physical qualities of the hand skin, thickness, muscle, texture, and color."
+    },
+    {
+      "name": "Palm",
+      "description": "The palm dimensions, proportions, and muscle fullness."
+    },
+    {
+      "name": "Finger",
+      "description": "The fingers (excluding thumb) and their observable lengths, spacings, and leans."
+    },
+    {
+      "name": "Thumb",
+      "description": "The thumb - the core of willpower, logic, flexibility, and angles."
+    },
+    {
+      "name": "Mount",
+      "description": "The fleshy mounts of the palm representing mental, emotional, and physical reserves."
+    },
+    {
+      "name": "Major Line",
+      "description": "The primary paths of energy (Life, Head, Heart, Fate, Sun, Mercury)."
+    },
+    {
+      "name": "Minor Line",
+      "description": "Auxiliary lines like Marriage, Travel, Solomon's Ring, Girdle of Venus."
+    },
+    {
+      "name": "Mark",
+      "description": "Traditional symbols observed on mounts and lines (Star, Cross, Square, Trident, etc.)."
+    },
+    {
+      "name": "Nail",
+      "description": "The shape, color, texture, and crescent (lunula) of the fingernails."
+    },
+    {
+      "name": "Fingerprint",
+      "description": "The dermatoglyphic patterns (Loops, Whorls, Arches, Composite)."
+    },
+    {
+      "name": "Timing",
+      "description": "Age markers calculated along major and minor lines."
+    }
+  ],
+  "relationships": [
+    {
+      "name": "contains",
+      "description": "Expresses structural hierarchy (e.g. Hand contains Fingers)."
+    },
+    {
+      "name": "belongs_to",
+      "description": "Expresses category belonging."
+    },
+    {
+      "name": "parallel_to",
+      "description": "Expresses alignment parallel to another line."
+    },
+    {
+      "name": "crosses",
+      "description": "Expresses physical intersection."
+    },
+    {
+      "name": "touches",
+      "description": "Expresses physical contact without crossing."
+    },
+    {
+      "name": "intersects",
+      "description": "Expresses crossing paths."
+    },
+    {
+      "name": "starts_from",
+      "description": "Defines origin point."
+    },
+    {
+      "name": "ends_at",
+      "description": "Defines termination point."
+    },
+    {
+      "name": "supports",
+      "description": "Signifies energy reinforcement (e.g. sister line supports major line)."
+    },
+    {
+      "name": "strengthens",
+      "description": "Increases intensity of a feature."
+    },
+    {
+      "name": "weakens",
+      "description": "Decreases intensity of a feature."
+    },
+    {
+      "name": "inside",
+      "description": "Located within another feature."
+    },
+    {
+      "name": "outside",
+      "description": "Located outside another feature."
+    },
+    {
+      "name": "associated_with",
+      "description": "General conceptual association."
+    },
+    {
+      "name": "commonly_combined_with",
+      "description": "Frequent co-occurrence in readings."
+    },
+    {
+      "name": "contradicts",
+      "description": "Opposing meanings that resolve through rules."
+    },
+    {
+      "name": "modifies",
+      "description": "Modifies interpretation of target feature."
+    },
+    {
+      "name": "derived_from",
+      "description": "Indicates historical/traditional evolution."
+    }
+  ]
+}

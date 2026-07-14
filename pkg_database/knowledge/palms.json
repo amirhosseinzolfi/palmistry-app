@@ -1,0 +1,36 @@
+{
+  "features": [
+    {
+      "id": "palm_proportions",
+      "category": "Palm",
+      "family": "dimensions",
+      "subfamily": "size",
+      "name_translation_key": "palm_proportions_name",
+      "description_translation_key": "palm_proportions_desc",
+      "attributes": [
+        {
+          "name": "overall_size",
+          "possible_values": [
+            "large",
+            "medium",
+            "small"
+          ]
+        },
+        {
+          "name": "shape_ratio",
+          "possible_values": [
+            "square",
+            "rectangle",
+            "broad",
+            "narrow"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

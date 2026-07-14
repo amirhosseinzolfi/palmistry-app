@@ -1,0 +1,196 @@
+{
+  "features": [
+    {
+      "id": "hand_shape_earth",
+      "category": "Hand Shape",
+      "family": "elemental",
+      "subfamily": "earth",
+      "name_translation_key": "hand_shape_earth_name",
+      "description_translation_key": "hand_shape_earth_desc",
+      "attributes": [
+        {
+          "name": "palm_shape",
+          "possible_values": [
+            "square"
+          ]
+        },
+        {
+          "name": "finger_length",
+          "possible_values": [
+            "short"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "hand_shape_fire",
+      "category": "Hand Shape",
+      "family": "elemental",
+      "subfamily": "fire",
+      "name_translation_key": "hand_shape_fire_name",
+      "description_translation_key": "hand_shape_fire_desc",
+      "attributes": [
+        {
+          "name": "palm_shape",
+          "possible_values": [
+            "rectangle"
+          ]
+        },
+        {
+          "name": "finger_length",
+          "possible_values": [
+            "short"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "hand_shape_air",
+      "category": "Hand Shape",
+      "family": "elemental",
+      "subfamily": "air",
+      "name_translation_key": "hand_shape_air_name",
+      "description_translation_key": "hand_shape_air_desc",
+      "attributes": [
+        {
+          "name": "palm_shape",
+          "possible_values": [
+            "square"
+          ]
+        },
+        {
+          "name": "finger_length",
+          "possible_values": [
+            "long"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "hand_shape_water",
+      "category": "Hand Shape",
+      "family": "elemental",
+      "subfamily": "water",
+      "name_translation_key": "hand_shape_water_name",
+      "description_translation_key": "hand_shape_water_desc",
+      "attributes": [
+        {
+          "name": "palm_shape",
+          "possible_values": [
+            "rectangle"
+          ]
+        },
+        {
+          "name": "finger_length",
+          "possible_values": [
+            "long"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "hand_shape_philosophic",
+      "category": "Hand Shape",
+      "family": "traditional",
+      "subfamily": "knots",
+      "name_translation_key": "hand_shape_philosophic_name",
+      "description_translation_key": "hand_shape_philosophic_desc",
+      "attributes": [
+        {
+          "name": "knots_prominence",
+          "possible_values": [
+            "prominent"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "hand_shape_psychic",
+      "category": "Hand Shape",
+      "family": "traditional",
+      "subfamily": "pointed",
+      "name_translation_key": "hand_shape_psychic_name",
+      "description_translation_key": "hand_shape_psychic_desc",
+      "attributes": [
+        {
+          "name": "finger_tips",
+          "possible_values": [
+            "pointed"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "hand_shape_spatulate",
+      "category": "Hand Shape",
+      "family": "traditional",
+      "subfamily": "spatulate",
+      "name_translation_key": "hand_shape_spatulate_name",
+      "description_translation_key": "hand_shape_spatulate_desc",
+      "attributes": [
+        {
+          "name": "finger_tips",
+          "possible_values": [
+            "spatulate"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "hand_shape_conic",
+      "category": "Hand Shape",
+      "family": "traditional",
+      "subfamily": "conic",
+      "name_translation_key": "hand_shape_conic_name",
+      "description_translation_key": "hand_shape_conic_desc",
+      "attributes": [
+        {
+          "name": "finger_tips",
+          "possible_values": [
+            "conic"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

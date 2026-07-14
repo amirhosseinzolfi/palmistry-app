@@ -1,0 +1,118 @@
+{
+  "categories": [
+    {
+      "id": "cat_hand",
+      "entity_class": "Hand",
+      "subcategories": [
+        "dominance",
+        "density",
+        "flexibility"
+      ]
+    },
+    {
+      "id": "cat_hand_shape",
+      "entity_class": "Hand Shape",
+      "subcategories": [
+        "elemental",
+        "traditional"
+      ]
+    },
+    {
+      "id": "cat_physical_feature",
+      "entity_class": "Physical Feature",
+      "subcategories": [
+        "skin",
+        "color",
+        "temperature"
+      ]
+    },
+    {
+      "id": "cat_palm",
+      "entity_class": "Palm",
+      "subcategories": [
+        "size",
+        "proportions"
+      ]
+    },
+    {
+      "id": "cat_finger",
+      "entity_class": "Finger",
+      "subcategories": [
+        "jupiter",
+        "saturn",
+        "apollo",
+        "mercury"
+      ]
+    },
+    {
+      "id": "cat_thumb",
+      "entity_class": "Thumb",
+      "subcategories": [
+        "will",
+        "logic",
+        "flexibility"
+      ]
+    },
+    {
+      "id": "cat_mount",
+      "entity_class": "Mount",
+      "subcategories": [
+        "height",
+        "texture",
+        "marks"
+      ]
+    },
+    {
+      "id": "cat_major_line",
+      "entity_class": "Major Line",
+      "subcategories": [
+        "life",
+        "head",
+        "heart",
+        "fate",
+        "sun",
+        "mercury"
+      ]
+    },
+    {
+      "id": "cat_minor_line",
+      "entity_class": "Minor Line",
+      "subcategories": [
+        "relationship",
+        "travel",
+        "intuition",
+        "rings"
+      ]
+    },
+    {
+      "id": "cat_mark",
+      "entity_class": "Mark",
+      "subcategories": [
+        "symbols"
+      ]
+    },
+    {
+      "id": "cat_nail",
+      "entity_class": "Nail",
+      "subcategories": [
+        "shape",
+        "color",
+        "texture"
+      ]
+    },
+    {
+      "id": "cat_fingerprint",
+      "entity_class": "Fingerprint",
+      "subcategories": [
+        "patterns"
+      ]
+    },
+    {
+      "id": "cat_timing",
+      "entity_class": "Timing",
+      "subcategories": [
+        "chronology"
+      ]
+    }
+  ]
+}

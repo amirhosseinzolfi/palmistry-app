@@ -1,0 +1,270 @@
+{
+  "features": [
+    {
+      "id": "mount_jupiter",
+      "category": "Mount",
+      "family": "jupiter",
+      "subfamily": "leadership",
+      "name_translation_key": "mount_jupiter_name",
+      "description_translation_key": "mount_jupiter_desc",
+      "attributes": [
+        {
+          "name": "development",
+          "possible_values": [
+            "flat",
+            "normal",
+            "prominent",
+            "overdeveloped"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "star",
+        "square",
+        "cross",
+        "grille",
+        "triangle"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mount_saturn",
+      "category": "Mount",
+      "family": "saturn",
+      "subfamily": "responsibility",
+      "name_translation_key": "mount_saturn_name",
+      "description_translation_key": "mount_saturn_desc",
+      "attributes": [
+        {
+          "name": "development",
+          "possible_values": [
+            "flat",
+            "normal",
+            "prominent",
+            "overdeveloped"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "star",
+        "square",
+        "cross",
+        "grille",
+        "triangle"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mount_apollo",
+      "category": "Mount",
+      "family": "apollo",
+      "subfamily": "creativity",
+      "name_translation_key": "mount_apollo_name",
+      "description_translation_key": "mount_apollo_desc",
+      "attributes": [
+        {
+          "name": "development",
+          "possible_values": [
+            "flat",
+            "normal",
+            "prominent",
+            "overdeveloped"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "star",
+        "square",
+        "cross",
+        "grille",
+        "triangle"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mount_mercury",
+      "category": "Mount",
+      "family": "mercury",
+      "subfamily": "communication",
+      "name_translation_key": "mount_mercury_name",
+      "description_translation_key": "mount_mercury_desc",
+      "attributes": [
+        {
+          "name": "development",
+          "possible_values": [
+            "flat",
+            "normal",
+            "prominent",
+            "overdeveloped"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "star",
+        "square",
+        "cross",
+        "grille",
+        "triangle"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mount_venus",
+      "category": "Mount",
+      "family": "venus",
+      "subfamily": "passion",
+      "name_translation_key": "mount_venus_name",
+      "description_translation_key": "mount_venus_desc",
+      "attributes": [
+        {
+          "name": "development",
+          "possible_values": [
+            "flat",
+            "normal",
+            "prominent",
+            "overdeveloped"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "star",
+        "square",
+        "cross",
+        "grille",
+        "triangle"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mount_moon",
+      "category": "Mount",
+      "family": "moon",
+      "subfamily": "imagination",
+      "name_translation_key": "mount_moon_name",
+      "description_translation_key": "mount_moon_desc",
+      "attributes": [
+        {
+          "name": "development",
+          "possible_values": [
+            "flat",
+            "normal",
+            "prominent",
+            "overdeveloped"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "star",
+        "square",
+        "cross",
+        "grille",
+        "triangle"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mount_mars_positive",
+      "category": "Mount",
+      "family": "mars",
+      "subfamily": "physical_courage",
+      "name_translation_key": "mount_mars_positive_name",
+      "description_translation_key": "mount_mars_positive_desc",
+      "attributes": [
+        {
+          "name": "development",
+          "possible_values": [
+            "flat",
+            "normal",
+            "prominent",
+            "overdeveloped"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "star",
+        "square",
+        "cross",
+        "grille"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mount_mars_negative",
+      "category": "Mount",
+      "family": "mars",
+      "subfamily": "mental_courage",
+      "name_translation_key": "mount_mars_negative_name",
+      "description_translation_key": "mount_mars_negative_desc",
+      "attributes": [
+        {
+          "name": "development",
+          "possible_values": [
+            "flat",
+            "normal",
+            "prominent",
+            "overdeveloped"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "star",
+        "square",
+        "cross",
+        "grille"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mount_plain_mars",
+      "category": "Mount",
+      "family": "mars",
+      "subfamily": "struggle",
+      "name_translation_key": "mount_plain_mars_name",
+      "description_translation_key": "mount_plain_mars_desc",
+      "attributes": [
+        {
+          "name": "development",
+          "possible_values": [
+            "flat",
+            "normal",
+            "prominent",
+            "overdeveloped"
+          ]
+        }
+      ],
+      "associated_marks": [
+        "cross",
+        "triangle",
+        "square"
+      ],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "relations": [
+    {
+      "parent": "Hand",
+      "child": "Palm"
+    },
+    {
+      "parent": "Hand",
+      "child": "Fingers"
+    },
+    {
+      "parent": "Fingers",
+      "child": "Thumb"
+    },
+    {
+      "parent": "Fingers",
+      "child": "Index"
+    },
+    {
+      "parent": "Fingers",
+      "child": "Middle"
+    },
+    {
+      "parent": "Fingers",
+      "child": "Ring"
+    },
+    {
+      "parent": "Fingers",
+      "child": "Little"
+    },
+    {
+      "parent": "Palm",
+      "child": "Mounts"
+    },
+    {
+      "parent": "Palm",
+      "child": "Lines"
+    }
+  ]
+}

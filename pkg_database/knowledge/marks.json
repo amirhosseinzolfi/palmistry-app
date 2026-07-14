@@ -1,0 +1,224 @@
+{
+  "features": [
+    {
+      "id": "mark_star",
+      "category": "Mark",
+      "family": "symbols",
+      "subfamily": "star",
+      "name_translation_key": "mark_star_name",
+      "description_translation_key": "mark_star_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mark_cross",
+      "category": "Mark",
+      "family": "symbols",
+      "subfamily": "cross",
+      "name_translation_key": "mark_cross_name",
+      "description_translation_key": "mark_cross_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mark_square",
+      "category": "Mark",
+      "family": "symbols",
+      "subfamily": "square",
+      "name_translation_key": "mark_square_name",
+      "description_translation_key": "mark_square_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mark_triangle",
+      "category": "Mark",
+      "family": "symbols",
+      "subfamily": "triangle",
+      "name_translation_key": "mark_triangle_name",
+      "description_translation_key": "mark_triangle_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mark_island",
+      "category": "Mark",
+      "family": "symbols",
+      "subfamily": "island",
+      "name_translation_key": "mark_island_name",
+      "description_translation_key": "mark_island_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mark_grille",
+      "category": "Mark",
+      "family": "symbols",
+      "subfamily": "grille",
+      "name_translation_key": "mark_grille_name",
+      "description_translation_key": "mark_grille_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mark_circle",
+      "category": "Mark",
+      "family": "symbols",
+      "subfamily": "circle",
+      "name_translation_key": "mark_circle_name",
+      "description_translation_key": "mark_circle_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mark_dot",
+      "category": "Mark",
+      "family": "symbols",
+      "subfamily": "dot",
+      "name_translation_key": "mark_dot_name",
+      "description_translation_key": "mark_dot_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mark_trident",
+      "category": "Mark",
+      "family": "symbols",
+      "subfamily": "trident",
+      "name_translation_key": "mark_trident_name",
+      "description_translation_key": "mark_trident_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    },
+    {
+      "id": "mark_fish",
+      "category": "Mark",
+      "family": "symbols",
+      "subfamily": "fish",
+      "name_translation_key": "mark_fish_name",
+      "description_translation_key": "mark_fish_desc",
+      "attributes": [
+        {
+          "name": "clarity",
+          "possible_values": [
+            "clear",
+            "faint"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
+    }
+  ]
+}
