@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ابزار استخراج مختصات کف دست | Palmistry Coordinates Helper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Vazirmatn', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #0b0f19;
+            border-bottom: 1px solid #334155;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-grow: 1;
+            align-items: start;
+        }
+
+        /* Canvas Workspace Area */
+        .workspace-card {
+            background-color: var(--card-dark);
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 360px;
+            height: 500px;
+            background-color: #0b1329;
+            border: 2px solid #475569;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            cursor: crosshair;
+        }
+
+        .hand-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            pointer-events: none;
+            opacity: 0.75;
+        }
+
+        .overlay-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background-color: var(--card-dark);
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .mode-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            background: #0f172a;
+            padding: 0.25rem;
+            border-radius: 8px;
+        }
+
+        .mode-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .mode-btn.active {
+            background: var(--accent-cyan);
+            color: #0f172a;
+        }
+
+        .stats {
+            background-color: #0f172a;
+            border-radius: 8px;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            text-align: center;
+        }
+
+        .stat-box span {
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .stat-val {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            flex-grow: 1;
+            padding: 0.65rem 1rem;
+            border-radius: 8px;
+            border: none;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary {
+            background-color: #475569;
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background-color: #334155;
+        }
+
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+
+        .output-box {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .output-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-link {
+            color: var(--accent-cyan);
+            cursor: pointer;
+            font-size: 0.75rem;
+            text-decoration: underline;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #34d399;
+            font-family: 'Outfit', Consolas, monospace;
+            font-size: 0.8rem;
+            padding: 0.75rem;
+            resize: none;
+            direction: ltr;
+        }
+
+        .instructions {
+            background-color: rgba(6, 182, 212, 0.08);
+            border-right: 3px solid var(--accent-cyan);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .instructions h3 {
+            margin-bottom: 0.25rem;
+            color: var(--accent-cyan);
+        }
+
+        .instructions ul {
+            padding-right: 1.25rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>کف‌بینی: ابزار ترسیم مختصات تعاملی</h1>
+            <p class="subtitle">تولید کدهای مکان‌نما برای Flutter و صفحات وب بر اساس اندازه پایه 360x500</p>
+        </div>
+        <div class="subtitle" style="font-family: 'Outfit';">Canvas Size: 360 x 500</div>
+    </header>
+
+    <div class="main-layout">
+        <div class="workspace-card">
+            <div class="canvas-container" id="canvas-container">
+                <img src="hand.png" class="hand-image" alt="دست">
+                <svg class="overlay-svg" id="overlay-svg">
+                    <!-- Current points drawn here dynamically -->
+                    <g id="temp-drawings"></g>
+                </svg>
+            </div>
+            <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+                تغییرات را به صورت بصری روی بوم بالا تماشا کنید.
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <div class="instructions">
+                <h3><i class="fa-solid fa-circle-info"></i> راهنمای استفاده:</h3>
+                <ul>
+                    <li>حالت <strong>تک نقطه‌ای</strong> را برای استخراج مکان تپه‌ها، نمادها یا حلقه‌ها انتخاب کنید.</li>
+                    <li>حالت <strong>ترسیم مسیر</strong> را برای ترسیم خطوط (خط قلب، سر، زندگی و...) استفاده کنید. با هر کلیک نقطه جدیدی اضافه می‌شود.</li>
+                    <li>کد خروجی به صورت خودکار در جعبه‌های پایین به زبان Dart (مخصوص Flutter) و SVG (مخصوص وب) تولید می‌شود.</li>
+                </ul>
+            </div>
+
+            <div class="mode-selector">
+                <button class="mode-btn active" id="mode-single">تک نقطه‌ای</button>
+                <button class="mode-btn" id="mode-path">ترسیم مسیر</button>
+            </div>
+
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-label">موقعیت X فعلی</span>
+                    <span class="stat-val" id="cursor-x">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">موقعیت Y فعلی</span>
+                    <span class="stat-val" id="cursor-y">0</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-secondary" id="clear-btn"><i class="fa-solid fa-rotate-left"></i> پاک کردن نقاط</button>
+                <button class="btn btn-danger" id="undo-btn"><i class="fa-solid fa-undo"></i> برگشت آخرین نقطه</button>
+            </div>
+
+            <div class="output-box">
+                <div class="output-label">
+                    <span>کد خروجی فلاتر (Flutter / Dart)</span>
+                    <span class="copy-link" onclick="copyText('flutter-out')">کپی کردن</span>
+                </div>
+                <textarea id="flutter-out" readonly placeholder="Offset(x, y)..."></textarea>
+            </div>
+
+            <div class="output-box">
+                <div class="output-label">
+                    <span>مسیر SVG برای وب (HTML)</span>
+                    <span class="copy-link" onclick="copyText('svg-out')">کپی کردن</span>
+                </div>
+                <textarea id="svg-out" readonly placeholder='d="M x y..."'></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('canvas-container');
+        const overlay = document.getElementById('overlay-svg');
+        const tempGroup = document.getElementById('temp-drawings');
+        
+        const cursorXText = document.getElementById('cursor-x');
+        const cursorYText = document.getElementById('cursor-y');
+        
+        const modeSingleBtn = document.getElementById('mode-single');
+        const modePathBtn = document.getElementById('mode-path');
+        const clearBtn = document.getElementById('clear-btn');
+        const undoBtn = document.getElementById('undo-btn');
+        
+        const flutterOut = document.getElementById('flutter-out');
+        const svgOut = document.getElementById('svg-out');
+        
+        let isPathMode = false;
+        let points = [];
+
+        // Tracks mouse coordinates relative to the 360x500 box
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = Math.round(((e.clientX - rect.left) / rect.width) * 360);
+            const y = Math.round(((e.clientY - rect.top) / rect.height) * 500);
+            
+            cursorXText.textContent = Math.max(0, Math.min(360, x));
+            cursorYText.textContent = Math.max(0, Math.min(500, y));
+        });
+
+        // Click handler to register points
+        container.addEventListener('click', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = Math.round(((e.clientX - rect.left) / rect.width) * 360);
+            const y = Math.round(((e.clientY - rect.top) / rect.height) * 500);
+            
+            const boundedX = Math.max(0, Math.min(360, x));
+            const boundedY = Math.max(0, Math.min(500, y));
+
+            if (isPathMode) {
+                points.push({x: boundedX, y: boundedY});
+            } else {
+                points = [{x: boundedX, y: boundedY}];
+            }
+            
+            draw();
+            generateCode();
+        });
+
+        // Mode Toggling
+        modeSingleBtn.addEventListener('click', () => {
+            isPathMode = false;
+            modeSingleBtn.classList.add('active');
+            modePathBtn.classList.remove('active');
+            points = [];
+            draw();
+            generateCode();
+        });
+
+        modePathBtn.addEventListener('click', () => {
+            isPathMode = true;
+            modePathBtn.classList.add('active');
+            modeSingleBtn.classList.remove('active');
+            points = [];
+            draw();
+            generateCode();
+        });
+
+        // Clear and Undo
+        clearBtn.addEventListener('click', () => {
+            points = [];
+            draw();
+            generateCode();
+        });
+
+        undoBtn.addEventListener('click', () => {
+            points.pop();
+            draw();
+            generateCode();
+        });
+
+        // Draw circles/lines on SVG overlay
+        function draw() {
+            tempGroup.innerHTML = '';
+            
+            if (points.length === 0) return;
+
+            if (!isPathMode) {
+                // Single mode: draw circle
+                const pt = points[0];
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', pt.x);
+                circle.setAttribute('cy', pt.y);
+                circle.setAttribute('r', '8');
+                circle.setAttribute('fill', '#06b6d4');
+                circle.setAttribute('stroke', '#ffffff');
+                circle.setAttribute('stroke-width', '2');
+                tempGroup.appendChild(circle);
+            } else {
+                // Path mode: draw joints and polyline
+                let pathD = '';
+                points.forEach((pt, index) => {
+                    // Draw node circles
+                    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    circle.setAttribute('cx', pt.x);
+                    circle.setAttribute('cy', pt.y);
+                    circle.setAttribute('r', '5');
+                    circle.setAttribute('fill', '#8b5cf6');
+                    circle.setAttribute('stroke', '#ffffff');
+                    circle.setAttribute('stroke-width', '1.5');
+                    tempGroup.appendChild(circle);
+
+                    if (index === 0) {
+                        pathD += `M ${pt.x} ${pt.y}`;
+                    } else if (index === 1) {
+                        pathD += ` C ${points[0].x} ${points[0].y}, ${pt.x} ${pt.y}, ${pt.x} ${pt.y}`;
+                    } else {
+                        // Create spline segments
+                        pathD += ` C ${points[index-1].x} ${points[index-1].y}, ${pt.x} ${pt.y}, ${pt.x} ${pt.y}`;
+                    }
+                });
+
+                if (points.length > 1) {
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path.setAttribute('d', pathD);
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('stroke', '#8b5cf6');
+                    path.setAttribute('stroke-width', '3');
+                    path.setAttribute('stroke-linecap', 'round');
+                    tempGroup.insertBefore(path, tempGroup.firstChild);
+                }
+            }
+        }
+
+        // Code Generation format
+        function generateCode() {
+            if (points.length === 0) {
+                flutterOut.value = '';
+                svgOut.value = '';
+                return;
+            }
+
+            if (!isPathMode) {
+                const pt = points[0];
+                flutterOut.value = `Offset(${pt.x}, ${pt.y})`;
+                svgOut.value = `cx="${pt.x}" cy="${pt.y}"`;
+            } else {
+                // Generate Flutter Points list
+                let flutterPts = '[\n';
+                points.forEach((pt) => {
+                    flutterPts += `  Offset(${pt.x}, ${pt.y}),\n`;
+                });
+                flutterPts += ']';
+                flutterOut.value = flutterPts;
+
+                // Generate SVG Path d="..."
+                let pathD = '';
+                if (points.length > 0) {
+                    pathD += `M ${points[0].x} ${points[0].y}`;
+                    if (points.length > 1) {
+                        // Generate bezier approximation curves or lines
+                        // For simplicity in a helper, we generate cubics targeting coordinates
+                        pathD += ` C`;
+                        for (let i = 1; i < points.length; i++) {
+                            const prev = points[i-1];
+                            const curr = points[i];
+                            // Simple control points: linear interpolation approximation
+                            pathD += ` ${prev.x} ${prev.y}, ${curr.x} ${curr.y}, ${curr.x} ${curr.y}`;
+                            if (i < points.length - 1) pathD += `,`;
+                        }
+                    }
+                }
+                svgOut.value = `d="${pathD}"`;
+            }
+        }
+
+        // Copy Text Helper
+        function copyText(id) {
+            const textarea = document.getElementById(id);
+            if (!textarea.value) return;
+            textarea.select();
+            document.execCommand('copy');
+            alert('کد با موفقیت در حافظه موقت کپی شد!');
+        }
+    </script>
+</body>
+</html>
