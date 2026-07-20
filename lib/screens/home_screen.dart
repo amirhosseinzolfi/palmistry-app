@@ -344,53 +344,117 @@ class _HomeScreenState extends State<HomeScreen> {
             _buildManualTab(),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentTabIndex,
-          onTap: (index) {
-            setState(() {
-              _currentTabIndex = index;
-            });
-          },
-          backgroundColor: const Color(0xFF04060C),
-          selectedItemColor: const Color(0xFF00F2FE),
-          unselectedItemColor: const Color(0x40FFFFFF),
-          selectedLabelStyle: const TextStyle(fontFamily: 'Vazirmatn', fontWeight: FontWeight.bold, fontSize: 12),
-          unselectedLabelStyle: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 11),
-          type: BottomNavigationBarType.fixed,
-          elevation: 8,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.back_hand_rounded),
-              label: "نقشه تعاملی",
+        bottomNavigationBar: Container(
+          height: 75,
+          decoration: const BoxDecoration(
+            color: Color(0xFF04060C),
+            border: Border(
+              top: BorderSide(color: Color(0x15FFFFFF), width: 1),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.grid_view_rounded),
-              label: "دانشنامه کیهانی",
-            ),
-          ],
-        ),
-        floatingActionButton: _currentTabIndex == 0
-            ? FloatingActionButton.extended(
-                backgroundColor: const Color(0xFF6366F1),
-                foregroundColor: Colors.white,
-                elevation: 6,
-                label: const Text(
-                  "تحلیل گام به گام دست (طالع‌خوان)",
-                  style: TextStyle(
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Vazirmatn',
+          ),
+          child: SafeArea(
+            top: false,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                // Tab 1: Interactive Map
+                Expanded(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => setState(() => _currentTabIndex = 0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.back_hand_rounded,
+                          color: _currentTabIndex == 0 ? const Color(0xFF00F2FE) : const Color(0x50FFFFFF),
+                          size: 22,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          "نقشه تعاملی",
+                          style: TextStyle(
+                            fontFamily: 'Vazirmatn',
+                            fontSize: 11,
+                            fontWeight: _currentTabIndex == 0 ? FontWeight.bold : FontWeight.normal,
+                            color: _currentTabIndex == 0 ? const Color(0xFF00F2FE) : const Color(0x50FFFFFF),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                icon: const Icon(Icons.auto_awesome),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const WizardScreen()),
-                  );
-                },
-              )
-            : null,
+                
+                // Shiny, round, purple wizard button in the middle
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const WizardScreen()),
+                    );
+                  },
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF8B5CF6), Color(0xFF6366F1)], // Purple to Indigo shiny gradient
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF8B5CF6).withOpacity(0.4),
+                          blurRadius: 10,
+                          spreadRadius: 1,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                      border: Border.all(
+                        color: const Color(0xFFC084FC), // Light purple shiny border highlight
+                        width: 1.5,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.auto_awesome,
+                      color: Colors.white,
+                      size: 22,
+                    ),
+                  ),
+                ),
+                
+                // Tab 2: Cosmic Encyclopedia
+                Expanded(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => setState(() => _currentTabIndex = 1),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.grid_view_rounded,
+                          color: _currentTabIndex == 1 ? const Color(0xFF00F2FE) : const Color(0x50FFFFFF),
+                          size: 22,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          "دانشنامه کیهانی",
+                          style: TextStyle(
+                            fontFamily: 'Vazirmatn',
+                            fontSize: 11,
+                            fontWeight: _currentTabIndex == 1 ? FontWeight.bold : FontWeight.normal,
+                            color: _currentTabIndex == 1 ? const Color(0xFF00F2FE) : const Color(0x50FFFFFF),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -399,26 +463,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Filter Chips at top
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                _buildHandFilterChip("همه بخش‌ها", "all"),
-                _buildHandFilterChip("خطوط دست", "lines"),
-                _buildHandFilterChip("تپه‌ها (کوه‌ها)", "mounts"),
-                _buildHandFilterChip("نشانه‌ها", "symbols"),
-                _buildHandFilterChip("انگشتان", "fingers"),
-              ],
-            ),
-          ),
-        ),
-
         // Helper hint text
         const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 5),
           child: Text(
             "روی بخش‌های رنگی دست ضربه بزنید تا معنی و تفسیر را درجا ببینید",
             textAlign: TextAlign.center,
@@ -429,11 +476,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-
-        // Interactive Hand Map Widget
+        
+        // Interactive Hand Map Widget Container
         Expanded(
           child: Container(
-            margin: const EdgeInsets.fromLTRB(15, 5, 15, 20),
+            margin: const EdgeInsets.fromLTRB(15, 5, 15, 0),
             decoration: BoxDecoration(
               gradient: RadialGradient(
                 center: const Alignment(0, 0),
@@ -455,10 +502,47 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(24),
-              child: InteractiveHandWidget(
-                selectedId: _selectedSvgId,
-                activeFilter: _handFilter,
-                onSelected: _onElementSelected,
+              child: Stack(
+                children: [
+                  // Hand Widget taking the full background space
+                  Positioned.fill(
+                    child: InteractiveHandWidget(
+                      selectedId: _selectedSvgId,
+                      activeFilter: _handFilter,
+                      onSelected: _onElementSelected,
+                    ),
+                  ),
+
+                  // Minimal Vertical Island of Filter Buttons on the Right Side (inside the container)
+                  Positioned(
+                    right: 15,
+                    top: 0,
+                    bottom: 0,
+                    child: Center(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                        decoration: const BoxDecoration(
+                          color: Colors.transparent, // No background, shares the hand background!
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _buildHandFilterIconButton(Icons.layers_rounded, "همه بخش‌ها", "all"),
+                            const SizedBox(height: 12),
+                            _buildHandFilterIconButton(Icons.timeline_rounded, "خطوط دست", "lines"),
+                            const SizedBox(height: 12),
+                            _buildHandFilterIconButton(Icons.blur_circular_rounded, "تپه‌ها (کوه‌ها)", "mounts"),
+                            const SizedBox(height: 12),
+                            _buildHandFilterIconButton(Icons.auto_awesome_rounded, "نشانه‌ها", "symbols"),
+                            const SizedBox(height: 12),
+                            _buildHandFilterIconButton(Icons.back_hand_rounded, "انگشتان", "fingers"),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -467,7 +551,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHandFilterChip(String label, String filterValue) {
+  Widget _buildHandFilterIconButton(IconData icon, String label, String filterValue) {
     final bool isSelected = _handFilter == filterValue;
     return GestureDetector(
       onTap: () {
@@ -476,24 +560,29 @@ class _HomeScreenState extends State<HomeScreen> {
           _selectedSvgId = null;
         });
       },
-      child: Container(
-        margin: const EdgeInsets.only(left: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      child: Tooltip(
+        message: label,
+        textStyle: const TextStyle(fontFamily: 'Vazirmatn', color: Colors.white, fontSize: 11),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF6366F1).withOpacity(0.18) : const Color(0xFF14172C),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: isSelected ? const Color(0xFF6366F1) : const Color(0x0FFFFFFF),
-            width: 1.2,
-          ),
+          color: const Color(0xFF1E293B),
+          borderRadius: BorderRadius.circular(8),
         ),
-        child: Text(
-          label,
-          style: TextStyle(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          width: 44,
+          height: 44,
+          decoration: BoxDecoration(
+            color: isSelected ? const Color(0xFF6366F1).withOpacity(0.2) : Colors.transparent,
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: isSelected ? const Color(0xFF6366F1) : Colors.transparent,
+              width: 1.5,
+            ),
+          ),
+          child: Icon(
+            icon,
+            size: 20,
             color: isSelected ? const Color(0xFF00F2FE) : const Color(0xFFA9B2C3),
-            fontSize: 12,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            fontFamily: 'Vazirmatn',
           ),
         ),
       ),

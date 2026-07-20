@@ -42,18 +42,14 @@ if ($action -eq "clean") {
     }
 
 } elseif ($action -eq "run") {
-    # Run directly on connected emulator (x64 only)
-    Write-Host "Running on emulator (x64 only)..." -ForegroundColor Yellow
-    flutter run `
-        --target-platform android-x64 `
-        --android-skip-build-dependency-validation
+    # Run directly on connected emulator
+    Write-Host "Running on emulator..." -ForegroundColor Yellow
+    flutter run --android-skip-build-dependency-validation
 
 } elseif ($action -eq "run-arm") {
-    # Run on a REAL physical Android device (arm64)
-    Write-Host "Running on physical device (arm64)..." -ForegroundColor Yellow
-    flutter run `
-        --target-platform android-arm64 `
-        --android-skip-build-dependency-validation
+    # Run on a REAL physical Android device
+    Write-Host "Running on physical device..." -ForegroundColor Yellow
+    flutter run --android-skip-build-dependency-validation
 
 } elseif ($action -eq "free-space") {
     # Show and clean up disk usage
@@ -81,14 +77,12 @@ if ($action -eq "clean") {
 
 } else {
     Write-Host "Usage:" -ForegroundColor Cyan
-    Write-Host "  .\run_app.ps1 run          # Run on x64 emulator (gphone16k)" -ForegroundColor White
+    Write-Host "  .\run_app.ps1 run          # Run on emulator" -ForegroundColor White
     Write-Host "  .\run_app.ps1 run-arm      # Run on physical Android phone" -ForegroundColor White
     Write-Host "  .\run_app.ps1 build        # Build debug APK (x64 only)" -ForegroundColor White
     Write-Host "  .\run_app.ps1 clean        # Clean build artifacts" -ForegroundColor White
     Write-Host "  .\run_app.ps1 free-space   # Show & clean C drive cache" -ForegroundColor White
     Write-Host ""
     Write-Host "Running on emulator by default..." -ForegroundColor Yellow
-    flutter run `
-        --target-platform android-x64 `
-        --android-skip-build-dependency-validation
+    flutter run --android-skip-build-dependency-validation
 }

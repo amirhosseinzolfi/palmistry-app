@@ -22,85 +22,129 @@ class InteractiveZone {
 // Predefined list of hit-test zones matching the coordinates in 360x500 space
 const List<InteractiveZone> interactiveZones = [
   // Mounts
-  InteractiveZone(id: "mount-jupiter", name: "برجستگی مشتری", center: Offset(132, 220), radius: 18),
-  InteractiveZone(id: "mount-saturn", name: "برجستگی زحل", center: Offset(168, 220), radius: 18),
-  InteractiveZone(id: "mount-apollo", name: "برجستگی خورشید", center: Offset(205, 220), radius: 18),
-  InteractiveZone(id: "mount-mercury", name: "برجستگی عطارد", center: Offset(250, 235), radius: 18),
-  InteractiveZone(id: "mount-mars-lower", name: "برجستگی مریخ پایین", center: Offset(135, 280), radius: 15),
-  InteractiveZone(id: "mount-mars-upper", name: "برجستگی مریخ بالا", center: Offset(270, 290), radius: 15),
-  InteractiveZone(id: "mount-mars-plain", name: "دشت مریخ", center: Offset(195, 305), radius: 22),
-  InteractiveZone(id: "mount-venus", name: "برجستگی ونوس", center: Offset(125, 365), radius: 32),
-  InteractiveZone(id: "mount-moon", name: "برجستگی ماه", center: Offset(260, 380), radius: 30),
+  InteractiveZone(id: "mount-jupiter", name: "برجستگی مشتری", center: Offset(225, 205), radius: 18),
+  InteractiveZone(id: "mount-saturn", name: "برجستگی زحل", center: Offset(180, 205), radius: 18),
+  InteractiveZone(id: "mount-apollo", name: "برجستگی خورشید", center: Offset(135, 205), radius: 18),
+  InteractiveZone(id: "mount-mercury", name: "برجستگی عطارد", center: Offset(90, 215), radius: 18),
+  InteractiveZone(id: "mount-mars-lower", name: "برجستگی مریخ پایین", center: Offset(225, 250), radius: 15),
+  InteractiveZone(id: "mount-mars-upper", name: "برجستگی مریخ بالا", center: Offset(85, 265), radius: 15),
+  InteractiveZone(id: "mount-mars-plain", name: "دشت مریخ", center: Offset(165, 275), radius: 22),
+  InteractiveZone(id: "mount-venus", name: "برجستگی ونوس", center: Offset(235, 345), radius: 32),
+  InteractiveZone(id: "mount-moon", name: "برجستگی ماه", center: Offset(90, 360), radius: 30),
 
   // Major Lines
   InteractiveZone(id: "line-heart", name: "خط قلب", points: [
-    Offset(280, 230), Offset(240, 190), Offset(190, 180), Offset(140, 180)
+  Offset(88, 262),
+  Offset(101, 258),
+  Offset(117, 255),
+  Offset(136, 249),
+  Offset(152, 243),
+  Offset(167, 236),
+  Offset(182, 228),
+  Offset(195, 220),
   ]),
   InteractiveZone(id: "line-head", name: "خط سر / ذهن", points: [
-    Offset(120, 230), Offset(160, 225), Offset(220, 240), Offset(275, 285)
+  Offset(233, 224),
+  Offset(221, 227),
+  Offset(209, 234),
+  Offset(192, 242),
+  Offset(181, 251),
+  Offset(169, 260),
+  Offset(154, 272),
+  Offset(140, 280),
   ]),
   InteractiveZone(id: "line-life", name: "خط زندگی", points: [
-    Offset(120, 230), Offset(145, 280), Offset(130, 385), Offset(175, 450)
+  Offset(248, 231),
+  Offset(232, 234),
+  Offset(217, 245),
+  Offset(206, 256),
+  Offset(195, 269),
+  Offset(190, 284),
+  Offset(184, 299),
+  Offset(184, 320),
   ]),
   InteractiveZone(id: "line-fate", name: "خط سرنوشت", points: [
-    Offset(200, 455), Offset(195, 380), Offset(185, 295), Offset(178, 215)
+  Offset(175, 336),
+  Offset(169, 323),
+  Offset(169, 310),
+  Offset(169, 292),
+  Offset(170, 274),
+  Offset(172, 254),
+  Offset(178, 235),
+  Offset(183, 221),
+  Offset(191, 207),
   ]),
-
   // Minor Lines
   InteractiveZone(id: "line-sun", name: "خط خورشید", points: [
-    Offset(208, 225), Offset(208, 270), Offset(208, 320)
+  Offset(149, 339),
+  Offset(150, 318),
+  Offset(149, 297),
+  Offset(148, 275),
+  Offset(146, 255),
+  Offset(146, 235),
+  Offset(145, 221),
   ]),
   InteractiveZone(id: "line-mercury", name: "خط سلامت", points: [
-    Offset(205, 420), Offset(225, 365), Offset(245, 305), Offset(255, 240)
+  Offset(170, 331),
+  Offset(173, 317),
+  Offset(178, 301),
+  Offset(182, 281),
+  Offset(188, 263),
+  Offset(196, 246),
+  Offset(203, 229),
+  Offset(207, 217),
+  Offset(215, 202),
   ]),
   InteractiveZone(id: "line-marriage", name: "خط ازدواج", points: [
-    Offset(270, 205), Offset(285, 205)
+  Offset(88, 252),
+  Offset(95, 249),
+  Offset(105, 246),
   ]),
   InteractiveZone(id: "line-girdle-venus", name: "کمربند ونوس", points: [
-    Offset(135, 190), Offset(160, 150), Offset(210, 150), Offset(245, 190)
+    Offset(225, 190), Offset(195, 175), Offset(145, 175), Offset(100, 190)
   ]),
   InteractiveZone(id: "line-intuition", name: "خط شهود", points: [
-    Offset(270, 365), Offset(230, 330), Offset(235, 285), Offset(255, 250)
+    Offset(85, 365), Offset(115, 320), Offset(115, 280), Offset(90, 235)
   ]),
   InteractiveZone(id: "line-mars", name: "خط مریخ", points: [
-    Offset(128, 250), Offset(135, 285), Offset(132, 345), Offset(148, 395)
+    Offset(230, 240), Offset(222, 280), Offset(230, 335), Offset(210, 385)
   ]),
   InteractiveZone(id: "line-travel", name: "خطوط سفر", points: [
-    Offset(270, 385), Offset(290, 385),
-    Offset(265, 400), Offset(285, 400)
+    Offset(85, 380), Offset(65, 380),
+    Offset(90, 395), Offset(70, 395)
   ]),
   InteractiveZone(id: "line-bracelets", name: "دستبندهای مچ", points: [
-    Offset(158, 458), Offset(190, 463), Offset(220, 463), Offset(238, 458)
+    Offset(205, 450), Offset(175, 455), Offset(145, 455), Offset(125, 450)
   ]),
 
   // Special Rings
   InteractiveZone(id: "ring-solomon", name: "حلقه سلیمان", points: [
-    Offset(132, 210)
+    Offset(225, 205)
   ]),
   InteractiveZone(id: "ring-saturn", name: "حلقه زحل", points: [
-    Offset(168, 210)
+    Offset(180, 205)
   ]),
   InteractiveZone(id: "ring-apollo", name: "حلقه خورشید", points: [
-    Offset(205, 210)
+    Offset(135, 205)
   ]),
   InteractiveZone(id: "ring-mercury", name: "حلقه عطارد", points: [
-    Offset(250, 222)
+    Offset(90, 215)
   ]),
 
   // Symbols
-  InteractiveZone(id: "symbol-star", name: "ستاره", center: Offset(132, 205), radius: 10),
-  InteractiveZone(id: "symbol-square", name: "مربع", center: Offset(130, 345), radius: 10),
-  InteractiveZone(id: "symbol-triangle", name: "مثلث", center: Offset(205, 235), radius: 10),
-  InteractiveZone(id: "symbol-island", name: "جزیره", center: Offset(195, 240), radius: 10),
-  InteractiveZone(id: "symbol-cross", name: "صلیب", center: Offset(195, 305), radius: 10),
-  InteractiveZone(id: "symbol-grille", name: "شبکه", center: Offset(250, 350), radius: 12),
+  InteractiveZone(id: "symbol-star", name: "ستاره", center: Offset(225, 195), radius: 10),
+  InteractiveZone(id: "symbol-square", name: "مربع", center: Offset(230, 330), radius: 10),
+  InteractiveZone(id: "symbol-triangle", name: "مثلث", center: Offset(135, 220), radius: 10),
+  InteractiveZone(id: "symbol-island", name: "جزیره", center: Offset(165, 225), radius: 10),
+  InteractiveZone(id: "symbol-cross", name: "صلیب", center: Offset(165, 275), radius: 10),
+  InteractiveZone(id: "symbol-grille", name: "شبکه", center: Offset(95, 345), radius: 12),
   
   // Fingers
-  InteractiveZone(id: "finger-thumb", name: "انگشت شست", center: Offset(65, 255), radius: 25),
-  InteractiveZone(id: "finger-jupiter", name: "انگشت اشاره", center: Offset(125, 120), radius: 20),
-  InteractiveZone(id: "finger-saturn", name: "انگشت میانی", center: Offset(165, 100), radius: 20),
-  InteractiveZone(id: "finger-apollo", name: "انگشت حلقه", center: Offset(205, 110), radius: 20),
-  InteractiveZone(id: "finger-mercury", name: "انگشت کوچک", center: Offset(250, 150), radius: 18),
+  InteractiveZone(id: "finger-thumb", name: "انگشت شست", center: Offset(295, 190), radius: 25),
+  InteractiveZone(id: "finger-jupiter", name: "انگشت اشاره", center: Offset(225, 110), radius: 20),
+  InteractiveZone(id: "finger-saturn", name: "انگشت میانی", center: Offset(180, 95), radius: 20),
+  InteractiveZone(id: "finger-apollo", name: "انگشت حلقه", center: Offset(135, 110), radius: 20),
+  InteractiveZone(id: "finger-mercury", name: "انگشت کوچک", center: Offset(90, 150), radius: 18),
 ];
 
 class InteractiveHandWidget extends StatelessWidget {
@@ -123,8 +167,8 @@ class InteractiveHandWidget extends StatelessWidget {
         final double height = constraints.maxHeight;
         final double scale = min(width / 360, height / 500);
 
-        final double offsetX = (width - 360 * scale) / 2;
-        final double offsetY = (height - 500 * scale) / 2;
+        final double offsetX = ((width - 360 * scale) / 2) - (28 * scale);
+        final double offsetY = ((height - 500 * scale) / 2) + (85 * scale);
 
         return GestureDetector(
           onTapDown: (details) {
@@ -179,20 +223,49 @@ class InteractiveHandWidget extends StatelessWidget {
               onSelected(closestId);
             }
           },
-          child: CustomPaint(
-            size: Size(width, height),
-            painter: HandPainter(
-              scale: scale,
-              offsetX: offsetX,
-              offsetY: offsetY,
-              selectedId: selectedId,
-              activeFilter: activeFilter,
-            ),
+          child: Stack(
+            children: [
+              Positioned(
+                left: offsetX,
+                top: offsetY,
+                width: 360 * scale,
+                height: 500 * scale,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: Image.asset(
+                    'assets/images/hand.png',
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              CustomPaint(
+                size: Size(width, height),
+                painter: HandPainter(
+                  scale: scale,
+                  offsetX: offsetX,
+                  offsetY: offsetY,
+                  selectedId: selectedId,
+                  activeFilter: activeFilter,
+                ),
+              ),
+            ],
           ),
         );
       },
     );
   }
+}
+
+Path _getPathForZone(String id) {
+  final zone = interactiveZones.firstWhere((z) => z.id == id, orElse: () => const InteractiveZone(id: '', name: ''));
+  final path = Path();
+  if (zone.points.isNotEmpty) {
+    path.moveTo(zone.points.first.dx, zone.points.first.dy);
+    for (int i = 1; i < zone.points.length; i++) {
+      path.lineTo(zone.points[i].dx, zone.points[i].dy);
+    }
+  }
+  return path;
 }
 
 class HandPainter extends CustomPainter {
@@ -217,51 +290,6 @@ class HandPainter extends CustomPainter {
     canvas.translate(offsetX, offsetY);
     canvas.scale(scale, scale);
 
-    // Modern glowing hand styles
-    final Paint handOutlinePaint = Paint()
-      ..color = const Color(0xFF6366F1).withOpacity(0.8) // Glowing Indigo outline
-      ..strokeWidth = 2.2
-      ..style = PaintingStyle.stroke;
-
-    final Paint handGlowPaint = Paint()
-      ..color = const Color(0xFF6366F1).withOpacity(0.25) // Deep Indigo edge glow
-      ..strokeWidth = 6.0
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0);
-
-    final Paint handFillPaint = Paint()
-      ..color = const Color(0xFF101326).withOpacity(0.65) // Translucent cosmic card fill
-      ..style = PaintingStyle.fill;
-
-    // Outer Hand Shape Path
-    final Path handPath = Path()
-      ..moveTo(150, 460)
-      ..cubicTo(110, 460, 80, 420, 80, 370)
-      ..cubicTo(80, 330, 50, 300, 35, 260)
-      ..cubicTo(20, 220, 50, 200, 75, 225)
-      ..cubicTo(95, 245, 110, 255, 120, 220)
-      ..cubicTo(120, 180, 105, 120, 110, 85)
-      ..cubicTo(112, 65, 138, 65, 140, 85)
-      ..cubicTo(145, 120, 145, 180, 148, 205)
-      ..cubicTo(148, 180, 152, 90, 156, 55)
-      ..cubicTo(158, 35, 182, 35, 184, 55)
-      ..cubicTo(188, 90, 188, 180, 192, 205)
-      ..cubicTo(192, 180, 196, 100, 200, 75)
-      ..cubicTo(202, 55, 226, 55, 228, 75)
-      ..cubicTo(232, 100, 232, 185, 236, 210)
-      ..cubicTo(236, 185, 240, 135, 245, 110)
-      ..cubicTo(247, 90, 268, 90, 270, 110)
-      ..cubicTo(273, 135, 273, 200, 278, 230)
-      ..cubicTo(295, 265, 305, 320, 305, 370)
-      ..cubicTo(305, 420, 275, 460, 240, 460)
-      ..close();
-
-    // Draw hand body
-    canvas.drawPath(handPath, handFillPaint);
-    canvas.drawPath(handPath, handGlowPaint);
-    canvas.drawPath(handPath, handOutlinePaint);
-
     // Render highlighted Finger Zones (Only when showing all or fingers)
     if ((activeFilter == "all" || activeFilter == "fingers") && selectedId != null && selectedId!.startsWith("finger-")) {
       final Paint fingerHighlightPaint = Paint()
@@ -270,35 +298,30 @@ class HandPainter extends CustomPainter {
       
       final Path fingerPath = Path();
       if (selectedId == "finger-thumb") {
-        fingerPath.moveTo(80, 370);
-        fingerPath.cubicTo(80, 330, 50, 300, 35, 260);
-        fingerPath.cubicTo(20, 220, 50, 200, 75, 225);
-        fingerPath.cubicTo(95, 245, 110, 255, 120, 220);
-        fingerPath.cubicTo(110, 255, 95, 290, 95, 330);
+        fingerPath.moveTo(250, 260);
+        fingerPath.cubicTo(265, 210, 290, 170, 300, 170);
+        fingerPath.cubicTo(310, 170, 305, 220, 280, 270);
+        fingerPath.cubicTo(270, 290, 260, 310, 250, 330);
         fingerPath.close();
       } else if (selectedId == "finger-jupiter") {
-        fingerPath.moveTo(120, 220);
-        fingerPath.cubicTo(120, 180, 105, 120, 110, 85);
-        fingerPath.cubicTo(112, 65, 138, 65, 140, 85);
-        fingerPath.cubicTo(145, 120, 145, 180, 148, 205);
+        fingerPath.moveTo(242, 180);
+        fingerPath.cubicTo(242, 140, 238, 75, 225, 55);
+        fingerPath.cubicTo(212, 75, 210, 140, 210, 180);
         fingerPath.close();
       } else if (selectedId == "finger-saturn") {
-        fingerPath.moveTo(148, 205);
-        fingerPath.cubicTo(148, 180, 152, 90, 156, 55);
-        fingerPath.cubicTo(158, 35, 182, 35, 184, 55);
-        fingerPath.cubicTo(188, 90, 188, 180, 192, 205);
+        fingerPath.moveTo(208, 180);
+        fingerPath.cubicTo(208, 130, 195, 50, 180, 35);
+        fingerPath.cubicTo(165, 50, 152, 130, 152, 180);
         fingerPath.close();
       } else if (selectedId == "finger-apollo") {
-        fingerPath.moveTo(192, 205);
-        fingerPath.cubicTo(192, 180, 196, 100, 200, 75);
-        fingerPath.cubicTo(202, 55, 226, 55, 228, 75);
-        fingerPath.cubicTo(232, 100, 232, 185, 236, 210);
+        fingerPath.moveTo(150, 180);
+        fingerPath.cubicTo(150, 140, 145, 75, 135, 55);
+        fingerPath.cubicTo(125, 75, 117, 140, 117, 190);
         fingerPath.close();
       } else if (selectedId == "finger-mercury") {
-        fingerPath.moveTo(236, 210);
-        fingerPath.cubicTo(236, 185, 240, 135, 245, 110);
-        fingerPath.cubicTo(247, 90, 268, 90, 270, 110);
-        fingerPath.cubicTo(273, 135, 273, 200, 278, 230);
+        fingerPath.moveTo(115, 190);
+        fingerPath.cubicTo(115, 160, 100, 125, 90, 115);
+        fingerPath.cubicTo(80, 125, 72, 160, 72, 210);
         fingerPath.close();
       }
       canvas.drawPath(fingerPath, fingerHighlightPaint);
@@ -306,108 +329,94 @@ class HandPainter extends CustomPainter {
 
     // Render Mounts (Only when showing all or mounts)
     if (activeFilter == "all" || activeFilter == "mounts") {
-      _drawMount(canvas, "mount-jupiter", const Offset(132, 220), 18, "مشتری");
-      _drawMount(canvas, "mount-saturn", const Offset(168, 220), 18, "زحل");
-      _drawMount(canvas, "mount-apollo", const Offset(205, 220), 18, "خورشید");
-      _drawMount(canvas, "mount-mercury", const Offset(250, 235), 18, "عطارد");
-      _drawMount(canvas, "mount-mars-lower", const Offset(135, 280), 15, "مریخ 🡫");
-      _drawMount(canvas, "mount-mars-upper", const Offset(270, 290), 15, "مریخ 🡩");
-      _drawMount(canvas, "mount-mars-plain", const Offset(195, 305), 22, "دشت مریخ");
-      _drawMount(canvas, "mount-venus", const Offset(125, 365), 32, "ونوس");
-      _drawMount(canvas, "mount-moon", const Offset(260, 380), 30, "ماه");
+      _drawMount(canvas, "mount-jupiter", const Offset(135, 205), 18, "مشتری");
+      _drawMount(canvas, "mount-saturn", const Offset(180, 205), 18, "زحل");
+      _drawMount(canvas, "mount-apollo", const Offset(225, 205), 18, "خورشید");
+      _drawMount(canvas, "mount-mercury", const Offset(270, 215), 18, "عطارد");
+      _drawMount(canvas, "mount-mars-lower", const Offset(135, 250), 15, "مریخ 🡫");
+      _drawMount(canvas, "mount-mars-upper", const Offset(275, 265), 15, "مریخ 🡩");
+      _drawMount(canvas, "mount-mars-plain", const Offset(195, 275), 22, "دشت مریخ");
+      _drawMount(canvas, "mount-venus", const Offset(125, 345), 32, "ونوس");
+      _drawMount(canvas, "mount-moon", const Offset(270, 360), 30, "ماه");
     }
 
     // Render Lines & Rings (Only when showing all or lines)
     if (activeFilter == "all" || activeFilter == "lines") {
       // Heart Line (Neon Cyan Glow)
-      final Path heartLine = Path()
-        ..moveTo(280, 230)
-        ..cubicTo(240, 190, 190, 180, 140, 180);
-      _drawLine(canvas, "line-heart", heartLine, const Color(0xFF00F2FE), 3.0);
+      _drawLine(canvas, "line-heart", _getPathForZone("line-heart"), const Color(0xFF00F2FE), 3.0);
 
       // Head Line (Neon Cyan Glow)
-      final Path headLine = Path()
-        ..moveTo(120, 230)
-        ..cubicTo(160, 225, 220, 240, 275, 285);
-      _drawLine(canvas, "line-head", headLine, const Color(0xFF00F2FE), 3.0);
+      _drawLine(canvas, "line-head", _getPathForZone("line-head"), const Color(0xFF00F2FE), 3.0);
 
       // Life Line (Neon Cyan Glow)
-      final Path lifeLine = Path()
-        ..moveTo(120, 230)
-        ..cubicTo(145, 280, 130, 385, 175, 450);
-      _drawLine(canvas, "line-life", lifeLine, const Color(0xFF00F2FE), 3.0);
+      _drawLine(canvas, "line-life", _getPathForZone("line-life"), const Color(0xFF00F2FE), 3.0);
 
       // Fate Line (Neon Cyan Glow)
-      final Path fateLine = Path()
-        ..moveTo(200, 455)
-        ..cubicTo(195, 380, 185, 295, 178, 215);
-      _drawLine(canvas, "line-fate", fateLine, const Color(0xFF00F2FE), 3.0);
+      _drawLine(canvas, "line-fate", _getPathForZone("line-fate"), const Color(0xFF00F2FE), 3.0);
 
       // Sun Line (Indigo Glow)
-      final Path sunLine = Path()
-        ..moveTo(208, 225)
-        ..lineTo(208, 320);
-      _drawLine(canvas, "line-sun", sunLine, const Color(0xFF6366F1), 2.0);
+      _drawLine(canvas, "line-sun", _getPathForZone("line-sun"), const Color(0xFF6366F1), 2.0);
 
       // Health Line (Indigo Glow)
-      final Path healthLine = Path()
-        ..moveTo(205, 420)
-        ..cubicTo(225, 365, 245, 305, 255, 240);
-      _drawLine(canvas, "line-mercury", healthLine, const Color(0xFF6366F1), 2.0);
+      _drawLine(canvas, "line-mercury", _getPathForZone("line-mercury"), const Color(0xFF6366F1), 2.0);
 
       // Marriage Line (Indigo Glow)
-      final Path marriageLine = Path()
-        ..moveTo(270, 205)
-        ..lineTo(285, 205);
-      _drawLine(canvas, "line-marriage", marriageLine, const Color(0xFF6366F1), 2.0);
+      _drawLine(canvas, "line-marriage", _getPathForZone("line-marriage"), const Color(0xFF6366F1), 2.0);
 
       // Girdle of Venus
-      final Path girdleVenus = Path()
-        ..moveTo(135, 190)
-        ..cubicTo(160, 150, 210, 150, 245, 190);
-      _drawLine(canvas, "line-girdle-venus", girdleVenus, const Color(0xFF6366F1), 2.0);
+      _drawLine(canvas, "line-girdle-venus", _getPathForZone("line-girdle-venus"), const Color(0xFF6366F1), 2.0);
 
       // Intuition Line
-      final Path intuitionLine = Path()
-        ..moveTo(270, 365)
-        ..cubicTo(230, 330, 235, 285, 255, 250);
-      _drawLine(canvas, "line-intuition", intuitionLine, const Color(0xFF6366F1), 2.0);
+      _drawLine(canvas, "line-intuition", _getPathForZone("line-intuition"), const Color(0xFF6366F1), 2.0);
 
       // Mars Line
-      final Path marsLine = Path()
-        ..moveTo(128, 250)
-        ..cubicTo(135, 285, 132, 345, 148, 395);
-      _drawLine(canvas, "line-mars", marsLine, const Color(0xFF6366F1), 1.5);
+      _drawLine(canvas, "line-mars", _getPathForZone("line-mars"), const Color(0xFF6366F1), 1.5);
 
-      // Travel Lines
-      final Path travel1 = Path()..moveTo(270, 385)..lineTo(290, 385);
-      final Path travel2 = Path()..moveTo(265, 400)..lineTo(285, 400);
-      _drawLine(canvas, "line-travel", travel1, const Color(0xFF6366F1), 1.8);
-      _drawLine(canvas, "line-travel", travel2, const Color(0xFF6366F1), 1.8);
+      // Travel Lines (multi-segment)
+      final travelZone = interactiveZones.firstWhere((z) => z.id == "line-travel");
+      if (travelZone.points.length >= 2) {
+        for (int i = 0; i < travelZone.points.length; i += 2) {
+          if (i + 1 < travelZone.points.length) {
+            final p = Path()
+              ..moveTo(travelZone.points[i].dx, travelZone.points[i].dy)
+              ..lineTo(travelZone.points[i+1].dx, travelZone.points[i+1].dy);
+            _drawLine(canvas, "line-travel", p, const Color(0xFF6366F1), 1.8);
+          }
+        }
+      }
 
       // Bracelets
-      final Path b1 = Path()..moveTo(158, 458)..cubicTo(190, 463, 220, 463, 238, 458);
-      final Path b2 = Path()..moveTo(156, 464)..cubicTo(190, 469, 220, 469, 240, 464);
-      final Path b3 = Path()..moveTo(154, 470)..cubicTo(190, 475, 220, 475, 242, 470);
+      final braceletsZone = interactiveZones.firstWhere((z) => z.id == "line-bracelets");
+      final Path b1 = _getPathForZone("line-bracelets");
+      final Path b2 = Path();
+      final Path b3 = Path();
+      if (braceletsZone.points.isNotEmpty) {
+        b2.moveTo(braceletsZone.points.first.dx - 2, braceletsZone.points.first.dy + 6);
+        b3.moveTo(braceletsZone.points.first.dx - 4, braceletsZone.points.first.dy + 12);
+        for (int i = 1; i < braceletsZone.points.length; i++) {
+          b2.lineTo(braceletsZone.points[i].dx, braceletsZone.points[i].dy + 6);
+          b3.lineTo(braceletsZone.points[i].dx, braceletsZone.points[i].dy + 12);
+        }
+      }
       _drawLine(canvas, "line-bracelets", b1, const Color(0xFF6366F1), 1.5);
       _drawLine(canvas, "line-bracelets", b2, const Color(0xFF6366F1), 1.5);
       _drawLine(canvas, "line-bracelets", b3, const Color(0xFF6366F1), 1.5);
 
       // Rings (Solomon, Saturn, Apollo, Mercury)
-      _drawRing(canvas, "ring-solomon", const Offset(132, 210), 15);
-      _drawRing(canvas, "ring-saturn", const Offset(168, 210), 18);
-      _drawRing(canvas, "ring-apollo", const Offset(205, 210), 18);
-      _drawRing(canvas, "ring-mercury", const Offset(250, 222), 18);
+      _drawRing(canvas, "ring-solomon", const Offset(135, 205), 15);
+      _drawRing(canvas, "ring-saturn", const Offset(180, 205), 18);
+      _drawRing(canvas, "ring-apollo", const Offset(225, 205), 18);
+      _drawRing(canvas, "ring-mercury", const Offset(270, 215), 18);
     }
 
     // Render Symbols (Only when showing all or symbols)
     if (activeFilter == "all" || activeFilter == "symbols") {
-      _drawStar(canvas, "symbol-star", const Offset(132, 205));
-      _drawSquare(canvas, "symbol-square", const Offset(130, 345));
-      _drawTriangle(canvas, "symbol-triangle", const Offset(205, 235));
-      _drawIsland(canvas, "symbol-island", const Offset(195, 240));
-      _drawCross(canvas, "symbol-cross", const Offset(195, 305));
-      _drawGrille(canvas, "symbol-grille", const Offset(250, 350));
+      _drawStar(canvas, "symbol-star", const Offset(135, 195));
+      _drawSquare(canvas, "symbol-square", const Offset(130, 330));
+      _drawTriangle(canvas, "symbol-triangle", const Offset(225, 220));
+      _drawIsland(canvas, "symbol-island", const Offset(195, 225));
+      _drawCross(canvas, "symbol-cross", const Offset(195, 275));
+      _drawGrille(canvas, "symbol-grille", const Offset(265, 345));
     }
 
     canvas.restore();
