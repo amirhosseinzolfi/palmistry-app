@@ -3,524 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ابزار استخراج مختصات کف دست | Palmistry Coordinates Helper</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Palmistry Coordinates Helper (Point, Circle, Oval & Path)</title>
     <style>
-        :root {
-            --bg-dark: #0f172a;
-            --card-dark: #1e293b;
-            --accent-cyan: #06b6d4;
-            --accent-purple: #8b5cf6;
-            --text-light: #f8fafc;
-            --text-muted: #94a3b8;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; }
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            font-family: 'Vazirmatn', sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            gap: 20px;
         }
-
-        header {
-            background-color: #0b0f19;
-            border-bottom: 1px solid #334155;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--accent-cyan);
-        }
-
-        .subtitle {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            flex-grow: 1;
-            align-items: start;
-        }
-
-        /* Canvas Workspace Area */
-        .workspace-card {
-            background-color: var(--card-dark);
-            border: 1px solid #334155;
-            border-radius: 16px;
-            padding: 1.5rem;
+        .canvas-area {
+            flex: 0 0 380px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
-
-        .canvas-container {
+        .canvas-wrapper {
             position: relative;
             width: 360px;
             height: 500px;
-            background-color: #0b1329;
-            border: 2px solid #475569;
-            border-radius: 12px;
+            border: 2px solid #6366f1;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            background: #1e293b;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             cursor: crosshair;
         }
-
-        .hand-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .canvas-wrapper img {
+            width: 360px;
+            height: 500px;
             object-fit: fill;
             pointer-events: none;
-            opacity: 0.75;
+            user-select: none;
         }
-
-        .overlay-svg {
+        .canvas-wrapper svg {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
+            width: 360px;
+            height: 500px;
         }
-
-        /* Control Panel */
-        .control-panel {
-            background-color: var(--card-dark);
-            border: 1px solid #334155;
-            border-radius: 16px;
-            padding: 1.5rem;
+        .controls {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            gap: 15px;
         }
-
-        .mode-selector {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-            background: #0f172a;
-            padding: 0.25rem;
-            border-radius: 8px;
+        .panel {
+            background: #1e293b;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
         }
-
+        h2, h3 { margin-top: 0; color: #818cf8; }
         .mode-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 0.5rem;
-            border-radius: 6px;
+            background: #334155;
+            color: #f8fafc;
+            border: 1px solid #475569;
+            padding: 8px 16px;
+            border-radius: 8px;
             cursor: pointer;
-            font-family: inherit;
-            font-weight: 700;
-            font-size: 0.85rem;
-            transition: all 0.2s ease;
+            font-weight: bold;
+            transition: all 0.2s;
         }
-
         .mode-btn.active {
-            background: var(--accent-cyan);
-            color: #0f172a;
+            background: #6366f1;
+            border-color: #818cf8;
+            box-shadow: 0 0 10px rgba(99,102,241,0.5);
         }
-
-        .stats {
-            background-color: #0f172a;
-            border-radius: 8px;
-            padding: 1rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-            text-align: center;
-        }
-
-        .stat-box span {
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .stat-val {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--accent-cyan);
-        }
-
-        .actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn {
-            flex-grow: 1;
-            padding: 0.65rem 1rem;
-            border-radius: 8px;
-            border: none;
-            font-family: inherit;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-secondary {
-            background-color: #475569;
-            color: var(--text-light);
-        }
-
-        .btn-secondary:hover {
-            background-color: #334155;
-        }
-
-        .btn-danger {
-            background-color: #ef4444;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: #dc2626;
-        }
-
-        .output-box {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .output-label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .copy-link {
-            color: var(--accent-cyan);
-            cursor: pointer;
-            font-size: 0.75rem;
-            text-decoration: underline;
-        }
-
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
         textarea {
             width: 100%;
-            height: 100px;
-            background-color: #0f172a;
+            height: 150px;
+            background: #0f172a;
+            color: #38bdf8;
             border: 1px solid #334155;
             border-radius: 8px;
-            color: #34d399;
-            font-family: 'Outfit', Consolas, monospace;
-            font-size: 0.8rem;
-            padding: 0.75rem;
-            resize: none;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 13px;
             direction: ltr;
+            resize: vertical;
         }
-
-        .instructions {
-            background-color: rgba(6, 182, 212, 0.08);
-            border-right: 3px solid var(--accent-cyan);
-            padding: 1rem;
-            border-radius: 0 8px 8px 0;
-            font-size: 0.8rem;
-            line-height: 1.6;
+        .action-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 8px;
         }
-
-        .instructions h3 {
-            margin-bottom: 0.25rem;
-            color: var(--accent-cyan);
+        .action-btn:hover { background: #059669; }
+        .danger-btn { background: #ef4444; }
+        .danger-btn:hover { background: #dc2626; }
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
         }
-
-        .instructions ul {
-            padding-right: 1.25rem;
-            margin-top: 0.5rem;
-        }
+        .slider-group label { min-width: 150px; font-size: 14px; }
+        .slider-group input[type="range"] { flex: 1; }
+        .slider-group span { min-width: 45px; font-family: monospace; }
     </style>
 </head>
 <body>
-    <header>
-        <div>
-            <h1>کف‌بینی: ابزار ترسیم مختصات تعاملی</h1>
-            <p class="subtitle">تولید کدهای مکان‌نما برای Flutter و صفحات وب بر اساس اندازه پایه 360x500</p>
+
+    <div class="canvas-area">
+        <div class="canvas-wrapper" id="wrapper">
+            <img src="assets/images/hand.png" alt="Hand asset" id="handImage" />
+            <svg id="svgOverlay" viewBox="0 0 360 500">
+                <g id="drawnShapes"></g>
+                <circle id="hoverPoint" cx="-10" cy="-10" r="4" fill="#f43f5e" />
+            </svg>
         </div>
-        <div class="subtitle" style="font-family: 'Outfit';">Canvas Size: 360 x 500</div>
-    </header>
+        <p style="font-size: 13px; color: #94a3b8; margin-top: 8px;">مختصات موس: <span id="coordsDisplay" style="font-family: monospace; color: #38bdf8;">(0, 0)</span></p>
+    </div>
 
-    <div class="main-layout">
-        <div class="workspace-card">
-            <div class="canvas-container" id="canvas-container">
-                <img src="hand.png" class="hand-image" alt="دست">
-                <svg class="overlay-svg" id="overlay-svg">
-                    <!-- Current points drawn here dynamically -->
-                    <g id="temp-drawings"></g>
-                </svg>
+    <div class="controls">
+        <div class="panel">
+            <h2>حالت‌های انتخاب (Selecting Modes)</h2>
+            <div class="btn-group">
+                <button class="mode-btn active" onclick="setMode('point')">نقطه منفرد (Single Point)</button>
+                <button class="mode-btn" onclick="setMode('circle')">کوه دایره‌ای (Circle Mount)</button>
+                <button class="mode-btn" onclick="setMode('oval')">کوه بیضی شکل (Oval Mount)</button>
+                <button class="mode-btn" onclick="setMode('path')">مسیر خطوط (Line Path)</button>
             </div>
-            <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">
-                تغییرات را به صورت بصری روی بوم بالا تماشا کنید.
+
+            <!-- Circle Controls -->
+            <div id="circleControls" style="display: none;">
+                <div class="slider-group">
+                    <label>شعاع دایره (Radius):</label>
+                    <input type="range" id="circleRadius" min="5" max="80" value="20" oninput="updateCircleShape()">
+                    <span id="radiusVal">20</span>
+                </div>
+            </div>
+
+            <!-- Oval Controls -->
+            <div id="ovalControls" style="display: none;">
+                <div class="slider-group">
+                    <label>شعاع افقی (Radius X / Width/2):</label>
+                    <input type="range" id="ovalRx" min="5" max="100" value="25" oninput="updateOvalShape()">
+                    <span id="ovalRxVal">25</span>
+                </div>
+                <div class="slider-group">
+                    <label>شعاع عمودی (Radius Y / Height/2):</label>
+                    <input type="range" id="ovalRy" min="5" max="100" value="35" oninput="updateOvalShape()">
+                    <span id="ovalRyVal">35</span>
+                </div>
+                <div class="slider-group">
+                    <label>زاویه چرخش (Rotation Angle °):</label>
+                    <input type="range" id="ovalRotation" min="-90" max="90" value="0" oninput="updateOvalShape()">
+                    <span id="ovalRotVal">0°</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 12px;">
+                <button class="action-btn danger-btn" onclick="clearAll()">پاکسازی کدهای ثبت‌شده (Clear All)</button>
             </div>
         </div>
 
-        <div class="control-panel">
-            <div class="instructions">
-                <h3><i class="fa-solid fa-circle-info"></i> راهنمای استفاده:</h3>
-                <ul>
-                    <li>حالت <strong>تک نقطه‌ای</strong> را برای استخراج مکان تپه‌ها، نمادها یا حلقه‌ها انتخاب کنید.</li>
-                    <li>حالت <strong>ترسیم مسیر</strong> را برای ترسیم خطوط (خط قلب، سر، زندگی و...) استفاده کنید. با هر کلیک نقطه جدیدی اضافه می‌شود.</li>
-                    <li>کد خروجی به صورت خودکار در جعبه‌های پایین به زبان Dart (مخصوص Flutter) و SVG (مخصوص وب) تولید می‌شود.</li>
-                </ul>
-            </div>
-
-            <div class="mode-selector">
-                <button class="mode-btn active" id="mode-single">تک نقطه‌ای</button>
-                <button class="mode-btn" id="mode-path">ترسیم مسیر</button>
-            </div>
-
-            <div class="stats">
-                <div class="stat-box">
-                    <span class="stat-label">موقعیت X فعلی</span>
-                    <span class="stat-val" id="cursor-x">0</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">موقعیت Y فعلی</span>
-                    <span class="stat-val" id="cursor-y">0</span>
-                </div>
-            </div>
-
-            <div class="actions">
-                <button class="btn btn-secondary" id="clear-btn"><i class="fa-solid fa-rotate-left"></i> پاک کردن نقاط</button>
-                <button class="btn btn-danger" id="undo-btn"><i class="fa-solid fa-undo"></i> برگشت آخرین نقطه</button>
-            </div>
-
-            <div class="output-box">
-                <div class="output-label">
-                    <span>کد خروجی فلاتر (Flutter / Dart)</span>
-                    <span class="copy-link" onclick="copyText('flutter-out')">کپی کردن</span>
-                </div>
-                <textarea id="flutter-out" readonly placeholder="Offset(x, y)..."></textarea>
-            </div>
-
-            <div class="output-box">
-                <div class="output-label">
-                    <span>مسیر SVG برای وب (HTML)</span>
-                    <span class="copy-link" onclick="copyText('svg-out')">کپی کردن</span>
-                </div>
-                <textarea id="svg-out" readonly placeholder='d="M x y..."'></textarea>
-            </div>
+        <div class="panel">
+            <h3>خروجی کد برای فلاتر (Flutter Dart Code Output)</h3>
+            <textarea id="dartOutput" readonly placeholder="کد خروجی برای فلاتر اینجا ظاهر می‌شود..."></textarea>
+            <button class="action-btn" onclick="copyDartCode()">کپی کد فلاتر (Copy Code)</button>
         </div>
     </div>
 
     <script>
-        const container = document.getElementById('canvas-container');
-        const overlay = document.getElementById('overlay-svg');
-        const tempGroup = document.getElementById('temp-drawings');
-        
-        const cursorXText = document.getElementById('cursor-x');
-        const cursorYText = document.getElementById('cursor-y');
-        
-        const modeSingleBtn = document.getElementById('mode-single');
-        const modePathBtn = document.getElementById('mode-path');
-        const clearBtn = document.getElementById('clear-btn');
-        const undoBtn = document.getElementById('undo-btn');
-        
-        const flutterOut = document.getElementById('flutter-out');
-        const svgOut = document.getElementById('svg-out');
-        
-        let isPathMode = false;
+        let currentMode = 'point';
         let points = [];
+        let circleCenter = null;
+        let ovalCenter = null;
 
-        // Tracks mouse coordinates relative to the 360x500 box
-        container.addEventListener('mousemove', (e) => {
-            const rect = container.getBoundingClientRect();
-            const x = Math.round(((e.clientX - rect.left) / rect.width) * 360);
-            const y = Math.round(((e.clientY - rect.top) / rect.height) * 500);
-            
-            cursorXText.textContent = Math.max(0, Math.min(360, x));
-            cursorYText.textContent = Math.max(0, Math.min(500, y));
-        });
+        const wrapper = document.getElementById('wrapper');
+        const svgOverlay = document.getElementById('svgOverlay');
+        const drawnShapes = document.getElementById('drawnShapes');
+        const hoverPoint = document.getElementById('hoverPoint');
+        const coordsDisplay = document.getElementById('coordsDisplay');
+        const dartOutput = document.getElementById('dartOutput');
 
-        // Click handler to register points
-        container.addEventListener('click', (e) => {
-            const rect = container.getBoundingClientRect();
-            const x = Math.round(((e.clientX - rect.left) / rect.width) * 360);
-            const y = Math.round(((e.clientY - rect.top) / rect.height) * 500);
-            
-            const boundedX = Math.max(0, Math.min(360, x));
-            const boundedY = Math.max(0, Math.min(500, y));
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
 
-            if (isPathMode) {
-                points.push({x: boundedX, y: boundedY});
-            } else {
-                points = [{x: boundedX, y: boundedY}];
-            }
-            
-            draw();
-            generateCode();
-        });
-
-        // Mode Toggling
-        modeSingleBtn.addEventListener('click', () => {
-            isPathMode = false;
-            modeSingleBtn.classList.add('active');
-            modePathBtn.classList.remove('active');
-            points = [];
-            draw();
-            generateCode();
-        });
-
-        modePathBtn.addEventListener('click', () => {
-            isPathMode = true;
-            modePathBtn.classList.add('active');
-            modeSingleBtn.classList.remove('active');
-            points = [];
-            draw();
-            generateCode();
-        });
-
-        // Clear and Undo
-        clearBtn.addEventListener('click', () => {
-            points = [];
-            draw();
-            generateCode();
-        });
-
-        undoBtn.addEventListener('click', () => {
-            points.pop();
-            draw();
-            generateCode();
-        });
-
-        // Draw circles/lines on SVG overlay
-        function draw() {
-            tempGroup.innerHTML = '';
-            
-            if (points.length === 0) return;
-
-            if (!isPathMode) {
-                // Single mode: draw circle
-                const pt = points[0];
-                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                circle.setAttribute('cx', pt.x);
-                circle.setAttribute('cy', pt.y);
-                circle.setAttribute('r', '8');
-                circle.setAttribute('fill', '#06b6d4');
-                circle.setAttribute('stroke', '#ffffff');
-                circle.setAttribute('stroke-width', '2');
-                tempGroup.appendChild(circle);
-            } else {
-                // Path mode: draw joints and polyline
-                let pathD = '';
-                points.forEach((pt, index) => {
-                    // Draw node circles
-                    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                    circle.setAttribute('cx', pt.x);
-                    circle.setAttribute('cy', pt.y);
-                    circle.setAttribute('r', '5');
-                    circle.setAttribute('fill', '#8b5cf6');
-                    circle.setAttribute('stroke', '#ffffff');
-                    circle.setAttribute('stroke-width', '1.5');
-                    tempGroup.appendChild(circle);
-
-                    if (index === 0) {
-                        pathD += `M ${pt.x} ${pt.y}`;
-                    } else if (index === 1) {
-                        pathD += ` C ${points[0].x} ${points[0].y}, ${pt.x} ${pt.y}, ${pt.x} ${pt.y}`;
-                    } else {
-                        // Create spline segments
-                        pathD += ` C ${points[index-1].x} ${points[index-1].y}, ${pt.x} ${pt.y}, ${pt.x} ${pt.y}`;
-                    }
-                });
-
-                if (points.length > 1) {
-                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                    path.setAttribute('d', pathD);
-                    path.setAttribute('fill', 'none');
-                    path.setAttribute('stroke', '#8b5cf6');
-                    path.setAttribute('stroke-width', '3');
-                    path.setAttribute('stroke-linecap', 'round');
-                    tempGroup.insertBefore(path, tempGroup.firstChild);
-                }
-            }
+            document.getElementById('circleControls').style.display = (mode === 'circle') ? 'block' : 'none';
+            document.getElementById('ovalControls').style.display = (mode === 'oval') ? 'block' : 'none';
         }
 
-        // Code Generation format
-        function generateCode() {
-            if (points.length === 0) {
-                flutterOut.value = '';
-                svgOut.value = '';
-                return;
-            }
-
-            if (!isPathMode) {
-                const pt = points[0];
-                flutterOut.value = `Offset(${pt.x}, ${pt.y})`;
-                svgOut.value = `cx="${pt.x}" cy="${pt.y}"`;
-            } else {
-                // Generate Flutter Points list
-                let flutterPts = '[\n';
-                points.forEach((pt) => {
-                    flutterPts += `  Offset(${pt.x}, ${pt.y}),\n`;
-                });
-                flutterPts += ']';
-                flutterOut.value = flutterPts;
-
-                // Generate SVG Path d="..."
-                let pathD = '';
-                if (points.length > 0) {
-                    pathD += `M ${points[0].x} ${points[0].y}`;
-                    if (points.length > 1) {
-                        // Generate bezier approximation curves or lines
-                        // For simplicity in a helper, we generate cubics targeting coordinates
-                        pathD += ` C`;
-                        for (let i = 1; i < points.length; i++) {
-                            const prev = points[i-1];
-                            const curr = points[i];
-                            // Simple control points: linear interpolation approximation
-                            pathD += ` ${prev.x} ${prev.y}, ${curr.x} ${curr.y}, ${curr.x} ${curr.y}`;
-                            if (i < points.length - 1) pathD += `,`;
-                        }
-                    }
-                }
-                svgOut.value = `d="${pathD}"`;
-            }
+        function getCanvasCoords(e) {
+            const rect = wrapper.getBoundingClientRect();
+            const x = Math.round(e.clientX - rect.left);
+            const y = Math.round(e.clientY - rect.top);
+            return {
+                x: Math.max(0, Math.min(360, x)),
+                y: Math.max(0, Math.min(500, y))
+            };
         }
 
-        // Copy Text Helper
-        function copyText(id) {
-            const textarea = document.getElementById(id);
-            if (!textarea.value) return;
-            textarea.select();
+        wrapper.addEventListener('mousemove', (e) => {
+            const { x, y } = getCanvasCoords(e);
+            hoverPoint.setAttribute('cx', x);
+            hoverPoint.setAttribute('cy', y);
+            coordsDisplay.innerText = `(${x}, ${y})`;
+        });
+
+        wrapper.addEventListener('click', (e) => {
+            const { x, y } = getCanvasCoords(e);
+
+            if (currentMode === 'point') {
+                const code = `Offset(${x}, ${y}),`;
+                appendCode(code);
+                addSvgDot(x, y, '#38bdf8');
+            } else if (currentMode === 'path') {
+                points.push({ x, y });
+                renderPath();
+            } else if (currentMode === 'circle') {
+                circleCenter = { x, y };
+                updateCircleShape();
+            } else if (currentMode === 'oval') {
+                ovalCenter = { x, y };
+                updateOvalShape();
+            }
+        });
+
+        function updateCircleShape() {
+            const r = parseInt(document.getElementById('circleRadius').value);
+            document.getElementById('radiusVal').innerText = r;
+            if (!circleCenter) return;
+
+            const { x, y } = circleCenter;
+            const code = `// Circle Mount\ncenter: Offset(${x}, ${y}), radius: ${r},\nRect.fromCircle(center: const Offset(${x}, ${y}), radius: ${r}),`;
+            
+            drawnShapes.innerHTML = `<circle cx="${x}" cy="${y}" r="${r}" fill="rgba(99,102,241,0.2)" stroke="#818cf8" stroke-width="2" />
+            <circle cx="${x}" cy="${y}" r="3" fill="#818cf8" />`;
+
+            dartOutput.value = code;
+        }
+
+        function updateOvalShape() {
+            const rx = parseInt(document.getElementById('ovalRx').value);
+            const ry = parseInt(document.getElementById('ovalRy').value);
+            const rot = parseInt(document.getElementById('ovalRotation').value);
+
+            document.getElementById('ovalRxVal').innerText = rx;
+            document.getElementById('ovalRyVal').innerText = ry;
+            document.getElementById('ovalRotVal').innerText = rot + '°';
+
+            if (!ovalCenter) return;
+
+            const { x, y } = ovalCenter;
+            const width = rx * 2;
+            const height = ry * 2;
+
+            let code = `// Oval Mount (Center + Width & Height)\ncenter: Offset(${x}, ${y}), radiusX: ${rx}, radiusY: ${ry}, rotation: ${rot},\nRect.fromCenter(center: const Offset(${x}, ${y}), width: ${width}, height: ${height}),`;
+
+            drawnShapes.innerHTML = `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" transform="rotate(${rot}, ${x}, ${y})" fill="rgba(244,63,94,0.25)" stroke="#f43f5e" stroke-width="2" />
+            <circle cx="${x}" cy="${y}" r="3" fill="#f43f5e" />`;
+
+            dartOutput.value = code;
+        }
+
+        function renderPath() {
+            let svg = '';
+            let code = '[\n';
+            points.forEach((p, i) => {
+                code += `  Offset(${p.x}, ${p.y}),\n`;
+                svg += `<circle cx="${p.x}" cy="${p.y}" r="3" fill="#10b981" />`;
+                if (i > 0) {
+                    const prev = points[i - 1];
+                    svg += `<line x1="${prev.x}" y1="${prev.y}" x2="${p.x}" y2="${p.y}" stroke="#10b981" stroke-width="2" />`;
+                }
+            });
+            code += ']';
+
+            drawnShapes.innerHTML = svg;
+            dartOutput.value = code;
+        }
+
+        function addSvgDot(x, y, color) {
+            const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            dot.setAttribute('cx', x);
+            dot.setAttribute('cy', y);
+            dot.setAttribute('r', '4');
+            dot.setAttribute('fill', color);
+            drawnShapes.appendChild(dot);
+        }
+
+        function appendCode(text) {
+            dartOutput.value += text + '\n';
+        }
+
+        function clearAll() {
+            points = [];
+            circleCenter = null;
+            ovalCenter = null;
+            drawnShapes.innerHTML = '';
+            dartOutput.value = '';
+        }
+
+        function copyDartCode() {
+            dartOutput.select();
             document.execCommand('copy');
-            alert('کد با موفقیت در حافظه موقت کپی شد!');
+            alert('کد فلاتر در حافظه کپی شد!');
         }
     </script>
 </body>

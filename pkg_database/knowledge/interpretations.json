@@ -2032,6 +2032,36 @@
         "overall": "key_interp_mount_jupiter_development_prominent",
         "sign": "key_specialSign_opt_star_jupiter_apollo_desc"
       }
+    },
+    {
+      "id": "interp_line_children_visibility_visible_generated",
+      "target_entity": "line_children",
+      "condition_attribute": "visibility",
+      "condition_value": "visible",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_children_visibility_visible"
+      }
+    },
+    {
+      "id": "interp_line_children_visibility_low_density_generated",
+      "target_entity": "line_children",
+      "condition_attribute": "visibility",
+      "condition_value": "low_density",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_children_visibility_low_density"
+      }
+    },
+    {
+      "id": "interp_line_children_visibility_absent_generated",
+      "target_entity": "line_children",
+      "condition_attribute": "visibility",
+      "condition_value": "absent",
+      "source_id": "cheiro_1910",
+      "interpretation": {
+        "overall": "key_interp_line_children_visibility_absent"
+      }
     }
   ]
 }

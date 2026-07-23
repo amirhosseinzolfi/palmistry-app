@@ -71,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (targetId == "line-mercury") return "line_mercury";
       if (targetId == "line-marriage") return "line_marriage";
       if (targetId == "line-travel") return "line_travel";
+      if (targetId == "line-children") return "line_children";
       if (targetId == "line-intuition") return "line_intuition";
       if (targetId == "line-girdle-venus") return "girdle_venus";
       if (targetId == "line-influence") return "line_influence";
@@ -88,6 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
       if (targetId == "symbol-triangle") return "mark_triangle";
       if (targetId == "symbol-island") return "mark_island";
       if (targetId == "symbol-grille") return "mark_grille";
+      if (targetId == "symbol-dot") return "mark_dot";
+      if (targetId == "symbol-trident") return "mark_trident";
+      if (targetId == "symbol-fish") return "mark_fish";
     }
     return null;
   }
@@ -513,6 +517,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
 
+                  // Mounts Legend Map Overlay - displayed ONLY when mounts filter is active
+                  if (_handFilter == "mounts")
+                    Positioned(
+                      top: 12,
+                      left: 12,
+                      right: 65,
+                      child: _buildMountsLegendMap(),
+                    ),
+
+                  // Major Lines Legend Map Overlay - displayed ONLY when major filter is active
+                  if (_handFilter == "major")
+                    Positioned(
+                      top: 12,
+                      left: 12,
+                      right: 65,
+                      child: _buildMajorLinesLegendMap(),
+                    ),
+
+                  // Minor Lines Legend Map Overlay - displayed ONLY when minor filter is active
+                  if (_handFilter == "minor")
+                    Positioned(
+                      top: 12,
+                      left: 12,
+                      right: 65,
+                      child: _buildMinorLinesLegendMap(),
+                    ),
+
                   // Minimal Vertical Island of Filter Buttons on the Right Side (inside the container)
                   Positioned(
                     right: 15,
@@ -530,7 +561,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             _buildHandFilterIconButton(Icons.layers_rounded, "همه بخش‌ها", "all"),
                             const SizedBox(height: 12),
-                            _buildHandFilterIconButton(Icons.timeline_rounded, "خطوط دست", "lines"),
+                            _buildHandFilterIconButton(Icons.timeline_rounded, "خطوط اصلی", "major"),
+                            const SizedBox(height: 12),
+                            _buildHandFilterIconButton(Icons.alt_route_rounded, "خطوط فرعی", "minor"),
                             const SizedBox(height: 12),
                             _buildHandFilterIconButton(Icons.blur_circular_rounded, "تپه‌ها (کوه‌ها)", "mounts"),
                             const SizedBox(height: 12),
@@ -548,6 +581,126 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildMountsLegendMap() {
+    final List<Map<String, dynamic>> items = [
+      {"id": "mount-jupiter", "name": "کوه مشتری", "color": const Color(0xFF84CC16)},
+      {"id": "mount-saturn", "name": "کوه زحل", "color": const Color(0xFF8B5CF6)},
+      {"id": "mount-apollo", "name": "کوه خورشید", "color": const Color(0xFFEAB308)},
+      {"id": "mount-mercury", "name": "کوه عطارد", "color": const Color(0xFF06B6D4)},
+      {"id": "mount-mars-lower", "name": "مریخ مثبت", "color": const Color(0xFF84CC16)},
+      {"id": "mount-mars-upper", "name": "مریخ منفی", "color": const Color(0xFFF97316)},
+      {"id": "mount-mars-plain", "name": "دشت مریخ", "color": const Color(0xFFFACC15)},
+      {"id": "mount-venus", "name": "کوه ونوس", "color": const Color(0xFFF43F5E)},
+      {"id": "mount-moon", "name": "کوه ماه", "color": const Color(0xFFA855F7)},
+    ];
+
+    return _buildGenericLegendMap(items);
+  }
+
+  Widget _buildMajorLinesLegendMap() {
+    final List<Map<String, dynamic>> items = [
+      {"id": "line-heart", "name": "خط قلب", "color": const Color(0xFFEF4444)},
+      {"id": "line-head", "name": "خط سر", "color": const Color(0xFF3B82F6)},
+      {"id": "line-life", "name": "خط زندگی", "color": const Color(0xFF10B981)},
+      {"id": "line-fate", "name": "خط سرنوشت", "color": const Color(0xFFEAB308)},
+      {"id": "line-sun", "name": "خط خورشید", "color": const Color(0xFF8B5CF6)},
+      {"id": "line-mercury", "name": "خط سلامت", "color": const Color(0xFF06B6D4)},
+    ];
+
+    return _buildGenericLegendMap(items);
+  }
+
+  Widget _buildMinorLinesLegendMap() {
+    final List<Map<String, dynamic>> items = [
+      {"id": "ring-saturn", "name": "حلقه زحل", "color": const Color(0xFF8B5CF6)},
+      {"id": "ring-solomon", "name": "حلقه سلیمان", "color": const Color(0xFF22C55E)},
+      {"id": "line-girdle-venus", "name": "کمربند ونوس", "color": const Color(0xFFEC4899)},
+      {"id": "line-marriage", "name": "خط ازدواج", "color": const Color(0xFFA855F7)},
+      {"id": "line-children", "name": "خطوط فرزندان", "color": const Color(0xFF06B6D4)},
+      {"id": "line-intuition", "name": "خط شهود", "color": const Color(0xFF84CC16)},
+      {"id": "line-travel", "name": "خطوط سفر", "color": const Color(0xFF0284C7)},
+      {"id": "line-influence", "name": "خطوط نفوذ", "color": const Color(0xFF38BDF8)},
+      {"id": "line-mars", "name": "خط مریخ", "color": const Color(0xFFF59E0B)},
+      {"id": "line-bracelets", "name": "خطوط مچ", "color": const Color(0xFFF97316)},
+    ];
+
+    return _buildGenericLegendMap(items);
+  }
+
+  Widget _buildGenericLegendMap(List<Map<String, dynamic>> items) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: const Color(0xFF0F172A).withOpacity(0.88),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0x306366F1)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.4),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          )
+        ],
+      ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        child: Row(
+          children: items.map((item) {
+            final bool isSelected = _selectedSvgId == item["id"];
+            final Color color = item["color"] as Color;
+
+            return GestureDetector(
+              onTap: () => _onElementSelected(item["id"] as String),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                margin: const EdgeInsets.only(left: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: isSelected ? color.withOpacity(0.3) : const Color(0x15FFFFFF),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: isSelected ? color : color.withOpacity(0.4),
+                    width: isSelected ? 1.5 : 1.0,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: color,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: color.withOpacity(0.6),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      item["name"] as String,
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : const Color(0xFFCBD5E1),
+                        fontSize: 10.5,
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                        fontFamily: 'Vazirmatn',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 
@@ -768,6 +921,8 @@ class _HomeScreenState extends State<HomeScreen> {
             else if (fid == "girdle_venus") iconData = Icons.gesture_rounded;
             else if (fid == "line_marriage") iconData = Icons.favorite_border_rounded;
             else if (fid == "line_travel") iconData = Icons.flight_takeoff_rounded;
+            else if (fid == "line_children") iconData = Icons.child_care_rounded;
+            else if (fid == "line_influence") iconData = Icons.people_outline_rounded;
             else if (fid == "line_intuition") iconData = Icons.lens_blur_rounded;
             else if (fid == "line_bracelets") iconData = Icons.menu_rounded;
             else iconData = Icons.linear_scale_rounded;
@@ -785,6 +940,9 @@ class _HomeScreenState extends State<HomeScreen> {
             else if (fid == "mark_square") iconData = Icons.crop_square_rounded;
             else if (fid == "mark_cross") iconData = Icons.add_rounded;
             else if (fid == "mark_island") iconData = Icons.lens_blur_rounded;
+            else if (fid == "mark_dot") iconData = Icons.circle;
+            else if (fid == "mark_trident") iconData = Icons.alt_route_rounded;
+            else if (fid == "mark_fish") iconData = Icons.set_meal_rounded;
             else iconData = Icons.grid_goldenratio_rounded;
           } else if (type == "finger") {
             iconData = Icons.back_hand_rounded;

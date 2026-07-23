@@ -232,6 +232,29 @@
         "cheiro_1910",
         "benham_1900"
       ]
+    },
+    {
+      "id": "line_children",
+      "category": "Minor Line",
+      "family": "children",
+      "subfamily": "family",
+      "name_translation_key": "line_children_name",
+      "description_translation_key": "line_children_desc",
+      "attributes": [
+        {
+          "name": "visibility",
+          "possible_values": [
+            "visible",
+            "low_density",
+            "absent"
+          ]
+        }
+      ],
+      "associated_marks": [],
+      "sources": [
+        "cheiro_1910",
+        "benham_1900"
+      ]
     }
   ]
 }
