@@ -517,58 +517,48 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
 
-                  // Mounts Legend Map Overlay - displayed ONLY when mounts filter is active
-                  if (_handFilter == "mounts")
-                    Positioned(
-                      top: 12,
-                      left: 12,
-                      right: 65,
-                      child: _buildMountsLegendMap(),
-                    ),
-
-                  // Major Lines Legend Map Overlay - displayed ONLY when major filter is active
-                  if (_handFilter == "major")
-                    Positioned(
-                      top: 12,
-                      left: 12,
-                      right: 65,
-                      child: _buildMajorLinesLegendMap(),
-                    ),
-
-                  // Minor Lines Legend Map Overlay - displayed ONLY when minor filter is active
-                  if (_handFilter == "minor")
-                    Positioned(
-                      top: 12,
-                      left: 12,
-                      right: 65,
-                      child: _buildMinorLinesLegendMap(),
-                    ),
+                  // Legend Map Overlay with Informative Title - displayed for active filter
+                  Positioned(
+                    top: 12,
+                    left: 12,
+                    right: 60,
+                    child: _buildActiveLegendMap(),
+                  ),
 
                   // Minimal Vertical Island of Filter Buttons on the Right Side (inside the container)
                   Positioned(
-                    right: 15,
+                    right: 12,
                     top: 0,
                     bottom: 0,
                     child: Center(
                       child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                        decoration: const BoxDecoration(
-                          color: Colors.transparent, // No background, shares the hand background!
+                        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF0F172A).withOpacity(0.88),
+                          borderRadius: BorderRadius.circular(22),
+                          border: Border.all(color: const Color(0x306366F1), width: 1.2),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.4),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             _buildHandFilterIconButton(Icons.layers_rounded, "همه بخش‌ها", "all"),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 5),
                             _buildHandFilterIconButton(Icons.timeline_rounded, "خطوط اصلی", "major"),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 5),
                             _buildHandFilterIconButton(Icons.alt_route_rounded, "خطوط فرعی", "minor"),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 5),
                             _buildHandFilterIconButton(Icons.blur_circular_rounded, "تپه‌ها (کوه‌ها)", "mounts"),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 5),
                             _buildHandFilterIconButton(Icons.auto_awesome_rounded, "نشانه‌ها", "symbols"),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 5),
                             _buildHandFilterIconButton(Icons.back_hand_rounded, "انگشتان", "fingers"),
                           ],
                         ),
@@ -584,6 +574,38 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildActiveLegendMap() {
+    switch (_handFilter) {
+      case "major":
+        return _buildMajorLinesLegendMap();
+      case "minor":
+        return _buildMinorLinesLegendMap();
+      case "mounts":
+        return _buildMountsLegendMap();
+      case "symbols":
+        return _buildSymbolsLegendMap();
+      case "fingers":
+        return _buildFingersLegendMap();
+      case "all":
+      default:
+        return _buildAllLegendMap();
+    }
+  }
+
+  Widget _buildAllLegendMap() {
+    final List<Map<String, dynamic>> items = [
+      {"id": "line-heart", "name": "خط قلب", "color": const Color(0xFFEF4444)},
+      {"id": "line-head", "name": "خط سر", "color": const Color(0xFF3B82F6)},
+      {"id": "line-life", "name": "خط زندگی", "color": const Color(0xFF10B981)},
+      {"id": "mount-jupiter", "name": "کوه مشتری", "color": const Color(0xFF84CC16)},
+      {"id": "mount-venus", "name": "کوه ونوس", "color": const Color(0xFFF43F5E)},
+      {"id": "symbol-star", "name": "ستاره", "color": const Color(0xFFF59E0B)},
+      {"id": "finger-thumb", "name": "شست", "color": const Color(0xFF8B5CF6)},
+    ];
+
+    return _buildGenericLegendMap(items, title: "همه بخش‌های دست");
+  }
+
   Widget _buildMountsLegendMap() {
     final List<Map<String, dynamic>> items = [
       {"id": "mount-jupiter", "name": "کوه مشتری", "color": const Color(0xFF84CC16)},
@@ -597,7 +619,7 @@ class _HomeScreenState extends State<HomeScreen> {
       {"id": "mount-moon", "name": "کوه ماه", "color": const Color(0xFFA855F7)},
     ];
 
-    return _buildGenericLegendMap(items);
+    return _buildGenericLegendMap(items, title: "تپه‌ها و کوه‌های دست");
   }
 
   Widget _buildMajorLinesLegendMap() {
@@ -610,7 +632,7 @@ class _HomeScreenState extends State<HomeScreen> {
       {"id": "line-mercury", "name": "خط سلامت", "color": const Color(0xFF06B6D4)},
     ];
 
-    return _buildGenericLegendMap(items);
+    return _buildGenericLegendMap(items, title: "خطوط اصلی دست");
   }
 
   Widget _buildMinorLinesLegendMap() {
@@ -627,79 +649,129 @@ class _HomeScreenState extends State<HomeScreen> {
       {"id": "line-bracelets", "name": "خطوط مچ", "color": const Color(0xFFF97316)},
     ];
 
-    return _buildGenericLegendMap(items);
+    return _buildGenericLegendMap(items, title: "خطوط فرعی و حلقه‌های دست");
   }
 
-  Widget _buildGenericLegendMap(List<Map<String, dynamic>> items) {
+  Widget _buildSymbolsLegendMap() {
+    final List<Map<String, dynamic>> items = [
+      {"id": "symbol-star", "name": "ستاره", "color": const Color(0xFFF59E0B)},
+      {"id": "symbol-cross", "name": "صلیب", "color": const Color(0xFFEF4444)},
+      {"id": "symbol-square", "name": "مربع", "color": const Color(0xFF10B981)},
+      {"id": "symbol-triangle", "name": "مثلث", "color": const Color(0xFF3B82F6)},
+      {"id": "symbol-island", "name": "جزیره", "color": const Color(0xFF8B5CF6)},
+      {"id": "symbol-grille", "name": "شبکه", "color": const Color(0xFFEC4899)},
+      {"id": "symbol-dot", "name": "نقطه", "color": const Color(0xFF06B6D4)},
+      {"id": "symbol-trident", "name": "سه‌شاخ", "color": const Color(0xFF84CC16)},
+      {"id": "symbol-fish", "name": "ماهی", "color": const Color(0xFFEAB308)},
+    ];
+
+    return _buildGenericLegendMap(items, title: "نشانه‌ها و علائم ویژه دست");
+  }
+
+  Widget _buildFingersLegendMap() {
+    final List<Map<String, dynamic>> items = [
+      {"id": "finger-thumb", "name": "انگشت شست", "color": const Color(0xFF8B5CF6)},
+      {"id": "finger-jupiter", "name": "انگشت اشاره", "color": const Color(0xFF84CC16)},
+      {"id": "finger-saturn", "name": "انگشت وسط", "color": const Color(0xFF3B82F6)},
+      {"id": "finger-apollo", "name": "انگشت حلقه", "color": const Color(0xFFEAB308)},
+      {"id": "finger-mercury", "name": "انگشت کوچک", "color": const Color(0xFF06B6D4)},
+    ];
+
+    return _buildGenericLegendMap(items, title: "انگشتان و فرم بندهای دست");
+  }
+
+  Widget _buildGenericLegendMap(List<Map<String, dynamic>> items, {required String title}) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
       decoration: BoxDecoration(
-        color: const Color(0xFF0F172A).withOpacity(0.88),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0x306366F1)),
+        color: const Color(0xFF0F172A).withOpacity(0.92),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: const Color(0x356366F1), width: 1.2),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.4),
-            blurRadius: 10,
+            color: Colors.black.withOpacity(0.45),
+            blurRadius: 12,
             offset: const Offset(0, 4),
           )
         ],
       ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        child: Row(
-          children: items.map((item) {
-            final bool isSelected = _selectedSvgId == item["id"];
-            final Color color = item["color"] as Color;
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (items.isNotEmpty) ...[
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              child: Row(
+                children: items.map((item) {
+                  final bool isSelected = _selectedSvgId == item["id"];
+                  final Color color = item["color"] as Color;
 
-            return GestureDetector(
-              onTap: () => _onElementSelected(item["id"] as String),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                margin: const EdgeInsets.only(left: 6),
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: isSelected ? color.withOpacity(0.3) : const Color(0x15FFFFFF),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: isSelected ? color : color.withOpacity(0.4),
-                    width: isSelected ? 1.5 : 1.0,
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 8,
-                      height: 8,
+                  return GestureDetector(
+                    onTap: () => _onElementSelected(item["id"] as String),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      margin: const EdgeInsets.only(left: 6),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: color,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: color.withOpacity(0.6),
-                            blurRadius: 4,
+                        color: isSelected ? color.withOpacity(0.3) : const Color(0x15FFFFFF),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: isSelected ? color : color.withOpacity(0.4),
+                          width: isSelected ? 1.5 : 1.0,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: color,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: color.withOpacity(0.6),
+                                  blurRadius: 4,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            item["name"] as String,
+                            style: TextStyle(
+                              color: isSelected ? Colors.white : const Color(0xFFCBD5E1),
+                              fontSize: 10.5,
+                              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                              fontFamily: 'Vazirmatn',
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 5),
-                    Text(
-                      item["name"] as String,
-                      style: TextStyle(
-                        color: isSelected ? Colors.white : const Color(0xFFCBD5E1),
-                        fontSize: 10.5,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                        fontFamily: 'Vazirmatn',
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                }).toList(),
               ),
-            );
-          }).toList(),
-        ),
+            ),
+            const SizedBox(height: 6),
+            const Divider(color: Color(0x15FFFFFF), height: 1, indent: 20, endIndent: 20),
+            const SizedBox(height: 5),
+          ],
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Color(0xFF00F2FE),
+              fontSize: 11.5,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Vazirmatn',
+              letterSpacing: 0.2,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -722,19 +794,19 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          width: 44,
-          height: 44,
+          width: 38,
+          height: 38,
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFF6366F1).withOpacity(0.2) : Colors.transparent,
+            color: isSelected ? const Color(0xFF6366F1).withOpacity(0.25) : const Color(0x10FFFFFF),
             shape: BoxShape.circle,
             border: Border.all(
-              color: isSelected ? const Color(0xFF6366F1) : Colors.transparent,
-              width: 1.5,
+              color: isSelected ? const Color(0xFF6366F1) : const Color(0x15FFFFFF),
+              width: 1.2,
             ),
           ),
           child: Icon(
             icon,
-            size: 20,
+            size: 19,
             color: isSelected ? const Color(0xFF00F2FE) : const Color(0xFFA9B2C3),
           ),
         ),
