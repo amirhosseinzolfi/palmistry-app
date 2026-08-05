@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../services/pkg_database_service.dart';
+import '../theme/app_theme.dart';
 
 class ReportScreen extends StatefulWidget {
   final Map<String, String> selections;
@@ -135,9 +136,9 @@ class _ReportScreenState extends State<ReportScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const Scaffold(
-        backgroundColor: Color(0xFF070A13),
+        backgroundColor: AppColors.scaffoldBackground,
         body: Center(
-          child: CircularProgressIndicator(color: Color(0xFF00F2FE)),
+          child: CircularProgressIndicator(color: AppColors.neonElectricBlue),
         ),
       );
     }
@@ -145,16 +146,16 @@ class _ReportScreenState extends State<ReportScreen> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFF070A13),
+        backgroundColor: AppColors.scaffoldBackground,
         appBar: AppBar(
-          backgroundColor: const Color(0xFF04060C),
+          backgroundColor: AppColors.appBarBackground,
           elevation: 0,
-          title: const Text(
+          title: Text(
             "گزارش نهایی تحلیل دست",
-            style: TextStyle(fontFamily: 'Vazirmatn'),
+            style: AppStyles.fontHeader(fontSize: 16),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -163,25 +164,15 @@ class _ReportScreenState extends State<ReportScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Parchment styled Report Container
+              // Premium Dark Glassmorphic Report Container
               Container(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Color(0xFF151932), Color(0xFF0C0E1E)],
-                  ),
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: const Color(0xFF6366F1).withOpacity(0.25), width: 1.5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.4),
-                      blurRadius: 15,
-                      offset: const Offset(0, 5),
-                    )
-                  ],
+                decoration: AppStyles.cardDecoration(
+                  backgroundColor: AppColors.surfaceCard,
+                  borderColor: AppColors.surfaceCardBorder,
+                  showGlow: true,
+                  glowColor: AppColors.primaryIndigo,
                 ),
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(22),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -189,34 +180,31 @@ class _ReportScreenState extends State<ReportScreen> {
                     const Center(
                       child: Icon(
                         Icons.nightlight_round,
-                        color: Color(0xFFFFB703),
+                        color: AppColors.neonElectricBlue,
                         size: 36,
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const Center(
+                    Center(
                       child: Text(
                         "تفسیر و راهنمای شخصی کف‌بینی",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Vazirmatn',
+                        style: AppStyles.fontHeader(
+                          fontSize: 16.5,
+                          color: AppColors.textPrimary,
                         ),
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Center(
+                    Center(
                       child: Text(
-                        "بر اساس فرمול جامع کف‌بینی شخصی",
-                        style: TextStyle(
-                          color: Color(0xFF6C7A9C),
-                          fontSize: 11,
-                          fontFamily: 'Vazirmatn',
+                        "بر اساس فرمول جامع کف‌بینی شخصی",
+                        style: AppStyles.fontCaption(
+                          fontSize: 11.5,
+                          color: AppColors.textMuted,
                         ),
                       ),
                     ),
-                    const Divider(color: Color(0x206366F1), height: 30),
+                    const Divider(color: Color(0x206366F1), height: 28),
 
                     // Section 1
                     _buildReportSection(
@@ -257,24 +245,22 @@ class _ReportScreenState extends State<ReportScreen> {
                     // Warning note box
                     Container(
                       padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFB703).withOpacity(0.04),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: const Color(0x30FFB703)),
+                      decoration: AppStyles.textContainerDecoration(
+                        backgroundColor: AppColors.primaryIndigo.withOpacity(0.08),
+                        borderColor: AppColors.primaryIndigo.withOpacity(0.3),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Icon(Icons.info_rounded, color: Color(0xFFFFB703), size: 18),
-                          SizedBox(width: 8),
+                        children: [
+                          const Icon(Icons.info_rounded, color: AppColors.neonElectricBlue, size: 18),
+                          const SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               "کف دست نقشه تقدیر نیست؛ بلکه بازتاب گرایش‌ها در زمان کنونی است. انتخاب‌ها، آگاهی و اراده شما همیشه اثرگذارترین عامل هستند.",
-                              style: TextStyle(
-                                color: Color(0xFFA9B2C3),
-                                fontSize: 11,
+                              style: AppStyles.fontBody(
+                                color: AppColors.textSecondary,
+                                fontSize: 11.5,
                                 height: 1.6,
-                                fontFamily: 'Vazirmatn',
                               ),
                             ),
                           ),
@@ -292,28 +278,28 @@ class _ReportScreenState extends State<ReportScreen> {
                   Expanded(
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF12162B),
-                        foregroundColor: Colors.white,
+                        backgroundColor: AppColors.surfaceCard,
+                        foregroundColor: AppColors.textPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
-                          side: const BorderSide(color: Color(0x15FFFFFF)),
+                          side: const BorderSide(color: AppColors.surfaceCardBorder),
                         ),
                         elevation: 0,
                       ),
                       icon: const Icon(Icons.copy_rounded, size: 18),
-                      label: const Text("کپی کردن متن", style: TextStyle(fontFamily: 'Vazirmatn', fontWeight: FontWeight.bold)),
+                      label: Text("کپی کردن متن", style: AppStyles.fontTitle(fontSize: 13, color: AppColors.textPrimary)),
                       onPressed: () {
                         Clipboard.setData(ClipboardData(text: _compileReportText()));
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             content: Text(
                               "متن گزارش در حافظه موقت کپی شد! ✓",
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontFamily: 'Vazirmatn'),
+                              style: AppStyles.fontBody(color: Colors.white, fontSize: 13),
                             ),
-                            backgroundColor: Color(0xFF6366F1),
-                            duration: Duration(seconds: 2),
+                            backgroundColor: AppColors.primaryIndigo,
+                            duration: const Duration(seconds: 2),
                           ),
                         );
                       },
@@ -323,7 +309,7 @@ class _ReportScreenState extends State<ReportScreen> {
                   Expanded(
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF6366F1),
+                        backgroundColor: AppColors.primaryIndigo,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
@@ -332,7 +318,7 @@ class _ReportScreenState extends State<ReportScreen> {
                         elevation: 0,
                       ),
                       icon: const Icon(Icons.home_rounded, size: 18),
-                      label: const Text("بازگشت به خانه", style: TextStyle(fontFamily: 'Vazirmatn', fontWeight: FontWeight.bold)),
+                      label: Text("بازگشت به خانه", style: AppStyles.fontTitle(fontSize: 13, color: Colors.white)),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -358,25 +344,27 @@ class _ReportScreenState extends State<ReportScreen> {
               width: 3.5,
               height: 14,
               decoration: BoxDecoration(
-                color: const Color(0xFF6366F1),
+                color: AppColors.primaryIndigo,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
             const SizedBox(width: 8),
             Text(
               title,
-              style: const TextStyle(
-                color: Color(0xFFFFB703),
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Vazirmatn',
+              style: AppStyles.fontTitle(
+                color: AppColors.neonElectricBlue,
+                fontSize: 13.5,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
-        _buildParsedText(content),
-        const SizedBox(height: 25),
+        const SizedBox(height: 10),
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: AppStyles.textContainerDecoration(),
+          child: _buildParsedText(content),
+        ),
+        const SizedBox(height: 20),
       ],
     );
   }
@@ -386,7 +374,7 @@ class _ReportScreenState extends State<ReportScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: lines.map((line) {
-        if (line.trim().isEmpty) return const SizedBox(height: 5);
+        if (line.trim().isEmpty) return const SizedBox(height: 4);
 
         bool isBullet = line.startsWith('•');
         String cleanedLine = isBullet ? line.replaceFirst('•', '').trim() : line;
@@ -401,7 +389,7 @@ class _ReportScreenState extends State<ReportScreen> {
           }
           spans.add(TextSpan(
             text: match.group(1),
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: AppStyles.fontTitle(fontSize: 13, color: AppColors.textPrimary),
           ));
           lastIndex = match.end;
         }
@@ -413,24 +401,23 @@ class _ReportScreenState extends State<ReportScreen> {
         if (spans.isEmpty) spans.add(TextSpan(text: cleanedLine));
 
         return Padding(
-          padding: EdgeInsets.only(bottom: 6, right: isBullet ? 12.0 : 0.0),
+          padding: EdgeInsets.only(bottom: 6, right: isBullet ? 10.0 : 0.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (isBullet)
                 const Padding(
                   padding: EdgeInsets.only(top: 6, left: 6),
-                  child: Icon(Icons.lens, size: 5, color: Color(0xFF00F2FE)),
+                  child: Icon(Icons.lens, size: 5, color: AppColors.neonElectricBlue),
                 ),
               Expanded(
                 child: RichText(
                   textAlign: TextAlign.justify,
                   text: TextSpan(
-                    style: const TextStyle(
-                      color: Color(0xFFA9B2C3),
-                      fontSize: 12.5,
-                      height: 1.6,
-                      fontFamily: 'Vazirmatn',
+                    style: AppStyles.fontBody(
+                      fontSize: 13,
+                      color: AppColors.textSecondary,
+                      height: 1.65,
                     ),
                     children: spans,
                   ),

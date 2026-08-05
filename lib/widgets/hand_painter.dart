@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
 
 // Definition of an interactive zone
 class InteractiveZone {
@@ -604,15 +605,15 @@ class HandPainter extends CustomPainter {
         // Low-contrast soft translucent purple fill
         final Paint fingerFillPaint = Paint()
           ..color = isSelected
-              ? const Color(0xFF6366F1).withOpacity(0.35)
-              : const Color(0xFF6366F1).withOpacity(0.18)
+              ? AppColors.primaryIndigo.withOpacity(0.35)
+              : AppColors.primaryIndigo.withOpacity(0.18)
           ..style = PaintingStyle.fill;
 
         // Soft border
         final Paint fingerBorderPaint = Paint()
           ..color = isSelected
-              ? const Color(0xFFA78BFA)
-              : const Color(0xFF6366F1).withOpacity(0.25)
+              ? AppColors.neonPurple
+              : AppColors.primaryIndigo.withOpacity(0.25)
           ..strokeWidth = isSelected ? 2.0 : 1.0
           ..style = PaintingStyle.stroke;
 
@@ -622,7 +623,7 @@ class HandPainter extends CustomPainter {
         // Selection glow effect
         if (isSelected) {
           final Paint glowPaint = Paint()
-            ..color = const Color(0xFF8B5CF6).withOpacity(0.4)
+            ..color = AppColors.primaryPurple.withOpacity(0.4)
             ..strokeWidth = 3.5
             ..style = PaintingStyle.stroke
             ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0);
@@ -655,58 +656,54 @@ class HandPainter extends CustomPainter {
 
     // Render Major Lines (Only when showing all or major)
     if (activeFilter == "all" || activeFilter == "major") {
-      // Heart Line (Red)
-      _drawLine(canvas, "line-heart", _getPathForZone("line-heart"), const Color(0xFFEF4444), 3.0);
+      // Heart Line (Neon Rose/Crimson)
+      _drawLine(canvas, "line-heart", _getPathForZone("line-heart"), AppColors.lineHeart, 3.0);
 
-      // Head Line (Blue)
-      _drawLine(canvas, "line-head", _getPathForZone("line-head"), const Color(0xFF3B82F6), 3.0);
+      // Head Line (Neon Blue)
+      _drawLine(canvas, "line-head", _getPathForZone("line-head"), AppColors.lineHead, 3.0);
 
-      // Life Line (Vibrant Green)
-      _drawLine(canvas, "line-life", _getPathForZone("line-life"), const Color(0xFF10B981), 3.0);
+      // Life Line (Neon Emerald)
+      _drawLine(canvas, "line-life", _getPathForZone("line-life"), AppColors.lineLife, 3.0);
 
-      // Fate Line (Golden Yellow)
-      _drawLine(canvas, "line-fate", _getPathForZone("line-fate"), const Color(0xFFEAB308), 3.0);
+      // Fate Line (Neon Purple)
+      _drawLine(canvas, "line-fate", _getPathForZone("line-fate"), AppColors.lineFate, 3.0);
 
-      // Sun Line (Purple)
-      _drawLine(canvas, "line-sun", _getPathForZone("line-sun"), const Color(0xFF8B5CF6), 2.0);
+      // Sun Line (Neon Amber)
+      _drawLine(canvas, "line-sun", _getPathForZone("line-sun"), AppColors.lineSun, 2.0);
 
-      // Health Line (Cyan)
-      _drawLine(canvas, "line-mercury", _getPathForZone("line-mercury"), const Color(0xFF06B6D4), 2.0);
+      // Health Line (Neon Cyan)
+      _drawLine(canvas, "line-mercury", _getPathForZone("line-mercury"), AppColors.lineMercury, 2.0);
     }
 
     // Render Minor Lines & Rings (Only when showing all or minor)
     if (activeFilter == "all" || activeFilter == "minor") {
-      // Marriage Line (Light Violet)
-      _drawLine(canvas, "line-marriage", _getPathForZone("line-marriage"), const Color(0xFFA855F7), 2.8);
+      // Marriage Line (Neon Pink)
+      _drawLine(canvas, "line-marriage", _getPathForZone("line-marriage"), AppColors.lineMarriage, 2.8);
 
-      // Girdle of Venus (Bright Pink)
-      _drawLine(canvas, "line-girdle-venus", _getPathForZone("line-girdle-venus"), const Color(0xFFEC4899), 2.8);
+      // Girdle of Venus (Neon Rose)
+      _drawLine(canvas, "line-girdle-venus", _getPathForZone("line-girdle-venus"), AppColors.lineGirdle, 2.8);
 
-      // Intuition Line (Lime Green)
-      _drawLine(canvas, "line-intuition", _getPathForZone("line-intuition"), const Color(0xFF84CC16), 2.8);
+      // Intuition Line (Neon Lime)
+      _drawLine(canvas, "line-intuition", _getPathForZone("line-intuition"), AppColors.lineIntuition, 2.8);
 
-      // Mars Line (Amber Orange)
-      _drawLine(canvas, "line-mars", _getPathForZone("line-mars"), const Color(0xFFF59E0B), 2.8);
+      // Mars Line (Neon Orange)
+      _drawLine(canvas, "line-mars", _getPathForZone("line-mars"), AppColors.lineMars, 2.8);
 
-      // Influence Line (Sky Blue)
-      _drawLine(canvas, "line-influence", _getPathForZone("line-influence"), const Color(0xFF38BDF8), 2.5);
+      // Influence Line (Neon Blue)
+      _drawLine(canvas, "line-influence", _getPathForZone("line-influence"), AppColors.lineInfluence, 2.5);
 
-      // Travel Lines (Deep Cyan)
+      // Travel Lines (Neon Cyan Blue)
       final List<Offset> t1Pts = [
         const Offset(105, 332), const Offset(113, 328), const Offset(119, 322),
-        //const Offset(110, 345), const Offset(122, 338),
       ];
       final List<Offset> t2Pts = [
         const Offset(100, 321), const Offset(108, 316), const Offset(115, 309),
-        //const Offset(100, 329), const Offset(110, 324),  const Offset(120, 317),
       ];
       final List<Offset> t3Pts = [
         const Offset(97, 311), const Offset(104, 308), const Offset(111, 300),
-        //const Offset(92, 312), const Offset(100, 306), const Offset(110, 300),
       ];
       final List<Offset> t4Pts = [
         const Offset(93, 297), const Offset(103, 292), const Offset(110, 284),
-        //const Offset(90, 298), const Offset(97, 295), const Offset(105, 288)
       ];
 
       Path buildTravelPath(List<Offset> pts) {
@@ -720,12 +717,12 @@ class HandPainter extends CustomPainter {
         return p;
       }
 
-      _drawLine(canvas, "line-travel", buildTravelPath(t1Pts), const Color(0xFF0284C7), 2.5);
-      _drawLine(canvas, "line-travel", buildTravelPath(t2Pts), const Color(0xFF0284C7), 2.5);
-      _drawLine(canvas, "line-travel", buildTravelPath(t3Pts), const Color(0xFF0284C7), 2.5);
-      _drawLine(canvas, "line-travel", buildTravelPath(t4Pts), const Color(0xFF0284C7), 2.5);
+      _drawLine(canvas, "line-travel", buildTravelPath(t1Pts), AppColors.lineTravel, 2.5);
+      _drawLine(canvas, "line-travel", buildTravelPath(t2Pts), AppColors.lineTravel, 2.5);
+      _drawLine(canvas, "line-travel", buildTravelPath(t3Pts), AppColors.lineTravel, 2.5);
+      _drawLine(canvas, "line-travel", buildTravelPath(t4Pts), AppColors.lineTravel, 2.5);
 
-      // Children Lines (Cyan Teal)
+      // Children Lines (Neon Teal)
       final childrenZone = interactiveZones.firstWhere((z) => z.id == "line-children");
       if (childrenZone.points.length >= 2) {
         for (int i = 0; i < childrenZone.points.length; i += 2) {
@@ -733,46 +730,24 @@ class HandPainter extends CustomPainter {
             final p = Path()
               ..moveTo(childrenZone.points[i].dx, childrenZone.points[i].dy)
               ..lineTo(childrenZone.points[i+1].dx, childrenZone.points[i+1].dy);
-            _drawLine(canvas, "line-children", p, const Color(0xFF06B6D4), 2.5);
+            _drawLine(canvas, "line-children", p, AppColors.lineChildren, 2.5);
           }
         }
       }
 
-      // Bracelets (Warm Orange)
+      // Bracelets (Neon Coral)
       final List<Offset> b1Pts = [
-        const Offset(125, 395),
-        const Offset(131, 398),
-        const Offset(146, 398),
-        const Offset(165, 397),
-        const Offset(183, 395),
-        const Offset(202, 393),
-        const Offset(218, 388),
-        const Offset(234, 382),
+        const Offset(125, 395), const Offset(131, 398), const Offset(146, 398), const Offset(165, 397),
+        const Offset(183, 395), const Offset(202, 393), const Offset(218, 388), const Offset(234, 382),
       ];
       final List<Offset> b2Pts = [
-        const Offset(119, 381),
-        const Offset(131, 383),
-        const Offset(154, 381),
-        const Offset(173, 380),
-        const Offset(193, 378),
-        const Offset(214, 375),
-        const Offset(231, 372),
-        //const Offset(124, 380), const Offset(138, 381), const Offset(156, 381), const Offset(167, 376), const Offset(184, 374), const Offset(201, 373), const Offset(216, 373), const Offset(229, 371),
+        const Offset(119, 381), const Offset(131, 383), const Offset(154, 381), const Offset(173, 380),
+        const Offset(193, 378), const Offset(214, 375), const Offset(231, 372),
       ];
       final List<Offset> b3Pts = [
-        const Offset(122, 373),
-        const Offset(138, 374),
-        const Offset(150, 372),
-        const Offset(159, 369),
-        const Offset(170, 368),
-        const Offset(180, 367),
-        const Offset(192, 367),
-        const Offset(199, 368),
-        const Offset(212, 369),
-        const Offset(223, 369),
-        const Offset(232, 368),
-        const Offset(238, 366),
-        //const Offset(125, 390), const Offset(141, 398), const Offset(159, 394), const Offset(181, 394), const Offset(199, 391), const Offset(217, 388), const Offset(232, 385),
+        const Offset(122, 373), const Offset(138, 374), const Offset(150, 372), const Offset(159, 369),
+        const Offset(170, 368), const Offset(180, 367), const Offset(192, 367), const Offset(199, 368),
+        const Offset(212, 369), const Offset(223, 369), const Offset(232, 368), const Offset(238, 366),
       ];
 
       Path buildBraceletPath(List<Offset> pts) {
@@ -786,13 +761,13 @@ class HandPainter extends CustomPainter {
         return p;
       }
 
-      _drawLine(canvas, "line-bracelets", buildBraceletPath(b1Pts), const Color(0xFFF97316), 2.8);
-      _drawLine(canvas, "line-bracelets", buildBraceletPath(b2Pts), const Color(0xFFF97316), 2.8);
-      _drawLine(canvas, "line-bracelets", buildBraceletPath(b3Pts), const Color(0xFFF97316), 2.8);
+      _drawLine(canvas, "line-bracelets", buildBraceletPath(b1Pts), AppColors.lineBracelets, 2.8);
+      _drawLine(canvas, "line-bracelets", buildBraceletPath(b2Pts), AppColors.lineBracelets, 2.8);
+      _drawLine(canvas, "line-bracelets", buildBraceletPath(b3Pts), AppColors.lineBracelets, 2.8);
 
-      // Rings (Solomon Green, Saturn Deep Purple)
-      _drawRing(canvas, "ring-solomon", const Offset(225, 191), 18, color: const Color(0xFF22C55E));
-      _drawRing(canvas, "ring-saturn", const Offset(180, 190), 18, color: const Color(0xFF8B5CF6));
+      // Rings (Solomon Green, Saturn Violet)
+      _drawRing(canvas, "ring-solomon", const Offset(225, 191), 18, color: AppColors.ringSolomon);
+      _drawRing(canvas, "ring-saturn", const Offset(180, 190), 18, color: AppColors.ringSaturn);
     }
 
     // Render Symbols (Only when showing all or symbols)
@@ -814,25 +789,25 @@ class HandPainter extends CustomPainter {
   Color _getMountColor(String id) {
     switch (id) {
       case "mount-jupiter":
-        return const Color(0xFF84CC16); // Lime Green (مشتری)
+        return AppColors.mountJupiter;
       case "mount-saturn":
-        return const Color(0xFF8B5CF6); // Indigo Purple (زحل)
+        return AppColors.mountSaturn;
       case "mount-apollo":
-        return const Color(0xFFEAB308); // Gold Yellow (خورشید/آپولو)
+        return AppColors.mountApollo;
       case "mount-mercury":
-        return const Color(0xFF06B6D4); // Cyan Teal (عطارد)
+        return AppColors.mountMercury;
       case "mount-mars-lower":
-        return const Color(0xFF84CC16); // Lime Green (مریخ مثبت)
+        return AppColors.mountMarsLower;
       case "mount-mars-upper":
-        return const Color(0xFFF97316); // Warm Orange (مریخ منفی)
+        return AppColors.mountMarsUpper;
       case "mount-mars-plain":
-        return const Color(0xFFFACC15); // Light Gold (دشت مریخ)
+        return AppColors.mountMarsPlain;
       case "mount-venus":
-        return const Color(0xFFF43F5E); // Coral Red (ونوس)
+        return AppColors.mountVenus;
       case "mount-moon":
-        return const Color(0xFFA855F7); // Lavender (ماه/لونا)
+        return AppColors.mountMoon;
       default:
-        return const Color(0xFF6366F1);
+        return AppColors.primaryIndigo;
     }
   }
 

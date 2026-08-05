@@ -1,5 +1,5 @@
 name: palmistry_app
-description: "راهنمای جامع کفبینی تعاملی - A premium interactive Palmistry Cheat Sheet app in Persian."
+description: "کف‌بین - راهنمای جامع کف‌بینی تعاملی"
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -12,16 +12,25 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   cupertino_icons: ^1.0.6
+  google_fonts: ^8.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: false
+  image_path: "assets/images/app icon logo.png"
+  min_sdk_android: 21
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/hand.png
+    - assets/images/
+    - assets/images/covers/
     - pkg_database/schema/
     - pkg_database/knowledge/
     - pkg_database/relationships/
