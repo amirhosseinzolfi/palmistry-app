@@ -3,6 +3,7 @@ import '../services/pkg_database_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/hand_painter.dart';
 import 'wizard_screen.dart';
+import 'user_info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -564,6 +565,39 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: AppStyles.fontCaption(
                           fontSize: 11.5,
                           color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(width: 8),
+
+                    // User Profile & Sync Button
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const UserInfoScreen(),
+                          ),
+                        );
+                      },
+                      child: Tooltip(
+                        message: "پروفایل کاربر و همگام‌سازی",
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryIndigo.withOpacity(0.2),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: AppColors.neonElectricBlue.withOpacity(0.4),
+                              width: 1.0,
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.person_rounded,
+                            color: AppColors.neonElectricBlue,
+                            size: 18,
+                          ),
                         ),
                       ),
                     ),
