@@ -113,4 +113,135 @@ class UserInfoService {
     }
     return false;
   }
+
+  // Save and sync wizard reading selections to backend server and local storage
+  Future<Map<String, dynamic>> saveWizardReading({
+    required Map<String, String> selections,
+    String? username,
+  }) async {
+    final UserInfoModel? localUser = await loadLocalUserInfo();
+    final String activeUsername = username ?? (localUser?.username.isNotEmpty == true ? localUser!.username : "guest_user");
+
+    // Update local user info palmistryInfo map
+    if (localUser != null) {
+      final updatedPalmistryInfo = Map<String, dynamic>.from(localUser.palmistryInfo)
+        ..addAll(selections);
+      final updatedUser = localUser.copyWith(palmistryInfo: updatedPalmistryInfo);
+      await saveLocalUserInfo(updatedUser);
+      // Trigger background sync for overall user info
+      saveAndSyncUserInfo(updatedUser).catchError((_) => <String, dynamic>{});
+    }
+
+    // Try posting directly to /api/wizard_readings
+    try {
+      final String baseUrl = await getServerUrl();
+      final Uri endpoint = Uri.parse('$baseUrl/api/wizard_readings');
+
+      final response = await http.post(
+        endpoint,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'username': activeUsername,
+          'selections': selections,
+        }),
+      ).timeout(const Duration(seconds: 7));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        return {
+          'success': true,
+          'message': 'نتیجه تحلیل کف‌بینی با موفقیت به سرور ارسال شد',
+          'server_response': responseData,
+        };
+      } else {
+        return {
+          'success': false,
+          'message': 'خطا در ارسال نتیجه به سرور (کد ${response.statusCode})',
+        };
+      }
+    } catch (e) {
+      debugPrint("Wizard reading backend sync error: $e");
+      return {
+        'success': false,
+        'message': 'سرور در دسترس نیست - اطلاعات در حافظه گوشی ذخیره شد',
+        'error': e.toString(),
+      };
+    }
+  }
+
+  // Login user with FastAPI backend and download profile + palmistry data to phone
+  Future<Map<String, dynamic>> loginUser({
+    required String username,
+    required String password,
+  }) async {
+    try {
+      final String baseUrl = await getServerUrl();
+      final Uri endpoint = Uri.parse('$baseUrl/api/login');
+
+      final response = await http.post(
+        endpoint,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'username': username,
+          'password': password,
+        }),
+      ).timeout(const Duration(seconds: 7));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final Map<String, dynamic> userData = responseData['user'];
+        
+        final UserInfoModel syncedUser = UserInfoModel.fromJson(userData).copyWith(
+          isSynced: true,
+          lastSyncedAt: DateTime.now().toIso8601String(),
+        );
+
+        // Save downloaded user data locally to phone storage
+        await saveLocalUserInfo(syncedUser);
+
+        return {
+          'success': true,
+          'message': 'ورود با موفقیت انجام شد و اطلاعات کاربری بازیابی گردید',
+          'user': syncedUser,
+          'readings': responseData['readings'] ?? [],
+        };
+      } else if (response.statusCode == 401) {
+        return {
+          'success': false,
+          'message': 'نام کاربری یا رمز عبور اشتباه است',
+        };
+      } else {
+        return {
+          'success': false,
+          'message': 'خطا در پاسخ سرور (کد ${response.statusCode})',
+        };
+      }
+    } catch (e) {
+      debugPrint("Login backend connection error: $e");
+
+      // Offline fallback: check if local storage has matching credentials
+      final UserInfoModel? localUser = await loadLocalUserInfo();
+      if (localUser != null &&
+          localUser.username == username &&
+          localUser.password == password) {
+        return {
+          'success': true,
+          'message': 'ورود آفلاین با اطلاعات ذخیره شده در گوشی انجام شد',
+          'user': localUser,
+        };
+      }
+
+      return {
+        'success': false,
+        'message': 'امکان اتصال به سرور وجود ندارد. لطفا اتصال اینترنت را بررسی کنید.',
+        'error': e.toString(),
+      };
+    }
+  }
 }
+
+

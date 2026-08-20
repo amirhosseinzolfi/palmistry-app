@@ -93,24 +93,42 @@ class _AuthScreenState extends State<AuthScreen> {
         palmistryInfo: {},
       );
       
-      await _userInfoService.saveAndSyncUserInfo(newUser);
+      final result = await _userInfoService.saveAndSyncUserInfo(newUser);
+      if (mounted && result['message'] != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(result['message'])),
+        );
+      }
     } else {
-      // For login, we'll just check if local user exists and matches (simple mock)
-      final existingUser = await _userInfoService.loadLocalUserInfo();
-      if (existingUser != null) {
-        if (existingUser.username != _usernameController.text.trim() || 
-            existingUser.password != _passwordController.text.trim()) {
-           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("نام کاربری یا رمز عبور اشتباه است")),
+      // Login flow: authenticate with server & download profile + palmistry data
+      final loginResult = await _userInfoService.loginUser(
+        username: _usernameController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      if (loginResult['success'] != true) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(loginResult['message'] ?? "خطا در ورود به حساب"),
+              backgroundColor: Colors.red.shade800,
+            ),
           );
           setState(() => _isLoading = false);
-          return;
         }
-      } else {
-        // If no user exists, let's create one for demo purposes if they "login"
-        // In real app, this would be an error or API call.
+        return;
+      }
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(loginResult['message'] ?? "ورود موفقیت‌آمیز بود"),
+            backgroundColor: Colors.green.shade800,
+          ),
+        );
       }
     }
+
 
     if (mounted) {
       Navigator.of(context).pushReplacement(

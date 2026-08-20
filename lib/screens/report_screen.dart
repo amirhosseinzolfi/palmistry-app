@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../services/pkg_database_service.dart';
+import '../services/user_info_service.dart';
 import '../theme/app_theme.dart';
 
 class ReportScreen extends StatefulWidget {
@@ -14,7 +15,9 @@ class ReportScreen extends StatefulWidget {
 
 class _ReportScreenState extends State<ReportScreen> {
   final PkgDatabaseService _dbService = PkgDatabaseService();
+  final UserInfoService _userInfoService = UserInfoService();
   bool _isLoading = true;
+  bool? _isSavedSuccessfully;
 
   @override
   void initState() {
@@ -24,9 +27,20 @@ class _ReportScreenState extends State<ReportScreen> {
         setState(() {
           _isLoading = false;
         });
+        _saveReadingToBackend();
       }
     });
   }
+
+  Future<void> _saveReadingToBackend() async {
+    final result = await _userInfoService.saveWizardReading(selections: widget.selections);
+    if (mounted) {
+      setState(() {
+        _isSavedSuccessfully = result['success'] == true;
+      });
+    }
+  }
+
 
   String _resolveOptionDesc(String stepKey, String optionValue) {
     for (var step in _dbService.wizardSteps) {
@@ -158,7 +172,27 @@ class _ReportScreenState extends State<ReportScreen> {
             icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
             onPressed: () => Navigator.pop(context),
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Tooltip(
+                message: _isSavedSuccessfully == true
+                    ? "ذخیره در سرور و حافظه"
+                    : "ذخیره در حافظه local",
+                child: Icon(
+                  _isSavedSuccessfully == true
+                      ? Icons.cloud_done_rounded
+                      : Icons.cloud_off_rounded,
+                  color: _isSavedSuccessfully == true
+                      ? AppColors.neonElectricBlue
+                      : AppColors.textMuted,
+                  size: 20,
+                ),
+              ),
+            ),
+          ],
         ),
+
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
