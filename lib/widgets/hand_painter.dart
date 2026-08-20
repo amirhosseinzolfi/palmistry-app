@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
@@ -29,15 +28,69 @@ class InteractiveZone {
 // Predefined list of hit-test zones matching the coordinates in 360x500 space
 const List<InteractiveZone> interactiveZones = [
   // Mounts
-  InteractiveZone(id: "mount-jupiter", name: "برجستگی مشتری", center: Offset(221, 205), radiusX: 23, radiusY: 19, rotation: 18),
-  InteractiveZone(id: "mount-saturn", name: "برجستگی زحل", center: Offset(179, 202), radiusX: 20, radiusY: 20, rotation: 18),
-  InteractiveZone(id: "mount-apollo", name: "برجستگی خورشید", center: Offset(139, 210), radiusX: 18, radiusY: 20, rotation: 7),
-  InteractiveZone(id: "mount-mercury", name: "برجستگی عطارد", center: Offset(102, 238), radiusX: 20, radiusY: 22, rotation: 7),
-  InteractiveZone(id: "mount-mars-lower", name: "برجستگی مریخ پایین", center: Offset(218, 246), radiusX: 28, radiusY: 22, rotation: -24),
-  InteractiveZone(id: "mount-mars-upper", name: "برجستگی مریخ بالا", center: Offset(107, 283), radiusX: 19, radiusY: 23, rotation: -14),
-  InteractiveZone(id: "mount-mars-plain", name: "دشت مریخ", center: Offset(167, 282), radiusX: 28, radiusY: 36, rotation: 18),
-  InteractiveZone(id: "mount-venus", name: "برجستگی ونوس",  center: Offset(230, 301), radiusX: 31, radiusY: 40, rotation: 40),
-  InteractiveZone(id: "mount-moon", name: "برجستگی ماه", center: Offset(125, 336), radiusX: 21, radiusY: 27, rotation: -35),
+  InteractiveZone(
+      id: "mount-jupiter",
+      name: "برجستگی مشتری",
+      center: Offset(221, 205),
+      radiusX: 23,
+      radiusY: 19,
+      rotation: 18),
+  InteractiveZone(
+      id: "mount-saturn",
+      name: "برجستگی زحل",
+      center: Offset(179, 202),
+      radiusX: 20,
+      radiusY: 20,
+      rotation: 18),
+  InteractiveZone(
+      id: "mount-apollo",
+      name: "برجستگی خورشید",
+      center: Offset(139, 210),
+      radiusX: 18,
+      radiusY: 20,
+      rotation: 7),
+  InteractiveZone(
+      id: "mount-mercury",
+      name: "برجستگی عطارد",
+      center: Offset(102, 238),
+      radiusX: 20,
+      radiusY: 22,
+      rotation: 7),
+  InteractiveZone(
+      id: "mount-mars-lower",
+      name: "برجستگی مریخ پایین",
+      center: Offset(218, 246),
+      radiusX: 28,
+      radiusY: 22,
+      rotation: -24),
+  InteractiveZone(
+      id: "mount-mars-upper",
+      name: "برجستگی مریخ بالا",
+      center: Offset(107, 283),
+      radiusX: 19,
+      radiusY: 23,
+      rotation: -14),
+  InteractiveZone(
+      id: "mount-mars-plain",
+      name: "دشت مریخ",
+      center: Offset(167, 282),
+      radiusX: 28,
+      radiusY: 36,
+      rotation: 18),
+  InteractiveZone(
+      id: "mount-venus",
+      name: "برجستگی ونوس",
+      center: Offset(230, 301),
+      radiusX: 31,
+      radiusY: 40,
+      rotation: 40),
+  InteractiveZone(
+      id: "mount-moon",
+      name: "برجستگی ماه",
+      center: Offset(125, 336),
+      radiusX: 21,
+      radiusY: 27,
+      rotation: -35),
 
   // Major Lines
   InteractiveZone(id: "line-heart", name: "خط قلب", points: [
@@ -137,14 +190,12 @@ const List<InteractiveZone> interactiveZones = [
     Offset(118, 248),
     Offset(112, 237),
   ]),
-  
-  
-  
+
   InteractiveZone(id: "line-travel", name: "خطوط سفر", points: [
     // Travel Line 1
     Offset(108, 348), Offset(117, 342), Offset(126, 335),
     // Travel Line 2
-    Offset(100, 329), Offset(110, 324),  Offset(120, 317),
+    Offset(100, 329), Offset(110, 324), Offset(120, 317),
     // Travel Line 3
     Offset(92, 312), Offset(100, 306), Offset(110, 300),
     // Travel Line 4
@@ -164,11 +215,14 @@ const List<InteractiveZone> interactiveZones = [
   ]),
   InteractiveZone(id: "line-bracelets", name: "دستبندهای مچ", points: [
     // Bracelet Line 1
-    Offset(126, 374), Offset(141, 374), Offset(152, 370), Offset(164, 369), Offset(175, 366), Offset(187, 365), Offset(201, 365),
+    Offset(126, 374), Offset(141, 374), Offset(152, 370), Offset(164, 369),
+    Offset(175, 366), Offset(187, 365), Offset(201, 365),
     // Bracelet Line 2
-    Offset(124, 380), Offset(138, 381), Offset(156, 381), Offset(167, 376), Offset(184, 374), Offset(201, 373), Offset(216, 373), Offset(229, 371),
+    Offset(124, 380), Offset(138, 381), Offset(156, 381), Offset(167, 376),
+    Offset(184, 374), Offset(201, 373), Offset(216, 373), Offset(229, 371),
     // Bracelet Line 3
-    Offset(125, 390), Offset(141, 398), Offset(159, 394), Offset(181, 394), Offset(199, 391), Offset(217, 388), Offset(232, 385),
+    Offset(125, 390), Offset(141, 398), Offset(159, 394), Offset(181, 394),
+    Offset(199, 391), Offset(217, 388), Offset(232, 385),
   ]),
 
   // Special Rings
@@ -194,19 +248,33 @@ const List<InteractiveZone> interactiveZones = [
   // ]),
 
   // Symbols
-  InteractiveZone(id: "symbol-star", name: "ستاره", center: Offset(220, 220), radius: 12),
-  InteractiveZone(id: "symbol-square", name: "مربع", center: Offset(180, 230), radius: 12),
-  InteractiveZone(id: "symbol-triangle", name: "مثلث", center: Offset(135, 235), radius: 12),
-  InteractiveZone(id: "symbol-cross", name: "صلیب", center: Offset(195, 275), radius: 12),
-  InteractiveZone(id: "symbol-island", name: "جزیره", center: Offset(160, 260), radius: 12),
-  InteractiveZone(id: "symbol-grille", name: "شبکه", center: Offset(105, 255), radius: 14),
-  InteractiveZone(id: "symbol-dot", name: "نقطه", center: Offset(210, 310), radius: 12),
-  InteractiveZone(id: "symbol-trident", name: "سه شاخ", center: Offset(175, 205), radius: 14),
-  InteractiveZone(id: "symbol-fish", name: "ماهی", center: Offset(145, 340), radius: 14),
-  
+  InteractiveZone(
+      id: "symbol-star", name: "ستاره", center: Offset(220, 220), radius: 12),
+  InteractiveZone(
+      id: "symbol-square", name: "مربع", center: Offset(180, 230), radius: 12),
+  InteractiveZone(
+      id: "symbol-triangle",
+      name: "مثلث",
+      center: Offset(135, 235),
+      radius: 12),
+  InteractiveZone(
+      id: "symbol-cross", name: "صلیب", center: Offset(195, 275), radius: 12),
+  InteractiveZone(
+      id: "symbol-island", name: "جزیره", center: Offset(160, 260), radius: 12),
+  InteractiveZone(
+      id: "symbol-grille", name: "شبکه", center: Offset(105, 255), radius: 14),
+  InteractiveZone(
+      id: "symbol-dot", name: "نقطه", center: Offset(210, 310), radius: 12),
+  InteractiveZone(
+      id: "symbol-trident",
+      name: "سه شاخ",
+      center: Offset(175, 205),
+      radius: 14),
+  InteractiveZone(
+      id: "symbol-fish", name: "ماهی", center: Offset(145, 340), radius: 14),
+
   // Fingers
-  InteractiveZone(id: "finger-thumb", name: "انگشت شست",
-   points:[
+  InteractiveZone(id: "finger-thumb", name: "انگشت شست", points: [
     Offset(253, 249),
     Offset(261, 239),
     Offset(265, 225),
@@ -239,63 +307,60 @@ const List<InteractiveZone> interactiveZones = [
     Offset(252, 264),
     Offset(252, 253),
   ]),
-  InteractiveZone(id: "finger-jupiter", name: "انگشت اشاره",
-   points:[
-     Offset(208, 182),
-     Offset(210, 168),
-     Offset(211, 154),
-     Offset(213, 135),
-     Offset(212, 117),
-     Offset(212, 92),
-     Offset(215, 73),
-     Offset(222, 60),
-     Offset(230, 60),
-     Offset(238, 62),
-     Offset(246, 72),
-     Offset(245, 84),
-     Offset(245, 98),
-     Offset(244, 119),
-     Offset(244, 132),
-     Offset(245, 148),
-     Offset(244, 171),
-     Offset(244, 186),
-     Offset(229, 192),
-     Offset(216, 186),
-     Offset(207, 181),
-   ]),
-  InteractiveZone(id: "finger-saturn", name: "انگشت میانی",
-   points:[
-     Offset(163, 181),
-     Offset(163, 164),
-     Offset(163, 151),
-     Offset(163, 136),
-     Offset(162, 120),
-     Offset(162, 106),
-     Offset(163, 96),
-     Offset(163, 81),
-     Offset(164, 69),
-     Offset(166, 49),
-     Offset(169, 42),
-     Offset(175, 39),
-     Offset(183, 40),
-     Offset(188, 40),
-     Offset(193, 49),
-     Offset(194, 62),
-     Offset(196, 75),
-     Offset(195, 93),
-     Offset(196, 105),
-     Offset(197, 118),
-     Offset(197, 138),
-     Offset(199, 149),
-     Offset(200, 163),
-     Offset(199, 179),
-     Offset(191, 185),
-     Offset(183, 183),
-     Offset(174, 184),
-     Offset(164, 184),
-   ]),
-  InteractiveZone(id: "finger-apollo", name: "انگشت حلقه",
-   points: [
+  InteractiveZone(id: "finger-jupiter", name: "انگشت اشاره", points: [
+    Offset(208, 182),
+    Offset(210, 168),
+    Offset(211, 154),
+    Offset(213, 135),
+    Offset(212, 117),
+    Offset(212, 92),
+    Offset(215, 73),
+    Offset(222, 60),
+    Offset(230, 60),
+    Offset(238, 62),
+    Offset(246, 72),
+    Offset(245, 84),
+    Offset(245, 98),
+    Offset(244, 119),
+    Offset(244, 132),
+    Offset(245, 148),
+    Offset(244, 171),
+    Offset(244, 186),
+    Offset(229, 192),
+    Offset(216, 186),
+    Offset(207, 181),
+  ]),
+  InteractiveZone(id: "finger-saturn", name: "انگشت میانی", points: [
+    Offset(163, 181),
+    Offset(163, 164),
+    Offset(163, 151),
+    Offset(163, 136),
+    Offset(162, 120),
+    Offset(162, 106),
+    Offset(163, 96),
+    Offset(163, 81),
+    Offset(164, 69),
+    Offset(166, 49),
+    Offset(169, 42),
+    Offset(175, 39),
+    Offset(183, 40),
+    Offset(188, 40),
+    Offset(193, 49),
+    Offset(194, 62),
+    Offset(196, 75),
+    Offset(195, 93),
+    Offset(196, 105),
+    Offset(197, 118),
+    Offset(197, 138),
+    Offset(199, 149),
+    Offset(200, 163),
+    Offset(199, 179),
+    Offset(191, 185),
+    Offset(183, 183),
+    Offset(174, 184),
+    Offset(164, 184),
+  ]),
+  InteractiveZone(id: "finger-apollo", name: "انگشت حلقه", points: [
     Offset(123, 198),
     Offset(122, 183),
     Offset(119, 166),
@@ -319,34 +384,33 @@ const List<InteractiveZone> interactiveZones = [
     Offset(138, 198),
     Offset(125, 199),
   ]),
-  InteractiveZone(id: "finger-mercury",name: "انگشت کوچک",
-   points: [
-     Offset(85, 224),
-     Offset(83, 212),
-     Offset(81, 200),
-     Offset(80, 186),
-     Offset(80, 172),
-     Offset(77, 161),
-     Offset(77, 148),
-     Offset(78, 130),
-     Offset(79, 121),
-     Offset(84, 116),
-     Offset(90, 116),
-     Offset(98, 117),
-     Offset(102, 124),
-     Offset(102, 132),
-     Offset(104, 142),
-     Offset(104, 155),
-     Offset(106, 169),
-     Offset(109, 182),
-     Offset(112, 197),
-     Offset(114, 209),
-     Offset(108, 215),
-     Offset(102, 217),
-     Offset(98, 219),
-     Offset(95, 220),
-     Offset(87, 223),
-   ]),
+  InteractiveZone(id: "finger-mercury", name: "انگشت کوچک", points: [
+    Offset(85, 224),
+    Offset(83, 212),
+    Offset(81, 200),
+    Offset(80, 186),
+    Offset(80, 172),
+    Offset(77, 161),
+    Offset(77, 148),
+    Offset(78, 130),
+    Offset(79, 121),
+    Offset(84, 116),
+    Offset(90, 116),
+    Offset(98, 117),
+    Offset(102, 124),
+    Offset(102, 132),
+    Offset(104, 142),
+    Offset(104, 155),
+    Offset(106, 169),
+    Offset(109, 182),
+    Offset(112, 197),
+    Offset(114, 209),
+    Offset(108, 215),
+    Offset(102, 217),
+    Offset(98, 219),
+    Offset(95, 220),
+    Offset(87, 223),
+  ]),
 ];
 
 const Set<String> majorLineIds = {
@@ -373,7 +437,8 @@ const Set<String> minorLineIds = {
 
 class InteractiveHandWidget extends StatelessWidget {
   final String? selectedId;
-  final String activeFilter; // "all", "major", "minor", "mounts", "symbols", "fingers"
+  final String
+      activeFilter; // "all", "major", "minor", "mounts", "symbols", "fingers"
   final Function(String) onSelected;
 
   const InteractiveHandWidget({
@@ -414,11 +479,21 @@ class InteractiveHandWidget extends StatelessWidget {
             for (var zone in interactiveZones) {
               // Apply activeFilter check
               if (activeFilter != "all") {
-                if (activeFilter == "major" && !majorLineIds.contains(zone.id)) continue;
-                if (activeFilter == "minor" && !minorLineIds.contains(zone.id)) continue;
-                if (activeFilter == "mounts" && !zone.id.startsWith("mount-")) continue;
-                if (activeFilter == "symbols" && !zone.id.startsWith("symbol-")) continue;
-                if (activeFilter == "fingers" && !zone.id.startsWith("finger-")) continue;
+                if (activeFilter == "major" && !majorLineIds.contains(zone.id)) {
+                  continue;
+                }
+                if (activeFilter == "minor" && !minorLineIds.contains(zone.id)) {
+                  continue;
+                }
+                if (activeFilter == "mounts" && !zone.id.startsWith("mount-")) {
+                  continue;
+                }
+                if (activeFilter == "symbols" && !zone.id.startsWith("symbol-")) {
+                  continue;
+                }
+                if (activeFilter == "fingers" && !zone.id.startsWith("finger-")) {
+                  continue;
+                }
               }
 
               if (zone.id.startsWith("finger-")) {
@@ -436,7 +511,7 @@ class InteractiveHandWidget extends StatelessWidget {
                   final double rotDeg = zone.rotation ?? 0.0;
                   final double relX = tapOffset.dx - zone.center!.dx;
                   final double relY = tapOffset.dy - zone.center!.dy;
-                  
+
                   double unrotX = relX;
                   double unrotY = relY;
                   if (rotDeg != 0) {
@@ -470,7 +545,8 @@ class InteractiveHandWidget extends StatelessWidget {
                 // Linear hit-testing (Lines)
                 for (var pt in zone.points) {
                   double dist = (tapOffset - pt).distance;
-                  if (dist < 18) { // Hit-test threshold of 18 units
+                  if (dist < 18) {
+                    // Hit-test threshold of 18 units
                     if (dist < minDistance) {
                       minDistance = dist;
                       closestId = zone.id;
@@ -518,7 +594,8 @@ class InteractiveHandWidget extends StatelessWidget {
 }
 
 Path _getPathForZone(String id) {
-  final zone = interactiveZones.firstWhere((z) => z.id == id, orElse: () => const InteractiveZone(id: '', name: ''));
+  final zone = interactiveZones.firstWhere((z) => z.id == id,
+      orElse: () => const InteractiveZone(id: '', name: ''));
   final path = Path();
   if (zone.points.isNotEmpty) {
     path.moveTo(zone.points.first.dx, zone.points.first.dy);
@@ -563,7 +640,8 @@ Path _getFingerPath(String id) {
 
 Path _getFingerPathForZone(InteractiveZone zone) {
   if (zone.points.length >= 3) {
-    final Path path = Path()..moveTo(zone.points.first.dx, zone.points.first.dy);
+    final Path path = Path()
+      ..moveTo(zone.points.first.dx, zone.points.first.dy);
     for (int i = 1; i < zone.points.length; i++) {
       path.lineTo(zone.points[i].dx, zone.points[i].dy);
     }
@@ -597,7 +675,8 @@ class HandPainter extends CustomPainter {
 
     // Render Finger Zones with translucent low-contrast purple fill (Only when showing all or fingers)
     if (activeFilter == "all" || activeFilter == "fingers") {
-      final fingerZones = interactiveZones.where((z) => z.id.startsWith("finger-"));
+      final fingerZones =
+          interactiveZones.where((z) => z.id.startsWith("finger-"));
       for (var zone in fingerZones) {
         final bool isSelected = selectedId == zone.id;
         final Path fingerPath = _getFingerPathForZone(zone);
@@ -605,15 +684,15 @@ class HandPainter extends CustomPainter {
         // Low-contrast soft translucent purple fill
         final Paint fingerFillPaint = Paint()
           ..color = isSelected
-              ? AppColors.primaryIndigo.withOpacity(0.35)
-              : AppColors.primaryIndigo.withOpacity(0.18)
+              ? AppColors.primaryIndigo.withValues(alpha: 0.35)
+              : AppColors.primaryIndigo.withValues(alpha: 0.18)
           ..style = PaintingStyle.fill;
 
         // Soft border
         final Paint fingerBorderPaint = Paint()
           ..color = isSelected
               ? AppColors.neonPurple
-              : AppColors.primaryIndigo.withOpacity(0.25)
+              : AppColors.primaryIndigo.withValues(alpha: 0.25)
           ..strokeWidth = isSelected ? 2.0 : 1.0
           ..style = PaintingStyle.stroke;
 
@@ -623,7 +702,7 @@ class HandPainter extends CustomPainter {
         // Selection glow effect
         if (isSelected) {
           final Paint glowPaint = Paint()
-            ..color = AppColors.primaryPurple.withOpacity(0.4)
+            ..color = AppColors.primaryPurple.withValues(alpha: 0.4)
             ..strokeWidth = 3.5
             ..style = PaintingStyle.stroke
             ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0);
@@ -634,10 +713,10 @@ class HandPainter extends CustomPainter {
 
     // Render Mounts (Only when showing all or mounts)
     if (activeFilter == "all" || activeFilter == "mounts") {
-      final mountZones = interactiveZones.where((z) => z.id.startsWith("mount-"));
+      final mountZones =
+          interactiveZones.where((z) => z.id.startsWith("mount-"));
       for (var zone in mountZones) {
         if (zone.center != null) {
-
           final modifiedName = zone.name.replaceAll("برجستگی", "کوه");
 
           _drawMount(
@@ -657,53 +736,72 @@ class HandPainter extends CustomPainter {
     // Render Major Lines (Only when showing all or major)
     if (activeFilter == "all" || activeFilter == "major") {
       // Heart Line (Neon Rose/Crimson)
-      _drawLine(canvas, "line-heart", _getPathForZone("line-heart"), AppColors.lineHeart, 3.0);
+      _drawLine(canvas, "line-heart", _getPathForZone("line-heart"),
+          AppColors.lineHeart, 3.0);
 
       // Head Line (Neon Blue)
-      _drawLine(canvas, "line-head", _getPathForZone("line-head"), AppColors.lineHead, 3.0);
+      _drawLine(canvas, "line-head", _getPathForZone("line-head"),
+          AppColors.lineHead, 3.0);
 
       // Life Line (Neon Emerald)
-      _drawLine(canvas, "line-life", _getPathForZone("line-life"), AppColors.lineLife, 3.0);
+      _drawLine(canvas, "line-life", _getPathForZone("line-life"),
+          AppColors.lineLife, 3.0);
 
       // Fate Line (Neon Purple)
-      _drawLine(canvas, "line-fate", _getPathForZone("line-fate"), AppColors.lineFate, 3.0);
+      _drawLine(canvas, "line-fate", _getPathForZone("line-fate"),
+          AppColors.lineFate, 3.0);
 
       // Sun Line (Neon Amber)
-      _drawLine(canvas, "line-sun", _getPathForZone("line-sun"), AppColors.lineSun, 2.0);
+      _drawLine(canvas, "line-sun", _getPathForZone("line-sun"),
+          AppColors.lineSun, 2.0);
 
       // Health Line (Neon Cyan)
-      _drawLine(canvas, "line-mercury", _getPathForZone("line-mercury"), AppColors.lineMercury, 2.0);
+      _drawLine(canvas, "line-mercury", _getPathForZone("line-mercury"),
+          AppColors.lineMercury, 2.0);
     }
 
     // Render Minor Lines & Rings (Only when showing all or minor)
     if (activeFilter == "all" || activeFilter == "minor") {
       // Marriage Line (Neon Pink)
-      _drawLine(canvas, "line-marriage", _getPathForZone("line-marriage"), AppColors.lineMarriage, 2.8);
+      _drawLine(canvas, "line-marriage", _getPathForZone("line-marriage"),
+          AppColors.lineMarriage, 2.8);
 
       // Girdle of Venus (Neon Rose)
-      _drawLine(canvas, "line-girdle-venus", _getPathForZone("line-girdle-venus"), AppColors.lineGirdle, 2.8);
+      _drawLine(canvas, "line-girdle-venus",
+          _getPathForZone("line-girdle-venus"), AppColors.lineGirdle, 2.8);
 
       // Intuition Line (Neon Lime)
-      _drawLine(canvas, "line-intuition", _getPathForZone("line-intuition"), AppColors.lineIntuition, 2.8);
+      _drawLine(canvas, "line-intuition", _getPathForZone("line-intuition"),
+          AppColors.lineIntuition, 2.8);
 
       // Mars Line (Neon Orange)
-      _drawLine(canvas, "line-mars", _getPathForZone("line-mars"), AppColors.lineMars, 2.8);
+      _drawLine(canvas, "line-mars", _getPathForZone("line-mars"),
+          AppColors.lineMars, 2.8);
 
       // Influence Line (Neon Blue)
-      _drawLine(canvas, "line-influence", _getPathForZone("line-influence"), AppColors.lineInfluence, 2.5);
+      _drawLine(canvas, "line-influence", _getPathForZone("line-influence"),
+          AppColors.lineInfluence, 2.5);
 
       // Travel Lines (Neon Cyan Blue)
       final List<Offset> t1Pts = [
-        const Offset(105, 332), const Offset(113, 328), const Offset(119, 322),
+        const Offset(105, 332),
+        const Offset(113, 328),
+        const Offset(119, 322),
       ];
       final List<Offset> t2Pts = [
-        const Offset(100, 321), const Offset(108, 316), const Offset(115, 309),
+        const Offset(100, 321),
+        const Offset(108, 316),
+        const Offset(115, 309),
       ];
       final List<Offset> t3Pts = [
-        const Offset(97, 311), const Offset(104, 308), const Offset(111, 300),
+        const Offset(97, 311),
+        const Offset(104, 308),
+        const Offset(111, 300),
       ];
       final List<Offset> t4Pts = [
-        const Offset(93, 297), const Offset(103, 292), const Offset(110, 284),
+        const Offset(93, 297),
+        const Offset(103, 292),
+        const Offset(110, 284),
       ];
 
       Path buildTravelPath(List<Offset> pts) {
@@ -717,19 +815,25 @@ class HandPainter extends CustomPainter {
         return p;
       }
 
-      _drawLine(canvas, "line-travel", buildTravelPath(t1Pts), AppColors.lineTravel, 2.5);
-      _drawLine(canvas, "line-travel", buildTravelPath(t2Pts), AppColors.lineTravel, 2.5);
-      _drawLine(canvas, "line-travel", buildTravelPath(t3Pts), AppColors.lineTravel, 2.5);
-      _drawLine(canvas, "line-travel", buildTravelPath(t4Pts), AppColors.lineTravel, 2.5);
+      _drawLine(canvas, "line-travel", buildTravelPath(t1Pts),
+          AppColors.lineTravel, 2.5);
+      _drawLine(canvas, "line-travel", buildTravelPath(t2Pts),
+          AppColors.lineTravel, 2.5);
+      _drawLine(canvas, "line-travel", buildTravelPath(t3Pts),
+          AppColors.lineTravel, 2.5);
+      _drawLine(canvas, "line-travel", buildTravelPath(t4Pts),
+          AppColors.lineTravel, 2.5);
 
       // Children Lines (Neon Teal)
-      final childrenZone = interactiveZones.firstWhere((z) => z.id == "line-children");
+      final childrenZone =
+          interactiveZones.firstWhere((z) => z.id == "line-children");
       if (childrenZone.points.length >= 2) {
         for (int i = 0; i < childrenZone.points.length; i += 2) {
           if (i + 1 < childrenZone.points.length) {
             final p = Path()
               ..moveTo(childrenZone.points[i].dx, childrenZone.points[i].dy)
-              ..lineTo(childrenZone.points[i+1].dx, childrenZone.points[i+1].dy);
+              ..lineTo(
+                  childrenZone.points[i + 1].dx, childrenZone.points[i + 1].dy);
             _drawLine(canvas, "line-children", p, AppColors.lineChildren, 2.5);
           }
         }
@@ -737,17 +841,37 @@ class HandPainter extends CustomPainter {
 
       // Bracelets (Neon Coral)
       final List<Offset> b1Pts = [
-        const Offset(125, 395), const Offset(131, 398), const Offset(146, 398), const Offset(165, 397),
-        const Offset(183, 395), const Offset(202, 393), const Offset(218, 388), const Offset(234, 382),
+        const Offset(125, 395),
+        const Offset(131, 398),
+        const Offset(146, 398),
+        const Offset(165, 397),
+        const Offset(183, 395),
+        const Offset(202, 393),
+        const Offset(218, 388),
+        const Offset(234, 382),
       ];
       final List<Offset> b2Pts = [
-        const Offset(119, 381), const Offset(131, 383), const Offset(154, 381), const Offset(173, 380),
-        const Offset(193, 378), const Offset(214, 375), const Offset(231, 372),
+        const Offset(119, 381),
+        const Offset(131, 383),
+        const Offset(154, 381),
+        const Offset(173, 380),
+        const Offset(193, 378),
+        const Offset(214, 375),
+        const Offset(231, 372),
       ];
       final List<Offset> b3Pts = [
-        const Offset(122, 373), const Offset(138, 374), const Offset(150, 372), const Offset(159, 369),
-        const Offset(170, 368), const Offset(180, 367), const Offset(192, 367), const Offset(199, 368),
-        const Offset(212, 369), const Offset(223, 369), const Offset(232, 368), const Offset(238, 366),
+        const Offset(122, 373),
+        const Offset(138, 374),
+        const Offset(150, 372),
+        const Offset(159, 369),
+        const Offset(170, 368),
+        const Offset(180, 367),
+        const Offset(192, 367),
+        const Offset(199, 368),
+        const Offset(212, 369),
+        const Offset(223, 369),
+        const Offset(232, 368),
+        const Offset(238, 366),
       ];
 
       Path buildBraceletPath(List<Offset> pts) {
@@ -761,13 +885,18 @@ class HandPainter extends CustomPainter {
         return p;
       }
 
-      _drawLine(canvas, "line-bracelets", buildBraceletPath(b1Pts), AppColors.lineBracelets, 2.8);
-      _drawLine(canvas, "line-bracelets", buildBraceletPath(b2Pts), AppColors.lineBracelets, 2.8);
-      _drawLine(canvas, "line-bracelets", buildBraceletPath(b3Pts), AppColors.lineBracelets, 2.8);
+      _drawLine(canvas, "line-bracelets", buildBraceletPath(b1Pts),
+          AppColors.lineBracelets, 2.8);
+      _drawLine(canvas, "line-bracelets", buildBraceletPath(b2Pts),
+          AppColors.lineBracelets, 2.8);
+      _drawLine(canvas, "line-bracelets", buildBraceletPath(b3Pts),
+          AppColors.lineBracelets, 2.8);
 
       // Rings (Solomon Green, Saturn Violet)
-      _drawRing(canvas, "ring-solomon", const Offset(225, 191), 18, color: AppColors.ringSolomon);
-      _drawRing(canvas, "ring-saturn", const Offset(180, 190), 18, color: AppColors.ringSaturn);
+      _drawRing(canvas, "ring-solomon", const Offset(225, 191), 18,
+          color: AppColors.ringSolomon);
+      _drawRing(canvas, "ring-saturn", const Offset(180, 190), 18,
+          color: AppColors.ringSaturn);
     }
 
     // Render Symbols (Only when showing all or symbols)
@@ -811,16 +940,19 @@ class HandPainter extends CustomPainter {
     }
   }
 
-  void _drawMount(Canvas canvas, String id, Offset center, String label, {double? radius, double? radiusX, double? radiusY, double? rotation}) {
+  void _drawMount(Canvas canvas, String id, Offset center, String label,
+      {double? radius, double? radiusX, double? radiusY, double? rotation}) {
     final bool isActive = selectedId == id;
     final Color mountColor = _getMountColor(id);
 
     final Paint mountPaint = Paint()
-      ..color = isActive ? mountColor.withOpacity(0.45) : mountColor.withOpacity(0.18)
+      ..color = isActive
+          ? mountColor.withValues(alpha: 0.45)
+          : mountColor.withValues(alpha: 0.18)
       ..style = PaintingStyle.fill;
 
     final Paint borderPaint = Paint()
-      ..color = isActive ? mountColor : mountColor.withOpacity(0.55)
+      ..color = isActive ? mountColor : mountColor.withValues(alpha: 0.55)
       ..strokeWidth = isActive ? 2.5 : 1.2
       ..style = PaintingStyle.stroke;
 
@@ -835,13 +967,14 @@ class HandPainter extends CustomPainter {
 
     if (isActive) {
       final Paint glowPaint = Paint()
-        ..color = mountColor.withOpacity(0.5)
+        ..color = mountColor.withValues(alpha: 0.5)
         ..strokeWidth = 3.5
         ..style = PaintingStyle.stroke
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.0);
 
       if (radiusX != null && radiusY != null) {
-        final Rect ovalRect = Rect.fromCenter(center: center, width: radiusX * 2, height: radiusY * 2);
+        final Rect ovalRect = Rect.fromCenter(
+            center: center, width: radiusX * 2, height: radiusY * 2);
         canvas.drawOval(ovalRect, glowPaint);
       } else {
         canvas.drawCircle(center, effectiveRadius, glowPaint);
@@ -849,7 +982,8 @@ class HandPainter extends CustomPainter {
     }
 
     if (radiusX != null && radiusY != null) {
-      final Rect ovalRect = Rect.fromCenter(center: center, width: radiusX * 2, height: radiusY * 2);
+      final Rect ovalRect = Rect.fromCenter(
+          center: center, width: radiusX * 2, height: radiusY * 2);
       canvas.drawOval(ovalRect, mountPaint);
       canvas.drawOval(ovalRect, borderPaint);
     } else {
@@ -860,12 +994,13 @@ class HandPainter extends CustomPainter {
     canvas.restore();
   }
 
-  void _drawLine(Canvas canvas, String id, Path path, Color color, double width) {
+  void _drawLine(
+      Canvas canvas, String id, Path path, Color color, double width) {
     final bool isActive = selectedId == id;
 
     // Glowing ambient background paint (makes all lines pop off the hand diagram)
     final Paint glowPaint = Paint()
-      ..color = color.withOpacity(isActive ? 0.65 : 0.35)
+      ..color = color.withValues(alpha: isActive ? 0.65 : 0.35)
       ..strokeWidth = width + (isActive ? 4.5 : 2.0)
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
@@ -873,7 +1008,7 @@ class HandPainter extends CustomPainter {
     canvas.drawPath(path, glowPaint);
 
     final Paint linePaint = Paint()
-      ..color = isActive ? Colors.white : color.withOpacity(0.9)
+      ..color = isActive ? Colors.white : color.withValues(alpha: 0.9)
       ..strokeWidth = isActive ? width + 1.2 : width
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
@@ -881,22 +1016,23 @@ class HandPainter extends CustomPainter {
     canvas.drawPath(path, linePaint);
   }
 
-  void _drawRing(Canvas canvas, String id, Offset center, double radius, {Color color = const Color(0xFF6366F1)}) {
+  void _drawRing(Canvas canvas, String id, Offset center, double radius,
+      {Color color = const Color(0xFF6366F1)}) {
     final bool isActive = selectedId == id;
     final Rect rect = Rect.fromCircle(center: center, radius: radius);
 
     final Paint glowPaint = Paint()
-      ..color = color.withOpacity(isActive ? 0.7 : 0.35)
+      ..color = color.withValues(alpha: isActive ? 0.7 : 0.35)
       ..strokeWidth = isActive ? 5.0 : 3.0
       ..style = PaintingStyle.stroke
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, isActive ? 3.5 : 1.5);
     canvas.drawArc(rect, 0.2, pi - 0.4, false, glowPaint);
 
     final Paint ringPaint = Paint()
-      ..color = isActive ? Colors.white : color.withOpacity(0.9)
+      ..color = isActive ? Colors.white : color.withValues(alpha: 0.9)
       ..strokeWidth = isActive ? 3.2 : 2.5
       ..style = PaintingStyle.stroke;
-    
+
     canvas.drawArc(rect, 0.2, pi - 0.4, false, ringPaint);
   }
 
@@ -910,16 +1046,20 @@ class HandPainter extends CustomPainter {
 
     if (isActive) {
       final Paint glowPaint = Paint()
-        ..color = const Color(0xFF8B5CF6).withOpacity(0.4)
+        ..color = const Color(0xFF8B5CF6).withValues(alpha: 0.4)
         ..strokeWidth = 3.5
         ..style = PaintingStyle.stroke
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0);
-      canvas.drawLine(Offset(p.dx - 5, p.dy - 5), Offset(p.dx + 5, p.dy + 5), glowPaint);
-      canvas.drawLine(Offset(p.dx + 5, p.dy - 5), Offset(p.dx - 5, p.dy + 5), glowPaint);
+      canvas.drawLine(
+          Offset(p.dx - 5, p.dy - 5), Offset(p.dx + 5, p.dy + 5), glowPaint);
+      canvas.drawLine(
+          Offset(p.dx + 5, p.dy - 5), Offset(p.dx - 5, p.dy + 5), glowPaint);
     }
 
-    canvas.drawLine(Offset(p.dx - 4, p.dy - 4), Offset(p.dx + 4, p.dy + 4), starPaint);
-    canvas.drawLine(Offset(p.dx + 4, p.dy - 4), Offset(p.dx - 4, p.dy + 4), starPaint);
+    canvas.drawLine(
+        Offset(p.dx - 4, p.dy - 4), Offset(p.dx + 4, p.dy + 4), starPaint);
+    canvas.drawLine(
+        Offset(p.dx + 4, p.dy - 4), Offset(p.dx - 4, p.dy + 4), starPaint);
     canvas.drawLine(Offset(p.dx, p.dy - 5), Offset(p.dx, p.dy + 5), starPaint);
     canvas.drawLine(Offset(p.dx - 5, p.dy), Offset(p.dx + 5, p.dy), starPaint);
   }
@@ -933,11 +1073,12 @@ class HandPainter extends CustomPainter {
 
     if (isActive) {
       final Paint glowPaint = Paint()
-        ..color = const Color(0xFF8B5CF6).withOpacity(0.4)
+        ..color = const Color(0xFF8B5CF6).withValues(alpha: 0.4)
         ..strokeWidth = 3.5
         ..style = PaintingStyle.stroke
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0);
-      canvas.drawRect(Rect.fromCenter(center: p, width: 8, height: 8), glowPaint);
+      canvas.drawRect(
+          Rect.fromCenter(center: p, width: 8, height: 8), glowPaint);
     }
 
     canvas.drawRect(Rect.fromCenter(center: p, width: 8, height: 8), paint);
@@ -958,7 +1099,7 @@ class HandPainter extends CustomPainter {
 
     if (isActive) {
       final Paint glowPaint = Paint()
-        ..color = const Color(0xFF8B5CF6).withOpacity(0.4)
+        ..color = const Color(0xFF8B5CF6).withValues(alpha: 0.4)
         ..strokeWidth = 3.5
         ..style = PaintingStyle.stroke
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0);
@@ -977,11 +1118,12 @@ class HandPainter extends CustomPainter {
 
     if (isActive) {
       final Paint glowPaint = Paint()
-        ..color = const Color(0xFF8B5CF6).withOpacity(0.4)
+        ..color = const Color(0xFF8B5CF6).withValues(alpha: 0.4)
         ..strokeWidth = 3.5
         ..style = PaintingStyle.stroke
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0);
-      canvas.drawOval(Rect.fromCenter(center: p, width: 10, height: 6), glowPaint);
+      canvas.drawOval(
+          Rect.fromCenter(center: p, width: 10, height: 6), glowPaint);
     }
 
     canvas.drawOval(Rect.fromCenter(center: p, width: 10, height: 6), paint);
@@ -996,16 +1138,20 @@ class HandPainter extends CustomPainter {
 
     if (isActive) {
       final Paint glowPaint = Paint()
-        ..color = const Color(0xFF8B5CF6).withOpacity(0.4)
+        ..color = const Color(0xFF8B5CF6).withValues(alpha: 0.4)
         ..strokeWidth = 3.5
         ..style = PaintingStyle.stroke
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0);
-      canvas.drawLine(Offset(p.dx - 4, p.dy - 4), Offset(p.dx + 4, p.dy + 4), glowPaint);
-      canvas.drawLine(Offset(p.dx + 4, p.dy - 4), Offset(p.dx - 4, p.dy + 4), glowPaint);
+      canvas.drawLine(
+          Offset(p.dx - 4, p.dy - 4), Offset(p.dx + 4, p.dy + 4), glowPaint);
+      canvas.drawLine(
+          Offset(p.dx + 4, p.dy - 4), Offset(p.dx - 4, p.dy + 4), glowPaint);
     }
 
-    canvas.drawLine(Offset(p.dx - 4, p.dy - 4), Offset(p.dx + 4, p.dy + 4), paint);
-    canvas.drawLine(Offset(p.dx + 4, p.dy - 4), Offset(p.dx - 4, p.dy + 4), paint);
+    canvas.drawLine(
+        Offset(p.dx - 4, p.dy - 4), Offset(p.dx + 4, p.dy + 4), paint);
+    canvas.drawLine(
+        Offset(p.dx + 4, p.dy - 4), Offset(p.dx - 4, p.dy + 4), paint);
   }
 
   void _drawGrille(Canvas canvas, String id, Offset p) {
@@ -1016,8 +1162,10 @@ class HandPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     for (double i = -4; i <= 4; i += 4) {
-      canvas.drawLine(Offset(p.dx - 6, p.dy + i), Offset(p.dx + 6, p.dy + i), paint);
-      canvas.drawLine(Offset(p.dx + i, p.dy - 6), Offset(p.dx + i, p.dy + 6), paint);
+      canvas.drawLine(
+          Offset(p.dx - 6, p.dy + i), Offset(p.dx + 6, p.dy + i), paint);
+      canvas.drawLine(
+          Offset(p.dx + i, p.dy - 6), Offset(p.dx + i, p.dy + 6), paint);
     }
   }
 
@@ -1031,7 +1179,7 @@ class HandPainter extends CustomPainter {
 
     if (isActive) {
       final Paint glowPaint = Paint()
-        ..color = const Color(0xFF8B5CF6).withOpacity(0.4)
+        ..color = const Color(0xFF8B5CF6).withValues(alpha: 0.4)
         ..strokeWidth = 2.0
         ..style = PaintingStyle.stroke
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0);
@@ -1057,7 +1205,7 @@ class HandPainter extends CustomPainter {
 
     if (isActive) {
       final Paint glowPaint = Paint()
-        ..color = const Color(0xFF8B5CF6).withOpacity(0.4)
+        ..color = const Color(0xFF8B5CF6).withValues(alpha: 0.4)
         ..strokeWidth = 3.5
         ..style = PaintingStyle.stroke
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0);
@@ -1083,7 +1231,7 @@ class HandPainter extends CustomPainter {
 
     if (isActive) {
       final Paint glowPaint = Paint()
-        ..color = const Color(0xFF8B5CF6).withOpacity(0.4)
+        ..color = const Color(0xFF8B5CF6).withValues(alpha: 0.4)
         ..strokeWidth = 3.5
         ..style = PaintingStyle.stroke
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.0);

@@ -7,7 +7,7 @@ import '../models/user_info.dart';
 class UserInfoService {
   static const String _userPrefsKey = 'user_info_data';
   static const String _serverUrlPrefsKey = 'backend_server_url';
-  
+
   // Default server URLs: 127.0.0.1 for desktop/web, 10.0.2.2 for Android emulator
   static const String _defaultDesktopUrl = 'http://127.0.0.1:8000';
 
@@ -59,24 +59,26 @@ class UserInfoService {
     try {
       final String baseUrl = await getServerUrl();
       final Uri endpoint = Uri.parse('$baseUrl/api/user_info');
-      
-      final response = await http.post(
-        endpoint,
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(user.toServerJson()),
-      ).timeout(const Duration(seconds: 7));
+
+      final response = await http
+          .post(
+            endpoint,
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(user.toServerJson()),
+          )
+          .timeout(const Duration(seconds: 7));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         final String syncedTime = DateTime.now().toIso8601String();
-        
+
         final UserInfoModel syncedUser = user.copyWith(
           isSynced: true,
           lastSyncedAt: syncedTime,
         );
-        
+
         // Update local storage with sync success status
         await saveLocalUserInfo(syncedUser);
 
@@ -89,7 +91,8 @@ class UserInfoService {
       } else {
         return {
           'success': false,
-          'message': 'خطا در پاسخ سرور (کد ${response.statusCode}) - اطلاعات در گوشی ذخیره شد',
+          'message':
+              'خطا در پاسخ سرور (کد ${response.statusCode}) - اطلاعات در گوشی ذخیره شد',
           'data': user,
         };
       }
@@ -120,13 +123,18 @@ class UserInfoService {
     String? username,
   }) async {
     final UserInfoModel? localUser = await loadLocalUserInfo();
-    final String activeUsername = username ?? (localUser?.username.isNotEmpty == true ? localUser!.username : "guest_user");
+    final String activeUsername = username ??
+        (localUser?.username.isNotEmpty == true
+            ? localUser!.username
+            : "guest_user");
 
     // Update local user info palmistryInfo map
     if (localUser != null) {
-      final updatedPalmistryInfo = Map<String, dynamic>.from(localUser.palmistryInfo)
-        ..addAll(selections);
-      final updatedUser = localUser.copyWith(palmistryInfo: updatedPalmistryInfo);
+      final updatedPalmistryInfo =
+          Map<String, dynamic>.from(localUser.palmistryInfo)
+            ..addAll(selections);
+      final updatedUser =
+          localUser.copyWith(palmistryInfo: updatedPalmistryInfo);
       await saveLocalUserInfo(updatedUser);
       // Trigger background sync for overall user info
       saveAndSyncUserInfo(updatedUser).catchError((_) => <String, dynamic>{});
@@ -137,16 +145,18 @@ class UserInfoService {
       final String baseUrl = await getServerUrl();
       final Uri endpoint = Uri.parse('$baseUrl/api/wizard_readings');
 
-      final response = await http.post(
-        endpoint,
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode({
-          'username': activeUsername,
-          'selections': selections,
-        }),
-      ).timeout(const Duration(seconds: 7));
+      final response = await http
+          .post(
+            endpoint,
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode({
+              'username': activeUsername,
+              'selections': selections,
+            }),
+          )
+          .timeout(const Duration(seconds: 7));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
@@ -180,22 +190,25 @@ class UserInfoService {
       final String baseUrl = await getServerUrl();
       final Uri endpoint = Uri.parse('$baseUrl/api/login');
 
-      final response = await http.post(
-        endpoint,
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode({
-          'username': username,
-          'password': password,
-        }),
-      ).timeout(const Duration(seconds: 7));
+      final response = await http
+          .post(
+            endpoint,
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode({
+              'username': username,
+              'password': password,
+            }),
+          )
+          .timeout(const Duration(seconds: 7));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         final Map<String, dynamic> userData = responseData['user'];
-        
-        final UserInfoModel syncedUser = UserInfoModel.fromJson(userData).copyWith(
+
+        final UserInfoModel syncedUser =
+            UserInfoModel.fromJson(userData).copyWith(
           isSynced: true,
           lastSyncedAt: DateTime.now().toIso8601String(),
         );
@@ -237,11 +250,10 @@ class UserInfoService {
 
       return {
         'success': false,
-        'message': 'امکان اتصال به سرور وجود ندارد. لطفا اتصال اینترنت را بررسی کنید.',
+        'message':
+            'امکان اتصال به سرور وجود ندارد. لطفا اتصال اینترنت را بررسی کنید.',
         'error': e.toString(),
       };
     }
   }
 }
-
-

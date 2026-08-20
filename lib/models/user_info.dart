@@ -59,7 +59,8 @@ class UserInfoModel {
         palmData = Map<String, dynamic>.from(json['palmistry_info']);
       } else if (json['palmistry_info'] is String) {
         try {
-          palmData = Map<String, dynamic>.from(jsonDecode(json['palmistry_info']));
+          palmData =
+              Map<String, dynamic>.from(jsonDecode(json['palmistry_info']));
         } catch (_) {}
       }
     }

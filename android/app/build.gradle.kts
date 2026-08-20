@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.palmistry_app"
-    // Explicitly set compileSdk to 36 (Android 16) for full compatibility
+    // Explicitly set compileSdk to 36 (Android 16) as required by latest dependencies
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
@@ -19,8 +19,8 @@ android {
         applicationId = "com.example.palmistry_app"
         // minSdk 21 = Android 5.0, supports a very wide range of devices
         minSdk = flutter.minSdkVersion
-        // targetSdk 36 = Android 16, required for proper installation on Android 16 devices
-        targetSdk = 36
+        // targetSdk 35 = Android 15, current stable target
+        targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

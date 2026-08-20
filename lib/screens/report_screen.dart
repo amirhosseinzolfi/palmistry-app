@@ -6,8 +6,13 @@ import '../theme/app_theme.dart';
 
 class ReportScreen extends StatefulWidget {
   final Map<String, String> selections;
+  final String? imagePath;
 
-  const ReportScreen({Key? key, required this.selections}) : super(key: key);
+  const ReportScreen({
+    super.key,
+    required this.selections,
+    this.imagePath,
+  });
 
   @override
   State<ReportScreen> createState() => _ReportScreenState();
@@ -33,14 +38,14 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   Future<void> _saveReadingToBackend() async {
-    final result = await _userInfoService.saveWizardReading(selections: widget.selections);
+    final result =
+        await _userInfoService.saveWizardReading(selections: widget.selections);
     if (mounted) {
       setState(() {
         _isSavedSuccessfully = result['success'] == true;
       });
     }
   }
-
 
   String _resolveOptionDesc(String stepKey, String optionValue) {
     for (var step in _dbService.wizardSteps) {
@@ -71,7 +76,8 @@ class _ReportScreenState extends State<ReportScreen> {
     buffer.writeln("\n۵. استعدادها، نشانه‌ها و ترکیب‌های طلایی:");
     buffer.writeln(_compileMinorSignsText(plainText: true));
     buffer.writeln("\n-----------------------------------------");
-    buffer.writeln("⚠️ یادداشت مهم: کف دست نقشه قطعی سرنوشت نیست، بلکه بازتاب‌دهنده الگوهای ذهنی و پتانسیل‌های فعلی شماست. اراده و آگاهی شما همواره فراتر از خطوط دستتان است.");
+    buffer.writeln(
+        "⚠️ یادداشت مهم: کف دست نقشه قطعی سرنوشت نیست، بلکه بازتاب‌دهنده الگوهای ذهنی و پتانسیل‌های فعلی شماست. اراده و آگاهی شما همواره فراتر از خطوط دستتان است.");
     return buffer.toString();
   }
 
@@ -134,13 +140,15 @@ class _ReportScreenState extends State<ReportScreen> {
 
     String comboText = "";
     if (shape == "fire" && head == "short_practical") {
-      comboText = "\n\n" + _dbService.translate("key_combo_fire_practical_desc");
+      comboText =
+          "\n\n${_dbService.translate("key_combo_fire_practical_desc")}";
     } else if (shape == "water" && heart == "chained_broken") {
-      comboText = "\n\n" + _dbService.translate("key_combo_water_sensitive_desc");
+      comboText =
+          "\n\n${_dbService.translate("key_combo_water_sensitive_desc")}";
     } else if (shape == "air" && head == "long_straight") {
-      comboText = "\n\n" + _dbService.translate("key_combo_air_strategic_desc");
+      comboText = "\n\n${_dbService.translate("key_combo_air_strategic_desc")}";
     } else if (shape == "earth" && life == "deep_clear") {
-      comboText = "\n\n" + _dbService.translate("key_combo_earth_stable_desc");
+      comboText = "\n\n${_dbService.translate("key_combo_earth_stable_desc")}";
     }
 
     return "• **خط سرنوشت/فرعی:** $fateText\n\n• **نشانه خاص:** $signText$comboText";
@@ -192,7 +200,6 @@ class _ReportScreenState extends State<ReportScreen> {
             ),
           ],
         ),
-
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -238,6 +245,37 @@ class _ReportScreenState extends State<ReportScreen> {
                         ),
                       ),
                     ),
+                    if (widget.imagePath != null) ...[
+                      const SizedBox(height: 12),
+                      Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: AppColors.neonElectricBlue
+                                .withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                                color: AppColors.neonElectricBlue
+                                    .withValues(alpha: 0.35)),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.verified_rounded,
+                                  color: AppColors.neonElectricBlue, size: 14),
+                              const SizedBox(width: 6),
+                              Text(
+                                "تصویر دست اسکن شده توسط هوش مصنوعی",
+                                style: AppStyles.fontCaption(
+                                    fontSize: 11,
+                                    color: AppColors.neonElectricBlue),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                     const Divider(color: Color(0x206366F1), height: 28),
 
                     // Section 1
@@ -280,13 +318,16 @@ class _ReportScreenState extends State<ReportScreen> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: AppStyles.textContainerDecoration(
-                        backgroundColor: AppColors.primaryIndigo.withOpacity(0.08),
-                        borderColor: AppColors.primaryIndigo.withOpacity(0.3),
+                        backgroundColor:
+                            AppColors.primaryIndigo.withValues(alpha: 0.08),
+                        borderColor:
+                            AppColors.primaryIndigo.withValues(alpha: 0.3),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(Icons.info_rounded, color: AppColors.neonElectricBlue, size: 18),
+                          const Icon(Icons.info_rounded,
+                              color: AppColors.neonElectricBlue, size: 18),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
@@ -317,20 +358,25 @@ class _ReportScreenState extends State<ReportScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
-                          side: const BorderSide(color: AppColors.surfaceCardBorder),
+                          side: const BorderSide(
+                              color: AppColors.surfaceCardBorder),
                         ),
                         elevation: 0,
                       ),
                       icon: const Icon(Icons.copy_rounded, size: 18),
-                      label: Text("کپی کردن متن", style: AppStyles.fontTitle(fontSize: 13, color: AppColors.textPrimary)),
+                      label: Text("کپی کردن متن",
+                          style: AppStyles.fontTitle(
+                              fontSize: 13, color: AppColors.textPrimary)),
                       onPressed: () {
-                        Clipboard.setData(ClipboardData(text: _compileReportText()));
+                        Clipboard.setData(
+                            ClipboardData(text: _compileReportText()));
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
                               "متن گزارش در حافظه موقت کپی شد! ✓",
                               textAlign: TextAlign.center,
-                              style: AppStyles.fontBody(color: Colors.white, fontSize: 13),
+                              style: AppStyles.fontBody(
+                                  color: Colors.white, fontSize: 13),
                             ),
                             backgroundColor: AppColors.primaryIndigo,
                             duration: const Duration(seconds: 2),
@@ -352,7 +398,9 @@ class _ReportScreenState extends State<ReportScreen> {
                         elevation: 0,
                       ),
                       icon: const Icon(Icons.home_rounded, size: 18),
-                      label: Text("بازگشت به خانه", style: AppStyles.fontTitle(fontSize: 13, color: Colors.white)),
+                      label: Text("بازگشت به خانه",
+                          style: AppStyles.fontTitle(
+                              fontSize: 13, color: Colors.white)),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -368,7 +416,8 @@ class _ReportScreenState extends State<ReportScreen> {
     );
   }
 
-  Widget _buildReportSection(BuildContext context, String title, String content) {
+  Widget _buildReportSection(
+      BuildContext context, String title, String content) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -411,7 +460,8 @@ class _ReportScreenState extends State<ReportScreen> {
         if (line.trim().isEmpty) return const SizedBox(height: 4);
 
         bool isBullet = line.startsWith('•');
-        String cleanedLine = isBullet ? line.replaceFirst('•', '').trim() : line;
+        String cleanedLine =
+            isBullet ? line.replaceFirst('•', '').trim() : line;
 
         List<TextSpan> spans = [];
         final regex = RegExp(r'\*\*(.*?)\*\*');
@@ -419,15 +469,17 @@ class _ReportScreenState extends State<ReportScreen> {
 
         for (var match in regex.allMatches(cleanedLine)) {
           if (match.start > lastIndex) {
-            spans.add(TextSpan(text: cleanedLine.substring(lastIndex, match.start)));
+            spans.add(
+                TextSpan(text: cleanedLine.substring(lastIndex, match.start)));
           }
           spans.add(TextSpan(
             text: match.group(1),
-            style: AppStyles.fontTitle(fontSize: 13, color: AppColors.textPrimary),
+            style:
+                AppStyles.fontTitle(fontSize: 13, color: AppColors.textPrimary),
           ));
           lastIndex = match.end;
         }
-        
+
         if (lastIndex < cleanedLine.length) {
           spans.add(TextSpan(text: cleanedLine.substring(lastIndex)));
         }
@@ -442,7 +494,8 @@ class _ReportScreenState extends State<ReportScreen> {
               if (isBullet)
                 const Padding(
                   padding: EdgeInsets.only(top: 6, left: 6),
-                  child: Icon(Icons.lens, size: 5, color: AppColors.neonElectricBlue),
+                  child: Icon(Icons.lens,
+                      size: 5, color: AppColors.neonElectricBlue),
                 ),
               Expanded(
                 child: RichText(

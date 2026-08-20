@@ -9,32 +9,33 @@ import 'services/user_info_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   final onboardingService = OnboardingService();
   final userInfoService = UserInfoService();
-  
-  final bool onboardingComplete = await onboardingService.isOnboardingComplete();
+
+  final bool onboardingComplete =
+      await onboardingService.isOnboardingComplete();
   final user = await userInfoService.loadLocalUserInfo();
   final bool isLoggedIn = user != null;
 
   runApp(PalmistryApp(
-    startScreen: !onboardingComplete 
-        ? const OnboardingScreen() 
+    startScreen: !onboardingComplete
+        ? const OnboardingScreen()
         : (isLoggedIn ? const HomeScreen() : const AuthScreen()),
   ));
 }
 
 class PalmistryApp extends StatelessWidget {
   final Widget startScreen;
-  
-  const PalmistryApp({Key? key, required this.startScreen}) : super(key: key);
+
+  const PalmistryApp({super.key, required this.startScreen});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'کف‌بین',
       debugShowCheckedModeBanner: false,
-      
+
       // RTL Farsi Localization settings
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -52,4 +53,3 @@ class PalmistryApp extends StatelessWidget {
     );
   }
 }
-

@@ -17,25 +17,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<OnboardingData> _pages = [
     OnboardingData(
       title: "خودشناسی مدرن با هوش مصنوعی",
-      description: "ترکیب هنر باستانی کف‌بینی با تکنولوژی مدرن و هوش مصنوعی برای درک عمیق‌تر از خود و مسیر زندگی.",
+      description:
+          "ترکیب هنر باستانی کف‌بینی با تکنولوژی مدرن و هوش مصنوعی برای درک عمیق‌تر از خود و مسیر زندگی.",
       icon: Icons.auto_awesome_rounded,
       color: AppColors.primaryIndigo,
     ),
     OnboardingData(
       title: "دانشنامه جامع کف‌بینی",
-      description: "آموزش کامل و تفسیر دقیق تمامی خطوط، علائم و نشانه‌های کف دست برای یادگیری هنر تحلیلگری.",
+      description:
+          "آموزش کامل و تفسیر دقیق تمامی خطوط، علائم و نشانه‌های کف دست برای یادگیری هنر تحلیلگری.",
       icon: Icons.menu_book_rounded,
       color: AppColors.neonElectricBlue,
     ),
     OnboardingData(
       title: "تحلیلگر هوشمند و اختصاصی",
-      description: "تجربه‌ای منحصر‌به‌فرد با تحلیل تصاویر دست و پاسخ به سوالات کلیدی برای دریافت تفسیری دقیق و شخصی‌سازی شده.",
+      description:
+          "تجربه‌ای منحصر‌به‌فرد با تحلیل تصاویر دست و پاسخ به سوالات کلیدی برای دریافت تفسیری دقیق و شخصی‌سازی شده.",
       icon: Icons.psychology_rounded,
       color: AppColors.primaryPurple,
     ),
     OnboardingData(
       title: "بینش روزانه و عددشناسی",
-      description: "تحلیل روزانه، طالع‌بینی و عددشناسی بر اساس نام و تاریخ تولد برای دریافت راهنمایی‌های اختصاصی هر روز.",
+      description:
+          "تحلیل روزانه، طالع‌بینی و عددشناسی بر اساس نام و تاریخ تولد برای دریافت راهنمایی‌های اختصاصی هر روز.",
       icon: Icons.insights_rounded,
       color: AppColors.neonPink,
     ),
@@ -118,13 +122,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       gradient: LinearGradient(
                         colors: [
                           _pages[_currentPage].color,
-                          _pages[_currentPage].color.withOpacity(0.7),
+                          _pages[_currentPage].color.withValues(alpha: 0.7),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: _pages[_currentPage].color.withOpacity(0.3),
+                          color:
+                              _pages[_currentPage].color.withValues(alpha: 0.3),
                           blurRadius: 15,
                           offset: const Offset(0, 5),
                         ),
@@ -196,8 +201,9 @@ class OnboardingPageWidget extends StatelessWidget {
             padding: const EdgeInsets.all(30),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: data.color.withOpacity(0.1),
-              border: Border.all(color: data.color.withOpacity(0.2), width: 2),
+              color: data.color.withValues(alpha: 0.1),
+              border: Border.all(
+                  color: data.color.withValues(alpha: 0.2), width: 2),
             ),
             child: Icon(
               data.icon,

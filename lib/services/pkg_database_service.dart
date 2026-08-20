@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class PkgDatabaseService {
   Map<String, dynamic> _translations = {};
   List<dynamic> _interpretations = [];
   List<dynamic> _combinationRules = [];
-  
+
   // Categorized knowledge collections
   List<dynamic> majorLines = [];
   List<dynamic> minorLines = [];
@@ -26,15 +27,18 @@ class PkgDatabaseService {
   Future<void> initialize() async {
     try {
       // Load Persian translations
-      final String transContent = await rootBundle.loadString('pkg_database/translations/fa.json');
+      final String transContent =
+          await rootBundle.loadString('pkg_database/translations/fa.json');
       _translations = json.decode(transContent);
 
       // Load interpretations table
-      final String interpContent = await rootBundle.loadString('pkg_database/knowledge/interpretations.json');
+      final String interpContent = await rootBundle
+          .loadString('pkg_database/knowledge/interpretations.json');
       _interpretations = json.decode(interpContent)['records'];
 
       // Load combination rules
-      final String rulesContent = await rootBundle.loadString('pkg_database/knowledge/combination_rules.json');
+      final String rulesContent = await rootBundle
+          .loadString('pkg_database/knowledge/combination_rules.json');
       _combinationRules = json.decode(rulesContent)['rules'];
 
       // Load specific knowledge assets
@@ -52,19 +56,19 @@ class PkgDatabaseService {
       palms = await _loadKnowledgeList('palms.json');
       physicals = await _loadKnowledgeList('physical_features.json');
       timing = await _loadKnowledgeList('timing.json');
-      
     } catch (e) {
-      print("Error loading PKG database: $e");
+      debugPrint("Error loading PKG database: $e");
     }
   }
 
   Future<List<dynamic>> _loadKnowledgeList(String fileName) async {
     try {
-      final String content = await rootBundle.loadString('pkg_database/knowledge/$fileName');
+      final String content =
+          await rootBundle.loadString('pkg_database/knowledge/$fileName');
       final Map<String, dynamic> data = json.decode(content);
       return data['features'] ?? data['steps'] ?? [];
     } catch (e) {
-      print("Error loading $fileName: $e");
+      debugPrint("Error loading $fileName: $e");
       return [];
     }
   }
@@ -80,7 +84,6 @@ class PkgDatabaseService {
       if (record['target_entity'] == entityId &&
           record['condition_attribute'] == attribute &&
           record['condition_value'] == value) {
-        
         final String overallKey = record['interpretation']['overall'] ?? '';
         return translate(overallKey, fallback: "$entityId ($attribute=$value)");
       }
@@ -95,12 +98,15 @@ class PkgDatabaseService {
       if (record['target_entity'] == entityId) {
         final String overallKey = record['interpretation']['overall'] ?? '';
         final String translationVal = translate(overallKey);
-        
+
         // Split raw "State: Explanation" text
         if (translationVal.isNotEmpty) {
           final parts = translationVal.split(":");
-          final String state = parts.isNotEmpty ? parts[0].trim() : record['condition_value'];
-          final String explanation = parts.length > 1 ? parts.sublist(1).join(":").trim() : translationVal;
+          final String state =
+              parts.isNotEmpty ? parts[0].trim() : record['condition_value'];
+          final String explanation = parts.length > 1
+              ? parts.sublist(1).join(":").trim()
+              : translationVal;
           results.add({
             "state": state,
             "explanation": explanation,
@@ -120,7 +126,7 @@ class PkgDatabaseService {
     for (var rule in _combinationRules) {
       final String op = rule['conditions']['operator'] ?? 'AND';
       final List<dynamic> subRules = rule['conditions']['rules'] ?? [];
-      
+
       bool isMatch = op == 'AND'; // Start true for AND, false for OR
       if (op == 'OR') isMatch = false;
 

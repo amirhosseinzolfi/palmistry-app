@@ -1,33 +1,42 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../services/pkg_database_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/hand_camera_overlay.dart';
 import 'report_screen.dart';
 
 class WizardScreen extends StatefulWidget {
-  const WizardScreen({Key? key}) : super(key: key);
+  const WizardScreen({super.key});
 
   @override
   State<WizardScreen> createState() => _WizardScreenState();
 }
 
-class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMixin {
+class _WizardScreenState extends State<WizardScreen>
+    with TickerProviderStateMixin {
   final PkgDatabaseService _dbService = PkgDatabaseService();
   final PageController _pageController = PageController();
+  final ImagePicker _imagePicker = ImagePicker();
 
   bool _isLoading = true;
   int _currentStep = 0;
   final Map<String, String> _selections = {};
 
-  // Photo Capture & AI Scanning State
+  // Photo Capture State
+  String? _capturedImagePath;
   bool _hasCapturedPhoto = false;
+  bool _isCapturing = false;
+
+  // AI Scanning State
   bool _isScanningAi = false;
   double _aiScanProgress = 0.0;
   String _currentScanLog = "در حال آماده‌سازی موتور اسکن هوش مصنوعی...";
   Timer? _scanTimer;
 
-  // Question Step keys (3 initial questions: hand shape question removed)
+  // Question Step keys (3 initial questions)
   final List<String> _questionKeys = [
     "activeHand",
     "skinTexture",
@@ -58,32 +67,78 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
       _selections[key] = value;
     });
 
-    // Automatically slide to next step after a tiny delay for visual confirmation
-    Future.delayed(const Duration(milliseconds: 300), () {
+    // Automatically slide to next step after short visual feedback
+    Future.delayed(const Duration(milliseconds: 280), () {
+      if (!mounted) return;
       if (_currentStep < 2) {
         _pageController.nextPage(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 320),
+          curve: Curves.easeInOutCubic,
         );
       } else if (_currentStep == 2) {
         // Advance from 3rd question to Photo Step (Index 3)
         _pageController.nextPage(
-          duration: const Duration(milliseconds: 350),
-          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 380),
+          curve: Curves.easeInOutCubic,
         );
       }
     });
   }
 
-  void _onCapturePhotoPressed() {
+  Future<void> _pickImage(ImageSource source) async {
     setState(() {
-      _hasCapturedPhoto = true;
+      _isCapturing = true;
     });
+
+    try {
+      final XFile? pickedFile = await _imagePicker.pickImage(
+        source: source,
+        maxWidth: 1400,
+        maxHeight: 1400,
+        imageQuality: 88,
+      );
+
+      if (pickedFile != null) {
+        setState(() {
+          _capturedImagePath = pickedFile.path;
+          _hasCapturedPhoto = true;
+          _selections['photo_path'] = pickedFile.path;
+        });
+      }
+    } catch (e) {
+      debugPrint("Camera / Image Picker error: $e");
+      // Fallback for emulator or desktop: use demo image
+      setState(() {
+        _capturedImagePath = null;
+        _hasCapturedPhoto = true;
+        _selections['photo_path'] = 'demo_hand';
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: AppColors.surfaceLightCard,
+            content: Text(
+              "تصویر پیش‌فرض جهت آزمایش انتخاب شد.",
+              style: AppStyles.fontCaption(color: AppColors.textPrimary),
+            ),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isCapturing = false;
+        });
+      }
+    }
   }
 
   void _onRetakePhotoPressed() {
     setState(() {
       _hasCapturedPhoto = false;
+      _capturedImagePath = null;
     });
   }
 
@@ -98,16 +153,17 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
     _pageController.animateToPage(
       4,
       duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOut,
+      curve: Curves.easeInOutCubic,
     );
 
     // Simulated AI scanning timer (Demo value until AI backend is connected)
-    const totalDurationMs = 3500;
+    const totalDurationMs = 3600;
     const intervalMs = 50;
     int elapsed = 0;
 
     _scanTimer?.cancel();
-    _scanTimer = Timer.periodic(const Duration(milliseconds: intervalMs), (timer) {
+    _scanTimer =
+        Timer.periodic(const Duration(milliseconds: intervalMs), (timer) {
       elapsed += intervalMs;
       final double progress = (elapsed / totalDurationMs).clamp(0.0, 1.0);
 
@@ -116,13 +172,17 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
           _aiScanProgress = progress;
 
           if (progress < 0.25) {
-            _currentScanLog = "در حال پردازش پیکسل‌های تصویر و نورسنجی...";
+            _currentScanLog =
+                "در حال پردازش پیکسل‌های تصویر و تنظیم نورسنجی...";
           } else if (progress < 0.55) {
-            _currentScanLog = "شناسایی و استخراج خطوط اصلی (قلب، سر، زندگی)...";
+            _currentScanLog =
+                "شناسایی و استخراج خطوط اصلی (قلب، سر، زندگی و سرنوشت)...";
           } else if (progress < 0.82) {
-            _currentScanLog = "محاسبه انرژی برجستگی‌های سیاره‌ای و نسبت عناصر...";
+            _currentScanLog =
+                "محاسبه انرژی برجستگی‌های سیاره‌ای و هندسه کف دست...";
           } else {
-            _currentScanLog = "ترکیب الگوریتمی هوش مصنوعی و ساخت کارنامه نهایی...";
+            _currentScanLog =
+                "ترکیب الگوریتمی هوش مصنوعی و تدوین کارنامه نهایی...";
           }
         });
       }
@@ -142,7 +202,10 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => ReportScreen(selections: _selections),
+        builder: (context) => ReportScreen(
+          selections: _selections,
+          imagePath: _capturedImagePath,
+        ),
       ),
     );
   }
@@ -171,12 +234,15 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
           backgroundColor: AppColors.appBarBackground,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
+            // RTL-Optimized Back Arrow (Points right in RTL layout)
+            icon: const Icon(Icons.arrow_forward_ios_rounded,
+                color: AppColors.textPrimary, size: 19),
+            tooltip: "بازگشت",
             onPressed: () {
               if (_currentStep > 0 && !_isScanningAi) {
                 _pageController.previousPage(
                   duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
+                  curve: Curves.easeInOutCubic,
                 );
               } else {
                 Navigator.pop(context);
@@ -185,108 +251,84 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
           ),
           centerTitle: true,
           title: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 _currentStep < 3
-                    ? "پرسش‌نامه پایه کف‌بینی"
+                    ? "پرسش‌های پایه کف‌بینی"
                     : _currentStep == 3
                         ? "ثبت تصویر هوشمند دست"
                         : "اسکن و تحلیل هوش مصنوعی",
-                style: AppStyles.fontHeader(fontSize: 15.5, color: AppColors.textPrimary),
+                style: AppStyles.fontHeader(
+                    fontSize: 15.5, color: AppColors.textPrimary),
               ),
               const SizedBox(height: 2),
               Text(
-                _currentStep < 3
-                    ? "مرحله ${_currentStep + 1} از ۳ (سوالات پایه)"
-                    : _currentStep == 3
-                        ? "مرحله ۴ از ۵ (تصویر دست)"
-                        : "مرحله ۵ از ۵ (اسکن AI)",
-                style: AppStyles.fontCaption(fontSize: 11, color: AppColors.textMuted),
+                "گام ${_currentStep + 1} از ۵",
+                style: AppStyles.fontCaption(
+                    fontSize: 11, color: AppColors.neonElectricBlue),
               ),
             ],
           ),
+          actions: const [
+            // Clean symmetrical spacing on the other side
+            SizedBox(width: 48),
+          ],
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(4.0),
-            child: LinearProgressIndicator(
-              value: progress,
-              backgroundColor: const Color(0x15FFFFFF),
-              valueColor: AlwaysStoppedAnimation<Color>(
-                _currentStep == 4 ? AppColors.neonElectricBlue : AppColors.primaryPurple,
-              ),
-              minHeight: 4.0,
-            ),
-          ),
-        ),
-        body: Column(
-          children: [
-            // PageView Container for the Steps
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: totalSteps,
-                onPageChanged: (pageIndex) {
-                  setState(() {
-                    _currentStep = pageIndex;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  if (index < 3) {
-                    // Render Question Steps (0 to 2)
-                    return _buildQuestionStep(index);
-                  } else if (index == 3) {
-                    // Render Photo Capture Step (Index 3)
-                    return _buildPhotoCaptureStep(isLeftHand);
-                  } else {
-                    // Render AI Scanning Step (Index 4)
-                    return _buildAiScanningStep(isLeftHand);
-                  }
-                },
-              ),
-            ),
-
-            // Numbered Step Dots (Bottom Navigation Indicator)
-            if (!_isScanningAi)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8, top: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(totalSteps, (i) {
-                    final bool isCurrent = i == _currentStep;
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      margin: const EdgeInsets.symmetric(horizontal: 3),
-                      width: isCurrent ? 24 : 18,
-                      height: 18,
-                      decoration: BoxDecoration(
-                        color: isCurrent ? AppColors.primaryPurple : const Color(0x18FFFFFF),
-                        borderRadius: BorderRadius.circular(9),
-                        border: Border.all(
-                          color: isCurrent ? AppColors.neonPurple : const Color(0x15FFFFFF),
-                          width: 1.0,
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          i == 3 ? "📷" : i == 4 ? "⚡" : "${i + 1}",
-                          style: AppStyles.fontCaption(
-                            fontSize: i >= 3 ? 9 : 9.5,
-                            fontWeight: FontWeight.bold,
-                            color: isCurrent ? Colors.white : AppColors.textMuted,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(2),
+                child: Container(
+                  height: 3.0,
+                  color: const Color(0x18FFFFFF),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: AnimatedFractionallySizedBox(
+                      duration: const Duration(milliseconds: 300),
+                      widthFactor: progress,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              AppColors.primaryPurple,
+                              AppColors.neonElectricBlue
+                            ],
                           ),
                         ),
                       ),
-                    );
-                  }),
+                    ),
+                  ),
                 ),
               ),
-          ],
+            ),
+          ),
+        ),
+        body: PageView.builder(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: totalSteps,
+          onPageChanged: (pageIndex) {
+            setState(() {
+              _currentStep = pageIndex;
+            });
+          },
+          itemBuilder: (context, index) {
+            if (index < 3) {
+              return _buildQuestionStep(index);
+            } else if (index == 3) {
+              return _buildPhotoCaptureStep(isLeftHand);
+            } else {
+              return _buildAiScanningStep(isLeftHand);
+            }
+          },
         ),
       ),
     );
   }
 
-  /// Build Question Step Widget (Steps 0 to 2)
+  /// Build Question Step Widget (Steps 0 to 2) - Clean & Minimal without extra bottom buttons
   Widget _buildQuestionStep(int questionIndex) {
     if (_dbService.wizardSteps.isEmpty) {
       return const Center(child: CircularProgressIndicator());
@@ -311,11 +353,13 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryPurple.withOpacity(0.18),
+                  color: AppColors.primaryPurple.withValues(alpha: 0.18),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppColors.primaryPurple.withOpacity(0.4)),
+                  border: Border.all(
+                      color: AppColors.primaryPurple.withValues(alpha: 0.4)),
                 ),
                 child: Text(
                   "سوال ${questionIndex + 1} از ۳",
@@ -347,7 +391,7 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
               fontSize: 13,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 18),
 
           // Options List
           ...options.map((opt) {
@@ -361,9 +405,11 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
                 padding: const EdgeInsets.all(15),
                 decoration: AppStyles.cardDecoration(
                   backgroundColor: isSelected
-                      ? AppColors.primaryPurple.withOpacity(0.18)
+                      ? AppColors.primaryPurple.withValues(alpha: 0.18)
                       : AppColors.surfaceCard,
-                  borderColor: isSelected ? AppColors.primaryPurple : AppColors.surfaceCardBorder,
+                  borderColor: isSelected
+                      ? AppColors.primaryPurple
+                      : AppColors.surfaceCardBorder,
                   showGlow: isSelected,
                   glowColor: AppColors.primaryPurple,
                 ),
@@ -372,22 +418,28 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
                   children: [
                     // Radio Check Icon
                     Container(
-                      width: 34,
-                      height: 34,
+                      width: 32,
+                      height: 32,
                       margin: const EdgeInsets.only(left: 12),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? AppColors.primaryPurple.withOpacity(0.3)
+                            ? AppColors.primaryPurple.withValues(alpha: 0.3)
                             : const Color(0x12FFFFFF),
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: isSelected ? AppColors.primaryPurple : const Color(0x18FFFFFF),
+                          color: isSelected
+                              ? AppColors.primaryPurple
+                              : const Color(0x18FFFFFF),
                           width: 1.0,
                         ),
                       ),
                       child: Icon(
-                        isSelected ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
-                        color: isSelected ? AppColors.neonElectricBlue : AppColors.textMuted,
+                        isSelected
+                            ? Icons.check_circle_rounded
+                            : Icons.radio_button_unchecked_rounded,
+                        color: isSelected
+                            ? AppColors.neonElectricBlue
+                            : AppColors.textMuted,
                         size: 18,
                       ),
                     ),
@@ -400,7 +452,9 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
                             style: AppStyles.fontTitle(
                               color: AppColors.textPrimary,
                               fontSize: 14,
-                              fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                              fontWeight: isSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.w600,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -419,117 +473,173 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
                 ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
   }
 
-  /// Build Step 4: Modern Hand Photo Capture & Camera Screen
+  /// Build Step 4: Refined, Minimal Hand Photo Capture with Built-In Clean Guidance
   Widget _buildPhotoCaptureStep(bool isLeftHand) {
-    final String handLabel = isLeftHand ? "دست چپ" : "دست راست";
+    final String handName = isLeftHand ? "دست چپ" : "دست راست";
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Header Instructions Banner
+          // Minimalist Modern Guidance Card (Always visible before photo capture)
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: AppStyles.textContainerDecoration(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: AppStyles.cardDecoration(
               backgroundColor: AppColors.surfaceCard,
               borderColor: AppColors.surfaceCardBorder,
             ),
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryPurple.withOpacity(0.2),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(Icons.camera_alt_rounded, color: AppColors.neonElectricBlue, size: 20),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryPurple.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Icon(
+                        Icons.pan_tool_rounded,
+                        color: AppColors.neonElectricBlue,
+                        size: 18,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          style: AppStyles.fontTitle(
+                              fontSize: 14, color: AppColors.textPrimary),
+                          children: [
+                            const TextSpan(text: "عکاسی از کف "),
+                            TextSpan(
+                              text: handName,
+                              style: const TextStyle(
+                                color: AppColors.neonElectricBlue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const TextSpan(text: " (دست فعال شما)"),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "عکاسی از کف $handLabel",
-                        style: AppStyles.fontTitle(fontSize: 14, color: AppColors.textPrimary),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        "کف دست خود را کاملاً صاف رو به کادر راهنما قرار دهید.",
-                        style: AppStyles.fontCaption(fontSize: 11.5, color: AppColors.textSecondary),
-                      ),
-                    ],
+                const SizedBox(height: 8),
+                Text(
+                  "• کف دست را کاملاً صاف و باز رو به دوربین نگه دارید.\n• در محیطی با نور مناسب و بدون سایه شدید عکاسی کنید.",
+                  style: AppStyles.fontBody(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                    height: 1.55,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
 
-          // Camera View / Image Preview Box
+          // Preset Hand Image & Camera Viewfinder Frame
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Stack(
                 children: [
-                  // Camera Simulation Feed / Captured Image
+                  // Image container: preset hand asset or user's captured photo
                   Container(
                     width: double.infinity,
                     height: double.infinity,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0C0C1E),
+                      color: const Color(0xFF0A0A18),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.surfaceCardBorder),
+                      border: Border.all(
+                        color: _hasCapturedPhoto
+                            ? AppColors.neonElectricBlue.withValues(alpha: 0.6)
+                            : AppColors.surfaceCardBorder,
+                        width: _hasCapturedPhoto ? 1.5 : 1.0,
+                      ),
                     ),
                     child: _hasCapturedPhoto
-                        ? Image.asset(
-                            'assets/images/hand.png',
-                            fit: BoxFit.cover,
+                        ? Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              // Actual Captured Image or fallback
+                              _capturedImagePath != null && !kIsWeb
+                                  ? Image.file(
+                                      File(_capturedImagePath!),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset(
+                                      'assets/images/hand.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                              // Minimal corner brackets
+                              const HandCameraOverlay(
+                                isScanning: false,
+                                showVectorHand: false,
+                              ),
+                            ],
                           )
                         : Stack(
                             fit: StackFit.expand,
                             children: [
-                              // Simulated Live Camera View Background
-                              Image.asset(
-                                'assets/images/hand.png',
-                                fit: BoxFit.cover,
-                                color: Colors.black.withOpacity(0.35),
-                                colorBlendMode: BlendMode.darken,
+                              // Clean preset hand image (flipped for left hand if needed)
+                              Transform.scale(
+                                scaleX: isLeftHand ? -1.0 : 1.0,
+                                child: Image.asset(
+                                  'assets/images/hand.png',
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                              // Hand Vector Overlay Guide Frame
-                              HandCameraOverlay(
-                                isLeftHand: isLeftHand,
+                              // Minimal corner brackets
+                              const HandCameraOverlay(
                                 isScanning: false,
+                                showVectorHand: false,
                               ),
                             ],
                           ),
                   ),
 
-                  // Active Hand Indicator Tag
+                  // Minimal Hand Tag Badge Top-Right
                   Positioned(
-                    top: 14,
-                    right: 14,
+                    top: 12,
+                    right: 12,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.65),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.neonElectricBlue.withOpacity(0.5)),
+                        color: Colors.black.withValues(alpha: 0.75),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: _hasCapturedPhoto
+                              ? AppColors.neonElectricBlue
+                              : AppColors.primaryPurple.withValues(alpha: 0.5),
+                        ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(Icons.pan_tool_rounded, color: AppColors.neonElectricBlue, size: 14),
-                          const SizedBox(width: 6),
+                          Icon(
+                            _hasCapturedPhoto
+                                ? Icons.check_circle_rounded
+                                : Icons.camera_alt_outlined,
+                            color: _hasCapturedPhoto
+                                ? AppColors.neonElectricBlue
+                                : AppColors.neonPurple,
+                            size: 13,
+                          ),
+                          const SizedBox(width: 5),
                           Text(
-                            "الگوی کادر: $handLabel",
+                            _hasCapturedPhoto ? "تصویر ثبت شد" : handName,
                             style: AppStyles.fontCaption(
                               fontSize: 11,
                               color: AppColors.textPrimary,
@@ -545,53 +655,131 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
             ),
           ),
 
-          const SizedBox(height: 10),
-
-          // Gesture Guidance Chips
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                _buildGuidanceChip(Icons.wb_sunny_outlined, "نور کافی و مستقیم"),
-                const SizedBox(width: 8),
-                _buildGuidanceChip(Icons.back_hand_outlined, "کف دست صاف و باز"),
-                const SizedBox(width: 8),
-                _buildGuidanceChip(Icons.crop_free_rounded, "تطبیق با الگوی کادر"),
-              ],
-            ),
-          ),
-
           const SizedBox(height: 14),
 
-          // Action Buttons: Capture / Confirm / Retake
-          if (!_hasCapturedPhoto)
-            ElevatedButton.icon(
-              onPressed: _onCapturePhotoPressed,
-              icon: const Icon(Icons.camera_rounded, size: 20),
-              label: Text("ثبت تصویر و بررسی", style: AppStyles.fontTitle(fontSize: 14, color: Colors.white)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryIndigo,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-              ),
-            )
-          else
+          // Action Section: Either Camera & Gallery Capture OR Review / Retake Actions
+          if (!_hasCapturedPhoto) ...[
+            // Capture Buttons (Camera + Gallery)
             Row(
               children: [
+                // Gallery Button
+                OutlinedButton.icon(
+                  onPressed: _isCapturing
+                      ? null
+                      : () => _pickImage(ImageSource.gallery),
+                  icon: const Icon(Icons.photo_library_rounded, size: 18),
+                  label: Text("گالری",
+                      style: AppStyles.fontTitle(
+                          fontSize: 13, color: AppColors.textPrimary)),
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: AppColors.surfaceCard,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 14),
+                    side: const BorderSide(color: AppColors.surfaceCardBorder),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14)),
+                  ),
+                ),
+                const SizedBox(width: 10),
+
+                // Main Camera Button
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: AppColors.wizardButtonGradient,
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              AppColors.primaryPurple.withValues(alpha: 0.35),
+                          blurRadius: 10,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton.icon(
+                      onPressed: _isCapturing
+                          ? null
+                          : () => _pickImage(ImageSource.camera),
+                      icon: _isCapturing
+                          ? const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                  strokeWidth: 2, color: Colors.white),
+                            )
+                          : const Icon(Icons.camera_alt_rounded,
+                              size: 20, color: Colors.white),
+                      label: Text(
+                        "عکاسی با دوربین",
+                        style: AppStyles.fontTitle(
+                            fontSize: 14,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14)),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ] else ...[
+            // Review Approval Prompt & Actions
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(
+                color: AppColors.surfaceDark,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                    color: AppColors.neonElectricBlue.withValues(alpha: 0.35)),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.check_circle_outline_rounded,
+                      color: AppColors.neonElectricBlue, size: 18),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      "آیا تصویر واضح است یا مایل به عکاسی مجدد هستید؟",
+                      style: AppStyles.fontCaption(
+                          fontSize: 12, color: AppColors.textPrimary),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Retake vs Confirm Buttons
+            Row(
+              children: [
+                // Retake Button
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: _onRetakePhotoPressed,
                     icon: const Icon(Icons.refresh_rounded, size: 18),
-                    label: Text("عکاسی مجدد", style: AppStyles.fontTitle(fontSize: 13, color: AppColors.textPrimary)),
+                    label: Text("عکاسی مجدد",
+                        style: AppStyles.fontTitle(
+                            fontSize: 13, color: AppColors.textPrimary)),
                     style: OutlinedButton.styleFrom(
                       backgroundColor: AppColors.surfaceCard,
                       padding: const EdgeInsets.symmetric(vertical: 14),
-                      side: const BorderSide(color: AppColors.surfaceCardBorder),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                      side:
+                          const BorderSide(color: AppColors.surfaceCardBorder),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14)),
                     ),
                   ),
                 ),
                 const SizedBox(width: 12),
+
+                // Confirm and Send to AI
                 Expanded(
                   flex: 2,
                   child: Container(
@@ -600,7 +788,8 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
                       borderRadius: BorderRadius.circular(14),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.primaryPurple.withOpacity(0.35),
+                          color:
+                              AppColors.primaryPurple.withValues(alpha: 0.35),
                           blurRadius: 10,
                           offset: const Offset(0, 3),
                         ),
@@ -608,19 +797,28 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
                     ),
                     child: ElevatedButton.icon(
                       onPressed: _startAiScanningProcess,
-                      icon: const Icon(Icons.auto_awesome_rounded, size: 18, color: Colors.white),
-                      label: Text("تایید و اسکن AI", style: AppStyles.fontTitle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold)),
+                      icon: const Icon(Icons.auto_awesome_rounded,
+                          size: 18, color: Colors.white),
+                      label: Text(
+                        "تایید و ارسال به AI",
+                        style: AppStyles.fontTitle(
+                            fontSize: 13.5,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14)),
                       ),
                     ),
                   ),
                 ),
               ],
             ),
+          ],
         ],
       ),
     );
@@ -631,7 +829,7 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
     final int pct = (_aiScanProgress * 100).toInt();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -643,28 +841,42 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.asset(
-                    'assets/images/hand.png',
-                    fit: BoxFit.cover,
-                  ),
+                  // Actual Captured User Photo or preset asset
+                  _capturedImagePath != null && !kIsWeb
+                      ? Image.file(
+                          File(_capturedImagePath!),
+                          fit: BoxFit.cover,
+                        )
+                      : Transform.scale(
+                          scaleX: isLeftHand ? -1.0 : 1.0,
+                          child: Image.asset(
+                            'assets/images/hand.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+
                   // Animated Scanning Laser & Overlay
                   HandCameraOverlay(
                     isLeftHand: isLeftHand,
                     isScanning: true,
                     scanProgress: _aiScanProgress,
+                    showVectorHand: false,
                   ),
 
                   // Scanning Percentage Badge Center Overlay
                   Center(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 22, vertical: 12),
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.75),
+                        color: Colors.black.withValues(alpha: 0.80),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.neonElectricBlue, width: 1.5),
+                        border: Border.all(
+                            color: AppColors.neonElectricBlue, width: 1.5),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.neonElectricBlue.withOpacity(0.3),
+                            color: AppColors.neonElectricBlue
+                                .withValues(alpha: 0.3),
                             blurRadius: 15,
                           ),
                         ],
@@ -672,7 +884,8 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(Icons.auto_awesome, color: AppColors.neonElectricBlue, size: 28),
+                          const Icon(Icons.auto_awesome,
+                              color: AppColors.neonElectricBlue, size: 28),
                           const SizedBox(height: 6),
                           Text(
                             "$pct%",
@@ -684,7 +897,8 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
                           ),
                           Text(
                             "در حال اسکن عمیق خطوط",
-                            style: AppStyles.fontCaption(fontSize: 10.5, color: Colors.white70),
+                            style: AppStyles.fontCaption(
+                                fontSize: 10.5, color: Colors.white70),
                           ),
                         ],
                       ),
@@ -695,14 +909,14 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
             ),
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 18),
 
           // Dynamic AI Status Text Box
           Container(
             padding: const EdgeInsets.all(16),
             decoration: AppStyles.cardDecoration(
               backgroundColor: AppColors.surfaceCard,
-              borderColor: AppColors.neonElectricBlue.withOpacity(0.4),
+              borderColor: AppColors.neonElectricBlue.withValues(alpha: 0.4),
               showGlow: true,
               glowColor: AppColors.neonElectricBlue,
             ),
@@ -722,7 +936,8 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
                     const SizedBox(width: 10),
                     Text(
                       "تحلیل هوشمند تصویر دست",
-                      style: AppStyles.fontTitle(fontSize: 14, color: AppColors.neonElectricBlue),
+                      style: AppStyles.fontTitle(
+                          fontSize: 14, color: AppColors.neonElectricBlue),
                     ),
                   ],
                 ),
@@ -739,29 +954,7 @@ class _WizardScreenState extends State<WizardScreen> with TickerProviderStateMix
               ],
             ),
           ),
-          const SizedBox(height: 10),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildGuidanceChip(IconData icon, String text) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceCard,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.surfaceCardBorder),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: AppColors.neonPurple),
-          const SizedBox(width: 5),
-          Text(
-            text,
-            style: AppStyles.fontCaption(fontSize: 11, color: AppColors.textSecondary),
-          ),
+          const SizedBox(height: 8),
         ],
       ),
     );
