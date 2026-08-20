@@ -16,22 +16,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<OnboardingData> _pages = [
     OnboardingData(
-      title: "به کف‌بین خوش آمدید",
-      description: "اسرار نهفته در کف دست خود را با قدرت هوش مصنوعی کشف کنید.",
+      title: "خودشناسی مدرن با هوش مصنوعی",
+      description: "ترکیب هنر باستانی کف‌بینی با تکنولوژی مدرن و هوش مصنوعی برای درک عمیق‌تر از خود و مسیر زندگی.",
       icon: Icons.auto_awesome_rounded,
       color: AppColors.primaryIndigo,
     ),
     OnboardingData(
-      title: "تحلیل دقیق خطوط",
-      description: "خطوط قلب، سر، زندگی و سرنوشت شما با دقت تحلیل می‌شوند تا آینده‌ای روشن‌تر بسازید.",
-      icon: Icons.back_hand_rounded,
+      title: "دانشنامه جامع کف‌بینی",
+      description: "آموزش کامل و تفسیر دقیق تمامی خطوط، علائم و نشانه‌های کف دست برای یادگیری هنر تحلیلگری.",
+      icon: Icons.menu_book_rounded,
       color: AppColors.neonElectricBlue,
     ),
     OnboardingData(
-      title: "امنیت و حریم خصوصی",
-      description: "اطلاعات شما به صورت ایمن ذخیره می‌شود و حریم خصوصی شما اولویت ماست.",
-      icon: Icons.security_rounded,
+      title: "تحلیلگر هوشمند و اختصاصی",
+      description: "تجربه‌ای منحصر‌به‌فرد با تحلیل تصاویر دست و پاسخ به سوالات کلیدی برای دریافت تفسیری دقیق و شخصی‌سازی شده.",
+      icon: Icons.psychology_rounded,
       color: AppColors.primaryPurple,
+    ),
+    OnboardingData(
+      title: "بینش روزانه و عددشناسی",
+      description: "تحلیل روزانه، طالع‌بینی و عددشناسی بر اساس نام و تاریخ تولد برای دریافت راهنمایی‌های اختصاصی هر روز.",
+      icon: Icons.insights_rounded,
+      color: AppColors.neonPink,
     ),
   ];
 
@@ -73,7 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               return OnboardingPageWidget(data: _pages[index]);
             },
           ),
-          
+
           // Navigation controls
           Positioned(
             bottom: 60,
@@ -101,7 +107,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ),
                 const SizedBox(height: 40),
-                
+
                 // Action Button
                 GestureDetector(
                   onTap: _onNextPage,
@@ -127,11 +133,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Center(
                       child: Text(
                         _currentPage == _pages.length - 1 ? "بزن بریم" : "بعدی",
-                        style: const TextStyle(
+                        style: AppStyles.fontHeader(
                           color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Vazirmatn',
                         ),
                       ),
                     ),
@@ -140,7 +143,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ],
             ),
           ),
-          
+
           // Skip button
           if (_currentPage < _pages.length - 1)
             Positioned(
@@ -148,12 +151,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               left: 20,
               child: TextButton(
                 onPressed: _finishOnboarding,
-                child: const Text(
+                child: Text(
                   "رد کردن",
-                  style: TextStyle(
+                  style: AppStyles.fontCaption(
                     color: Colors.white54,
                     fontSize: 14,
-                    fontFamily: 'Vazirmatn',
                   ),
                 ),
               ),
@@ -207,23 +209,13 @@ class OnboardingPageWidget extends StatelessWidget {
           Text(
             data.title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Vazirmatn',
-            ),
+            style: AppStyles.fontHeader(fontSize: 24),
           ),
           const SizedBox(height: 20),
           Text(
             data.description,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 16,
-              height: 1.6,
-              fontFamily: 'Vazirmatn',
-            ),
+            style: AppStyles.fontBody(fontSize: 16),
           ),
           const SizedBox(height: 100), // Space for indicator and button
         ],

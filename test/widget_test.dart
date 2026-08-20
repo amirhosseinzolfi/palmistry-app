@@ -10,12 +10,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:palmistry_app/main.dart';
 import 'package:palmistry_app/screens/home_screen.dart';
 
-
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const PalmistryApp(startScreen: HomeScreen()));
-
 
     // Verify that our app opens and displays the main title
     expect(find.textContaining('کف‌بینی'), findsOneWidget);

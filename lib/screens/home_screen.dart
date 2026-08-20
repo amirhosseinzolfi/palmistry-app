@@ -3,7 +3,8 @@ import '../services/pkg_database_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/hand_painter.dart';
 import 'wizard_screen.dart';
-import 'user_info_screen.dart';
+import '../models/user_info.dart';
+import '../services/user_info_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,11 +15,32 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final PkgDatabaseService _dbService = PkgDatabaseService();
+  final UserInfoService _userInfoService = UserInfoService();
+
+  // Search and general state
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-
   bool _isLoading = true;
-  int _currentTabIndex = 0; // 0: Interactive Hand Tab, 1: Manual/Search Tab
+
+  // Profile Form Controllers
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _notesController = TextEditingController();
+
+  // Profile Form State
+  String _gender = "مرد";
+  String _dominantHand = "راست";
+  String _handSize = "متوسط";
+  bool _isSaving = false;
+  bool _obscurePassword = true;
+  bool _isSynced = false;
+  String? _lastSyncedAt;
+  final _formKey = GlobalKey<FormState>();
+
+  int _currentTabIndex = 0; // 0: Home, 1: Learn, 2: History, 3: Profile
   String _handFilter =
       "major"; // "major", "minor", "mounts", "symbols", "fingers"
   String _searchQuery = "";
@@ -32,10 +54,130 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadDatabase() async {
     await _dbService.initialize();
+    await _loadUserData();
     if (mounted) {
       setState(() {
         _isLoading = false;
       });
+    }
+  }
+
+  Future<void> _loadUserData() async {
+    final existingUser = await _userInfoService.loadLocalUserInfo();
+    if (existingUser != null) {
+      _usernameController.text = existingUser.username;
+      _passwordController.text = existingUser.password;
+      _firstNameController.text = existingUser.firstName;
+      _lastNameController.text = existingUser.lastName;
+      _dobController.text = existingUser.dateOfBirth;
+      _gender = existingUser.gender.isNotEmpty ? existingUser.gender : "مرد";
+
+      final palmInfo = existingUser.palmistryInfo;
+      _dominantHand = palmInfo['dominant_hand'] ?? "راست";
+      _handSize = palmInfo['hand_size'] ?? "متوسط";
+      _notesController.text = palmInfo['notes'] ?? "";
+
+      _isSynced = existingUser.isSynced;
+      _lastSyncedAt = existingUser.lastSyncedAt;
+    } else {
+      _dobController.text = "1375/01/15";
+    }
+  }
+
+  Future<void> _selectDateOfBirth() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(1998, 5, 20),
+      firstDate: DateTime(1930),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.dark(
+              primary: AppColors.primaryIndigo,
+              onPrimary: Colors.white,
+              surface: AppColors.surfaceDark,
+              onSurface: Colors.white,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      setState(() {
+        _dobController.text =
+            "${picked.year}/${picked.month.toString().padLeft(2, '0')}/${picked.day.toString().padLeft(2, '0')}";
+      });
+    }
+  }
+
+  Future<void> _saveAndSyncData() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() {
+      _isSaving = true;
+    });
+
+    final UserInfoModel user = UserInfoModel(
+      username: _usernameController.text.trim(),
+      password: _passwordController.text.trim(),
+      firstName: _firstNameController.text.trim(),
+      lastName: _lastNameController.text.trim(),
+      dateOfBirth: _dobController.text.trim(),
+      gender: _gender,
+      palmistryInfo: {
+        'dominant_hand': _dominantHand,
+        'hand_size': _handSize,
+        'notes': _notesController.text.trim(),
+        'updated_at': DateTime.now().toIso8601String(),
+      },
+    );
+
+    final result = await _userInfoService.saveAndSyncUserInfo(user);
+
+    if (mounted) {
+      setState(() {
+        _isSaving = false;
+        if (result['data'] != null) {
+          final UserInfoModel updatedUser = result['data'];
+          _isSynced = updatedUser.isSynced;
+          _lastSyncedAt = updatedUser.lastSyncedAt;
+        }
+      });
+
+      final bool isSuccess = result['success'] == true;
+      final String msg = result['message'] ?? "";
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(
+                isSuccess
+                    ? Icons.cloud_done_rounded
+                    : Icons.phone_android_rounded,
+                color: isSuccess
+                    ? AppColors.neonElectricBlue
+                    : const Color(0xFFFFB703),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  msg,
+                  style: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 13),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: AppColors.surfaceDark,
+          behavior: SnackBarBehavior.floating,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          duration: const Duration(seconds: 4),
+        ),
+      );
     }
   }
 
@@ -571,36 +713,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     const SizedBox(width: 8),
 
-                    // User Profile & Sync Button
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const UserInfoScreen(),
-                          ),
-                        );
-                      },
-                      child: Tooltip(
-                        message: "پروفایل کاربر و همگام‌سازی",
-                        child: Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryIndigo.withOpacity(0.2),
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppColors.neonElectricBlue.withOpacity(0.4),
-                              width: 1.0,
-                            ),
-                          ),
-                          child: const Icon(
-                            Icons.person_rounded,
-                            color: AppColors.neonElectricBlue,
-                            size: 18,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -612,7 +724,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     _buildHandTab(),
                     _buildManualTab(),
-                    _buildHistoryTab(),
+                    _buildInsightTab(),
                     _buildProfileTab(),
                   ],
                 ),
@@ -685,12 +797,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   // Empty gap for middle floating island circle button
                   const SizedBox(width: 58),
 
-                  // Tab 2: History / سوابق
+                  // Tab 2: Insights / بینش‌ها
                   _buildNavItem(
                     index: 2,
-                    activeIcon: Icons.access_time_filled_rounded,
-                    inactiveIcon: Icons.access_time_rounded,
-                    label: "سوابق",
+                    activeIcon: Icons.auto_awesome_mosaic_rounded,
+                    inactiveIcon: Icons.auto_awesome_mosaic_outlined,
+                    label: "بینش‌ها",
                   ),
 
                   // Tab 3: Profile / پروفایل
@@ -1741,50 +1853,46 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // History Tab (سوابق و تحلیل‌های انجام شده)
-  Widget _buildHistoryTab() {
+  // Insight Tab (بینش‌های روزانه و کیهانی)
+  Widget _buildInsightTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Section Title Card
+          // Archetype Banner
           Container(
-            padding: const EdgeInsets.all(18),
+            padding: const EdgeInsets.all(20),
             decoration: AppStyles.cardDecoration(
               backgroundColor: AppColors.surfaceCard,
-              borderColor: AppColors.surfaceCardBorder,
+              borderColor: AppColors.primaryPurple.withOpacity(0.3),
               showGlow: true,
               glowColor: AppColors.primaryPurple,
             ),
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryPurple.withOpacity(0.2),
+                    color: AppColors.primaryPurple.withOpacity(0.1),
                     shape: BoxShape.circle,
-                    border: Border.all(
-                        color: AppColors.primaryPurple.withOpacity(0.4)),
+                    border: Border.all(color: AppColors.primaryPurple.withOpacity(0.3)),
                   ),
-                  child: const Icon(Icons.history_rounded,
-                      color: AppColors.neonPurple, size: 22),
+                  child: const Icon(Icons.auto_awesome_rounded, color: AppColors.neonPurple, size: 28),
                 ),
-                const SizedBox(width: 14),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "تاریخچه و سوابق تحلیل کیهانی",
-                        style: AppStyles.fontTitle(
-                            fontSize: 15, color: AppColors.textPrimary),
+                        "عنصر غالب شما: آتش",
+                        style: AppStyles.fontHeader(fontSize: 18),
                       ),
-                      const SizedBox(height: 3),
+                      const SizedBox(height: 4),
                       Text(
-                        "گزارش‌های ذخیره‌شده و تحلیل‌های هوشمند قبلی شما",
-                        style: AppStyles.fontCaption(
-                            fontSize: 11.5, color: AppColors.textSecondary),
+                        "خلاق، پرشور و عمل‌گرا. امروز انرژی درونی شما در بالاترین سطح است.",
+                        style: AppStyles.fontBody(fontSize: 12, color: AppColors.textSecondary),
                       ),
                     ],
                   ),
@@ -1792,68 +1900,35 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 24),
 
-          // Sample History Items
-          _buildHistoryCardItem(
-            date: "امروز - ۱۷:۳۰",
-            title: "تحلیل جامع دست راست (عنصر آتش)",
-            summary:
-                "کهن‌الگو: آتش | خط سر عمیق | خط قلب منحنی | کوه ونوس برجسته",
-            isRecent: true,
+          _buildSectionHeader("طالع‌بینی و بینش روزانه", AppColors.neonElectricBlue),
+          const SizedBox(height: 12),
+          _buildInsightCard(
+            title: "وضعیت ستارگان",
+            content: "امروز هم‌راستایی مشتری و مریخ به شما قدرت تصمیم‌گیری فوق‌العاده‌ای می‌دهد. در کارهای گروهی پیش‌قدم شوید.",
+            icon: Icons.wb_twilight_rounded,
+            accentColor: AppColors.neonPurple,
+            badge: "امروز",
           ),
           const SizedBox(height: 12),
-          _buildHistoryCardItem(
-            date: "دیروز - ۲۱:۱۵",
-            title: "ارزیابی خطوط اصلی و تپه مشتری",
-            summary:
-                "خط سرنوشت مستقیم | خط زندگی شفاف | علامت ستاره روی کوه مشتری",
-            isRecent: false,
-          ),
-          const SizedBox(height: 12),
-          _buildHistoryCardItem(
-            date: "۳ روز پیش",
-            title: "تحلیل الگوهای ناخن و بندهای انگشت",
-            summary:
-                "بند منطق قوی | ناخن‌های بادامی | کهن‌الگو هوا و تفکر استراتژیک",
-            isRecent: false,
+          _buildInsightCard(
+            title: "توصیه کیهانی",
+            content: "از گوش دادن به شهود خود غافل نشوید. پاسخ سوالی که مدت‌هاست به دنبالش هستید، در سکوت ذهن شما نهفته است.",
+            icon: Icons.psychology_rounded,
+            accentColor: AppColors.neonElectricBlue,
+            badge: "ویژه",
           ),
           const SizedBox(height: 24),
 
-          // Action Button to Start New Wizard Analysis
-          Container(
-            decoration: BoxDecoration(
-              gradient: AppColors.wizardButtonGradient,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primaryPurple.withOpacity(0.35),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                )
-              ],
-            ),
-            child: ElevatedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const WizardScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16)),
-              ),
-              icon: const Icon(Icons.auto_awesome_rounded,
-                  color: Colors.white, size: 20),
-              label: Text(
-                "شروع تحلیل جدید با هوش مصنوعی",
-                style: AppStyles.fontTitle(fontSize: 14, color: Colors.white),
-              ),
-            ),
+          _buildSectionHeader("عددشناسی (Numerology)", AppColors.neonPink),
+          const SizedBox(height: 12),
+          _buildInsightCard(
+            title: "عدد مسیر زندگی (۸)",
+            content: "عدد ۸ نماد فراوانی و تعادل است. امروز روی نظم بخشیدن به امور مالی و برنامه‌های بلندمدت خود تمرکز کنید.",
+            icon: Icons.pin_rounded,
+            accentColor: AppColors.neonPink,
+            badge: "عدد شما",
           ),
           const SizedBox(height: 30),
         ],
@@ -1935,213 +2010,279 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Profile Tab (پروفایل کیهانی و تنظیمات)
+  // Profile Tab (پروفایل و مدیریت حساب)
   Widget _buildProfileTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Profile Header Avatar Card
+          // Compact Modern Profile Header
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
             decoration: AppStyles.cardDecoration(
               backgroundColor: AppColors.surfaceCard,
               borderColor: AppColors.surfaceCardBorder,
-              showGlow: true,
-              glowColor: AppColors.primaryIndigo,
             ),
-            child: Column(
+            child: Row(
               children: [
-                // Glowing Avatar Circle
+                // Avatar with Glow
                 Container(
-                  width: 72,
-                  height: 72,
-                  padding: const EdgeInsets.all(3),
+                  width: 64,
+                  height: 64,
+                  padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: AppColors.neonGradient,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryPurple.withOpacity(0.4),
-                        blurRadius: 16,
-                        spreadRadius: 1,
-                      ),
-                    ],
+                    gradient: AppColors.primaryGradient,
                   ),
                   child: Container(
                     decoration: const BoxDecoration(
                       color: AppColors.surfaceDark,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
-                      Icons.person_rounded,
-                      size: 40,
-                      color: AppColors.neonPurple,
-                    ),
+                    child: const Icon(Icons.person_rounded, color: Colors.white, size: 32),
                   ),
                 ),
-                const SizedBox(height: 12),
-                Text(
-                  "پروفایل کیهانی کاربر",
-                  style: AppStyles.fontHeader(
-                      fontSize: 17, color: AppColors.textPrimary),
-                ),
-                const SizedBox(height: 4),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryPurple.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                        color: AppColors.primaryPurple.withOpacity(0.4)),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _usernameController.text.isNotEmpty ? _usernameController.text : "کاربر جدید",
+                        style: AppStyles.fontHeader(fontSize: 18),
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Icon(
+                            _isSynced ? Icons.cloud_done_rounded : Icons.cloud_off_rounded,
+                            size: 14,
+                            color: _isSynced ? AppColors.neonEmerald : AppColors.textMuted,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            _isSynced ? "همگام‌سازی شده" : "ذخیره محلی",
+                            style: AppStyles.fontCaption(
+                              color: _isSynced ? AppColors.neonEmerald : AppColors.textMuted,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  child: Text(
-                    "عنصر غالب: کهن‌الگو آتش 🔥",
-                    style: AppStyles.fontCaption(
-                        fontSize: 11,
-                        color: AppColors.neonPurple,
-                        fontWeight: FontWeight.bold),
+                ),
+                // Quick Action: Sync
+                IconButton(
+                  onPressed: _isSaving ? null : _saveAndSyncData,
+                  icon: Icon(
+                    Icons.sync_rounded,
+                    color: _isSaving ? AppColors.textMuted : AppColors.neonElectricBlue,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),
 
-          // Stats Overview Row
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: AppStyles.cardDecoration(
-                      backgroundColor: AppColors.surfaceCard),
-                  child: Column(
-                    children: [
-                      Text("۲۴",
-                          style: AppStyles.fontHeader(
-                              fontSize: 20, color: AppColors.neonElectricBlue)),
-                      const SizedBox(height: 2),
-                      Text("نشانه‌شناسی",
-                          style: AppStyles.fontCaption(
-                              fontSize: 11, color: AppColors.textMuted)),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: AppStyles.cardDecoration(
-                      backgroundColor: AppColors.surfaceCard),
-                  child: Column(
-                    children: [
-                      Text("۵",
-                          style: AppStyles.fontHeader(
-                              fontSize: 20, color: AppColors.neonPurple)),
-                      const SizedBox(height: 2),
-                      Text("کارنامه کامل",
-                          style: AppStyles.fontCaption(
-                              fontSize: 11, color: AppColors.textMuted)),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: AppStyles.cardDecoration(
-                      backgroundColor: AppColors.surfaceCard),
-                  child: Column(
-                    children: [
-                      Text("۹۸٪",
-                          style: AppStyles.fontHeader(
-                              fontSize: 20, color: AppColors.neonEmerald)),
-                      const SizedBox(height: 2),
-                      Text("دقت تحلیل",
-                          style: AppStyles.fontCaption(
-                              fontSize: 11, color: AppColors.textMuted)),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          // Section: History (Moved and Merged here)
+          _buildSectionHeader("سوابق تحلیل‌های شما", AppColors.primaryPurple),
+          const SizedBox(height: 12),
+          _buildHistoryCardItem(
+            date: "امروز - ۱۷:۳۰",
+            title: "تحلیل جامع دست راست",
+            summary: "عنصر آتش | خط سر عمیق | خط قلب منحنی",
+            isRecent: true,
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 8),
+          _buildHistoryCardItem(
+            date: "دیروز - ۲۱:۱۵",
+            title: "ارزیابی خطوط اصلی",
+            summary: "خط سرنوشت مستقیم | خط زندگی شفاف",
+            isRecent: false,
+          ),
+          const SizedBox(height: 24),
 
-          // Settings & Info List
-          _buildProfileTile(
-            icon: Icons.menu_book_rounded,
-            title: "راهنمای کامل خواندن خطوط دست",
-            subtitle: "آموزش اصول و مبانی کف‌بینی قدم به قدم",
-            onTap: () {},
+          // Section: Personal Info Settings
+          _buildSectionHeader("تنظیمات حساب کاربری", AppColors.neonCelestialBlue),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: AppStyles.cardDecoration(
+              backgroundColor: AppColors.surfaceCard,
+              borderColor: AppColors.surfaceCardBorder,
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  _buildProfileTextField(
+                    controller: _firstNameController,
+                    label: "نام",
+                    hint: "مثلاً: علی",
+                    icon: Icons.person_outline,
+                  ),
+                  const SizedBox(height: 12),
+                  _buildProfileTextField(
+                    controller: _lastNameController,
+                    label: "نام خانوادگی",
+                    hint: "رضایی",
+                    icon: Icons.family_restroom_outlined,
+                  ),
+                  const SizedBox(height: 12),
+                  GestureDetector(
+                    onTap: _selectDateOfBirth,
+                    child: AbsorbPointer(
+                      child: _buildProfileTextField(
+                        controller: _dobController,
+                        label: "تاریخ تولد",
+                        hint: "1370/01/01",
+                        icon: Icons.calendar_today_rounded,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: ["مرد", "زن"].map((g) {
+                      final bool sel = _gender == g;
+                      return Expanded(
+                        child: GestureDetector(
+                          onTap: () => setState(() => _gender = g),
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            decoration: BoxDecoration(
+                              color: sel ? AppColors.primaryIndigo.withOpacity(0.15) : AppColors.surfaceDark,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: sel ? AppColors.primaryIndigo : Colors.white10),
+                            ),
+                            child: Text(
+                              g,
+                              textAlign: TextAlign.center,
+                              style: AppStyles.fontCaption(
+                                color: sel ? Colors.white : AppColors.textMuted,
+                                fontWeight: sel ? FontWeight.bold : FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Save Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: _isSaving ? null : _saveAndSyncData,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryIndigo,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                      ),
+                      child: _isSaving
+                        ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                        : Text("بروزرسانی پروفایل", style: AppStyles.fontTitle(color: Colors.white)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          const SizedBox(height: 10),
-          _buildProfileTile(
-            icon: Icons.palette_rounded,
-            title: "پوسته و ظاهر برنامه",
-            subtitle: "حالت کیهانی (کف‌بین Dark Obsidian)",
-            onTap: () {},
-          ),
-          const SizedBox(height: 10),
-          _buildProfileTile(
-            icon: Icons.info_outline_rounded,
-            title: "درباره کف‌بین AI",
-            subtitle: "نسخه ۲.۴.۰ - سیستم هوشمند خودشناسی",
-            onTap: () {},
-          ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 40),
         ],
       ),
     );
   }
 
-  Widget _buildProfileTile({
-    required IconData icon,
+  Widget _buildInsightCard({
     required String title,
-    required String subtitle,
-    required VoidCallback onTap,
+    required String content,
+    required IconData icon,
+    required Color accentColor,
+    required String badge,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: AppStyles.cardDecoration(
-          backgroundColor: AppColors.surfaceCard,
-          borderColor: AppColors.surfaceCardBorder,
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: AppStyles.cardDecoration(
+        backgroundColor: AppColors.surfaceCard,
+        borderColor: AppColors.surfaceCardBorder,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: accentColor.withOpacity(0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(icon, color: accentColor, size: 20),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  title,
+                  style: AppStyles.fontTitle(fontSize: 15),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: accentColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: accentColor.withOpacity(0.3)),
+                ),
+                child: Text(
+                  badge,
+                  style: AppStyles.fontCaption(
+                      fontSize: 10, color: accentColor, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Text(
+            content,
+            style: AppStyles.fontBody(fontSize: 13, height: 1.6),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProfileTextField({
+    required TextEditingController controller,
+    required String label,
+    required String hint,
+    required IconData icon,
+  }) {
+    return TextFormField(
+      controller: controller,
+      style: AppStyles.fontBody(color: AppColors.textPrimary, fontSize: 14),
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: AppStyles.fontCaption(color: AppColors.textMuted),
+        hintText: hint,
+        hintStyle: AppStyles.fontCaption(color: Colors.white10),
+        prefixIcon: Icon(icon, color: AppColors.primaryIndigo, size: 20),
+        fillColor: AppColors.surfaceDark,
+        filled: true,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: Colors.white10),
         ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(9),
-              decoration: BoxDecoration(
-                color: AppColors.primaryIndigo.withOpacity(0.18),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: AppColors.neonElectricBlue, size: 20),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title,
-                      style: AppStyles.fontTitle(
-                          fontSize: 13.5, color: AppColors.textPrimary)),
-                  const SizedBox(height: 2),
-                  Text(subtitle,
-                      style: AppStyles.fontCaption(
-                          fontSize: 11, color: AppColors.textSecondary)),
-                ],
-              ),
-            ),
-            const Icon(Icons.chevron_left_rounded,
-                color: AppColors.textMuted, size: 20),
-          ],
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: Colors.white10),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: AppColors.primaryIndigo, width: 1.5),
         ),
       ),
     );
